@@ -954,9 +954,31 @@
       margin-top: 0.25rem;
     }
 
+    .train-preview-section {
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .train-preview-section .train-preview,
+    .train-preview-section .train-stage {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
     .train-preview-panel h2 {
       font-size: 1.05rem;
       margin-bottom: 0.75rem;
+      color: var(--gold-soft);
+    }
+
+    .train-players-section {
+      margin-top: 0.25rem;
+    }
+
+    .train-players-section > h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.85rem;
       color: var(--gold-soft);
     }
 
@@ -1293,26 +1315,31 @@
             </label>
           </div>
 
-          <div class="train-day-list" id="trainDayList">
-            <!-- filled by JS -->
+          <div class="train-preview-section">
+            <div class="panel train-preview-panel">
+              <h2>Aperçu</h2>
+              <div class="train-stage train-preview" id="trainStage">
+                <img id="trainImage" src="images/train.png" alt="Modèle Train 5LE" />
+                <div class="train-slot-label" data-day="lundi" data-label="LUNDI" id="slot-lundi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="mardi" data-label="MARDI" id="slot-mardi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="mercredi" data-label="MERCREDI" id="slot-mercredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="jeudi" data-label="JEUDI" id="slot-jeudi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="vendredi" data-label="VENDREDI" id="slot-vendredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="samedi" data-label="SAMEDI" id="slot-samedi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="dimanche" data-label="DIMANCHE" id="slot-dimanche"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+              </div>
+              <div class="train-error" id="trainImageError">Impossible de charger le modèle Train.</div>
+              <p class="train-hint" id="trainAdjustHint" hidden>
+                Mode ajustement : déplacez les zones ou redimensionnez via la poignée dorée. Sauvegarde automatique.
+              </p>
+            </div>
           </div>
 
-          <div class="panel train-preview-panel">
-            <h2>Aperçu</h2>
-            <div class="train-stage train-preview" id="trainStage">
-              <img id="trainImage" src="images/train.png" alt="Modèle Train 5LE" />
-              <div class="train-slot-label" data-day="lundi" data-label="LUNDI" id="slot-lundi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-              <div class="train-slot-label" data-day="mardi" data-label="MARDI" id="slot-mardi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-              <div class="train-slot-label" data-day="mercredi" data-label="MERCREDI" id="slot-mercredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-              <div class="train-slot-label" data-day="jeudi" data-label="JEUDI" id="slot-jeudi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-              <div class="train-slot-label" data-day="vendredi" data-label="VENDREDI" id="slot-vendredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-              <div class="train-slot-label" data-day="samedi" data-label="SAMEDI" id="slot-samedi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-              <div class="train-slot-label" data-day="dimanche" data-label="DIMANCHE" id="slot-dimanche"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+          <div class="train-players-section">
+            <h2>Sélection des joueurs</h2>
+            <div class="train-day-list" id="trainDayList">
+              <!-- filled by JS -->
             </div>
-            <div class="train-error" id="trainImageError">Impossible de charger le modèle Train.</div>
-            <p class="train-hint" id="trainAdjustHint" hidden>
-              Mode ajustement : déplacez les zones ou redimensionnez via la poignée dorée. Sauvegarde automatique.
-            </p>
           </div>
         </section>
 
