@@ -925,9 +925,145 @@
       font-size: 0.95rem;
     }
 
-    .train-day-row select.form-control {
-      min-height: 48px;
+    .train-combo {
+      position: relative;
       width: 100%;
+      min-width: 0;
+    }
+
+    .train-combo-trigger {
+      width: 100%;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.65rem 0.85rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-weight: 700;
+      text-align: left;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .train-combo-trigger:hover,
+    .train-combo.open .train-combo-trigger {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    .train-combo-value {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .train-combo-value.placeholder {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .train-combo-caret {
+      color: var(--gold);
+      flex-shrink: 0;
+      font-size: 0.85rem;
+    }
+
+    .train-combo-dropdown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 4px);
+      z-index: 40;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .train-combo-dropdown[hidden] {
+      display: none !important;
+    }
+
+    .train-combo-search-wrap {
+      padding: 0.65rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-card);
+    }
+
+    .train-combo-search {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.7rem 0.85rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      outline: none;
+    }
+
+    .train-combo-search:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    .train-combo-options {
+      max-height: 320px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0.35rem;
+    }
+
+    .train-combo-option {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.8rem 0.85rem;
+      min-height: 48px;
+      border-radius: var(--radius-sm);
+      text-align: left;
+      color: var(--text);
+      font-weight: 700;
+      background: transparent;
+      border: none;
+    }
+
+    .train-combo-option:hover,
+    .train-combo-option.active {
+      background: var(--bg-hover);
+    }
+
+    .train-combo-option.selected {
+      background: var(--gold-dim);
+      color: var(--gold);
+      outline: 1px solid rgba(212, 175, 55, 0.35);
+    }
+
+    .train-combo-option .role-mini {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .train-combo-option.selected .role-mini {
+      color: var(--gold-soft);
+    }
+
+    .train-combo-empty {
+      padding: 1rem 0.85rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.9rem;
     }
 
     .train-clear-day {
@@ -1021,22 +1157,26 @@
       font-weight: 800;
       color: #1b1208;
       user-select: none;
-      overflow-wrap: anywhere;
-      word-break: break-word;
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      -webkit-hyphens: none;
       pointer-events: none;
-      -webkit-hyphens: auto;
-      hyphens: auto;
     }
 
     .train-slot-text {
       display: block;
       width: 100%;
-      max-height: 100%;
+      max-width: 100%;
       overflow: hidden;
       text-align: center;
       line-height: 1.05;
-      overflow-wrap: anywhere;
-      word-break: break-word;
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      -webkit-hyphens: none;
     }
 
     .train-stage.adjusting .train-slot-label,
@@ -1126,13 +1266,293 @@
       }
 
       .train-day-label { grid-area: label; }
-      .train-day-row select.form-control { grid-area: select; }
+      .train-combo { grid-area: select; }
       .train-clear-day { grid-area: clear; }
 
       .train-toolbar .btn,
       .train-toolbar .train-option {
         flex: 1 1 100%;
       }
+    }
+
+    /* ---------- Team Ville ---------- */
+    .tv-teams-section {
+      margin-top: 0.25rem;
+    }
+
+    .tv-teams-section > h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.85rem;
+      color: var(--gold-soft);
+    }
+
+    .tv-teams-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .tv-team-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.9rem;
+      min-width: 0;
+    }
+
+    .tv-team-block.team1 { border-top: 3px solid var(--gold); }
+    .tv-team-block.team2 { border-top: 3px solid var(--blue-bright); }
+    .tv-team-block.team3 { border-top: 3px solid var(--red-bright); }
+
+    .tv-team-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .tv-team-header h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .tv-team-block.team1 .tv-team-header h3 { color: var(--gold); }
+    .tv-team-block.team2 .tv-team-header h3 { color: var(--blue-bright); }
+    .tv-team-block.team3 .tv-team-header h3 { color: #ff8a7a; }
+
+    .tv-team-count {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .tv-member-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      max-height: 360px;
+      overflow-y: auto;
+      margin-bottom: 0.75rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tv-member-row {
+      display: grid;
+      grid-template-columns: 28px 1fr auto auto;
+      gap: 0.35rem;
+      align-items: center;
+      padding: 0.45rem 0.5rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      min-height: 44px;
+    }
+
+    .tv-member-row.dragging-row {
+      opacity: 0.55;
+      border-color: var(--gold);
+    }
+
+    .tv-member-num {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    .tv-member-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }
+
+    .tv-member-actions {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .tv-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tv-icon-btn:hover { color: var(--text); border-color: var(--text-dim); }
+    .tv-icon-btn.danger:hover {
+      color: #ff8a7a;
+      border-color: rgba(192, 57, 43, 0.45);
+      background: var(--red-dim);
+    }
+
+    .tv-add-wrap {
+      position: relative;
+    }
+
+    .tv-slot {
+      position: absolute;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 4px 6px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .tv-slot-list {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .tv-line {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35em;
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      -webkit-hyphens: none;
+      overflow: hidden;
+      line-height: 1.15;
+      font-weight: 700;
+      width: 100%;
+    }
+
+    .tv-line .tv-num { flex-shrink: 0; font-weight: 800; }
+    .tv-line .tv-nick {
+      overflow: hidden;
+      text-overflow: clip;
+      min-width: 0;
+      flex: 1;
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      -webkit-hyphens: none;
+    }
+
+    .tv-slot[data-team="team1"] .tv-line { color: #f3e6c8; }
+    .tv-slot[data-team="team1"] .tv-num { color: #d4af37; }
+    .tv-slot[data-team="team2"] .tv-line { color: #d9e9ff; }
+    .tv-slot[data-team="team2"] .tv-num { color: #7eb6ff; }
+    .tv-slot[data-team="team3"] .tv-line { color: #ffd9d9; }
+    .tv-slot[data-team="team3"] .tv-num { color: #ff8a7a; }
+
+    .tv-stage.adjusting {
+      touch-action: none;
+      overflow: visible;
+    }
+
+    .tv-stage.adjusting .tv-slot {
+      pointer-events: auto;
+      cursor: grab;
+      outline: 2px dashed rgba(212, 175, 55, 0.9);
+      background: rgba(212, 175, 55, 0.12);
+      z-index: 2;
+      overflow: visible;
+    }
+
+    .tv-stage.adjusting .tv-slot::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -1.1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      pointer-events: none;
+    }
+
+    .tv-stage.adjusting .tv-slot.dragging {
+      outline-color: var(--blue-bright);
+      background: rgba(58, 123, 213, 0.22);
+      z-index: 5;
+    }
+
+    .tv-stage.adjusting .tv-slot-handle {
+      display: block;
+    }
+
+    .tv-empty {
+      padding: 0.75rem;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .tv-teams-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tv-toolbar .btn,
+      .tv-toolbar .train-option {
+        flex: 1 1 100%;
+      }
+    }
+
+    /* ---------- Mobile image export ---------- */
+    .mobile-export-modal .modal {
+      max-width: 560px;
+    }
+
+    .mobile-export-hint {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin: 0.75rem 0 1rem;
+      line-height: 1.4;
+    }
+
+    .mobile-export-frame {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      background: #000;
+      max-height: 55dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-export-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      -webkit-touch-callout: default;
+      -webkit-user-select: auto;
+      user-select: auto;
+      pointer-events: auto;
+    }
+
+    .mobile-export-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+
+    .mobile-export-actions .btn {
+      flex: 1;
+      min-width: 120px;
     }
   </style>
 </head>
@@ -1161,8 +1581,8 @@
         <button type="button" class="nav-btn" data-page="train">
           <span class="nav-icon">▣</span> Train
         </button>
-        <button type="button" class="nav-btn" data-page="teams">
-          <span class="nav-icon">▤</span> Équipes
+        <button type="button" class="nav-btn" data-page="teamville">
+          <span class="nav-icon">▤</span> Team Ville
         </button>
         <button type="button" class="nav-btn" data-page="templates">
           <span class="nav-icon">▦</span> Modèles
@@ -1343,18 +1763,57 @@
           </div>
         </section>
 
-        <!-- Équipes -->
-        <section class="page" id="page-teams" data-page="teams">
+        <!-- Team Ville -->
+        <section class="page" id="page-teamville" data-page="teamville">
           <div class="page-header">
             <div>
-              <h1>Équipes</h1>
-              <p>Organisation des teams de l'alliance</p>
+              <h1>Team Ville</h1>
+              <p>Répartition des joueurs par équipe</p>
             </div>
           </div>
-          <div class="coming-soon">
-            <div class="badge">Bientôt</div>
-            <h2>Module bientôt disponible</h2>
-            <p>Créez et gérez vos équipes, puis assignez les joueurs en quelques clics.</p>
+
+          <div class="train-toolbar tv-toolbar">
+            <button type="button" class="btn btn-primary" id="btnExportTeamVille">Exporter l'image</button>
+            <button type="button" class="btn btn-secondary" id="btnAdjustTeamVille">Ajuster les positions</button>
+            <button type="button" class="btn btn-ghost" id="btnResetTeamVillePos">Réinitialiser les positions</button>
+            <button type="button" class="btn btn-secondary" id="btnAutoTeamVille">Répartir automatiquement</button>
+            <button type="button" class="btn btn-danger" id="btnClearTeamVille">Vider les équipes</button>
+            <label class="train-option" id="tvAllowDuplicatesLabel">
+              <input type="checkbox" id="tvAllowDuplicates" />
+              Autoriser les doublons
+            </label>
+          </div>
+
+          <div class="train-preview-section tv-preview-section">
+            <div class="panel train-preview-panel">
+              <h2>Aperçu</h2>
+              <div class="train-stage train-preview tv-stage" id="tvStage">
+                <img id="tvImage" src="images/teamville.png" alt="Modèle Team Ville 5LE" />
+                <div class="tv-slot" data-team="team1" data-label="TEAM 1" id="tv-slot-team1">
+                  <div class="tv-slot-list" id="tv-list-team1"></div>
+                  <span class="train-slot-handle tv-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="tv-slot" data-team="team2" data-label="TEAM 2" id="tv-slot-team2">
+                  <div class="tv-slot-list" id="tv-list-team2"></div>
+                  <span class="train-slot-handle tv-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="tv-slot" data-team="team3" data-label="TEAM 3" id="tv-slot-team3">
+                  <div class="tv-slot-list" id="tv-list-team3"></div>
+                  <span class="train-slot-handle tv-slot-handle" data-resize="1"></span>
+                </div>
+              </div>
+              <div class="train-error" id="tvImageError">Impossible de charger le modèle Team Ville.</div>
+              <p class="train-hint" id="tvAdjustHint" hidden>
+                Mode ajustement : déplacez ou redimensionnez les 3 colonnes. Sauvegarde automatique.
+              </p>
+            </div>
+          </div>
+
+          <div class="tv-teams-section">
+            <h2>Gestion des équipes</h2>
+            <div class="tv-teams-grid" id="tvTeamsGrid">
+              <!-- filled by JS -->
+            </div>
           </div>
         </section>
 
@@ -1492,6 +1951,26 @@
     </div>
   </div>
 
+  <!-- Modal: Mobile image export -->
+  <div class="modal-overlay mobile-export-modal" id="mobileExportModal" role="dialog" aria-modal="true" aria-labelledby="mobileExportTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="mobileExportTitle">Image prête</h2>
+        <button type="button" class="modal-close" id="mobileExportClose" aria-label="Fermer">×</button>
+      </div>
+      <div class="mobile-export-frame">
+        <img id="mobileExportImage" class="mobile-export-image" alt="Image générée 5LE" />
+      </div>
+      <p class="mobile-export-hint" id="mobileExportHint">
+        Maintenez votre doigt sur l'image puis choisissez « Enregistrer dans Photos » ou « Enregistrer l'image ».
+      </p>
+      <div class="mobile-export-actions">
+        <button type="button" class="btn btn-secondary" id="mobileExportShare" hidden>Partager</button>
+        <button type="button" class="btn btn-primary" id="mobileExportDone">Fermer</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <!-- ============================= -->
@@ -1537,6 +2016,16 @@
     const DEFAULT_TRAIN_SLOT_POSITIONS = trainSlotPositions;
     const TRAIN_POSITIONS_VERSION = 3;
 
+    /* Positions colonnes Team Ville (en % — cases noires sous TEAM 1/2/3) */
+    const teamVillePositions = {
+      team1: { left: 17.89, top: 30.5, width: 16.25, height: 54 },
+      team2: { left: 41.41, top: 30.5, width: 15.94, height: 54 },
+      team3: { left: 65.00, top: 30.5, width: 15.16, height: 54 }
+    };
+    const TEAM_VILLE_POSITIONS_VERSION = 1;
+    const TEAM_VILLE_KEYS = ["team1", "team2", "team3"];
+    const TEAM_VILLE_LABELS = { team1: "TEAM 1", team2: "TEAM 2", team3: "TEAM 3" };
+
     /* ============================= */
     /* STATE                         */
     /* ============================= */
@@ -1551,6 +2040,7 @@
         players: [],
         settings: {},
         train: createDefaultTrain(),
+        teamVille: createDefaultTeamVille(),
         teams: [],
         templates: [],
         history: []
@@ -1630,15 +2120,207 @@
       };
     }
 
+    function createDefaultTeamVille() {
+      return {
+        team1: [],
+        team2: [],
+        team3: [],
+        allowDuplicates: false,
+        slotPositions: clonePositions(teamVillePositions),
+        positionsVersion: TEAM_VILLE_POSITIONS_VERSION
+      };
+    }
+
+    function normalizeTeamVille(data) {
+      const base = createDefaultTeamVille();
+      if (!data || typeof data !== "object") return base;
+      const out = {
+        team1: [],
+        team2: [],
+        team3: [],
+        allowDuplicates: !!data.allowDuplicates,
+        slotPositions: clonePositions(teamVillePositions),
+        positionsVersion: TEAM_VILLE_POSITIONS_VERSION
+      };
+      TEAM_VILLE_KEYS.forEach(function (key) {
+        const arr = Array.isArray(data[key]) ? data[key] : [];
+        out[key] = arr.map(function (id) { return String(id); }).filter(Boolean);
+      });
+      const version = Number(data.positionsVersion) || 0;
+      if (version >= TEAM_VILLE_POSITIONS_VERSION && data.slotPositions) {
+        out.slotPositions = {};
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          const src = data.slotPositions[key] || teamVillePositions[key];
+          out.slotPositions[key] = {
+            left: Number(src.left) || 0,
+            top: Number(src.top) || 0,
+            width: Number(src.width) || 0,
+            height: Number(src.height) || 0
+          };
+        });
+        out.positionsVersion = TEAM_VILLE_POSITIONS_VERSION;
+      }
+      return out;
+    }
+
+    /* Roster alliance 5LE — R3/R2/R1 → Membre (rôles app : R5, R4, Membre) */
+    const ALLIANCE_ROSTER = [
+      { nickname: "Aiko5LE", role: "R5" },
+      { nickname: "cocaiine", role: "R4" },
+      { nickname: "Le parisien perdu", role: "R4" },
+      { nickname: "FuryX571", role: "R4" },
+      { nickname: "Samsuh", role: "R4" },
+      { nickname: "sibphoenix", role: "R4" },
+      { nickname: "Djay13", role: "R4" },
+      { nickname: "Danycef6z2", role: "R4" },
+      { nickname: "tonton3", role: "R4" },
+      { nickname: "Lilicelaplusbelle", role: "R4" },
+      { nickname: "Twazou", role: "R4" },
+      { nickname: "Thrall Hurlenfer", role: "Membre" },
+      { nickname: "Brodiro", role: "Membre" },
+      { nickname: "Melymell", role: "Membre" },
+      { nickname: "Sephirot88", role: "Membre" },
+      { nickname: "SixthR6ver", role: "Membre" },
+      { nickname: "GoldGOAT", role: "Membre" },
+      { nickname: "Venom", role: "Membre" },
+      { nickname: "wafranck", role: "Membre" },
+      { nickname: "CrazyCalcium", role: "Membre" },
+      { nickname: "Dolosweety", role: "Membre" },
+      { nickname: "TallyHood", role: "Membre" },
+      { nickname: "Diego del Paris", role: "Membre" },
+      { nickname: "Mastertibz", role: "Membre" },
+      { nickname: "Offbeatkiko", role: "Membre" },
+      { nickname: "Tomgduzor", role: "Membre" },
+      { nickname: "Xyntrix", role: "Membre" },
+      { nickname: "Bubb3ls", role: "Membre" },
+      { nickname: "Cassie74", role: "Membre" },
+      { nickname: "Alexxxxandra", role: "Membre" },
+      { nickname: "juki joo", role: "Membre" },
+      { nickname: "GuiKing87", role: "Membre" },
+      { nickname: "88Goldorak", role: "Membre" },
+      { nickname: "Monkey D Dragon77", role: "Membre" },
+      { nickname: "Tank1300", role: "Membre" },
+      { nickname: "YagZzou", role: "Membre" },
+      { nickname: "wayne 73", role: "Membre" },
+      { nickname: "Snake 73", role: "Membre" },
+      { nickname: "Mr Daryl", role: "Membre" },
+      { nickname: "Fred2714", role: "Membre" },
+      { nickname: "Francois52", role: "Membre" },
+      { nickname: "Ssvvmm", role: "Membre" },
+      { nickname: "jimbo936", role: "Membre" },
+      { nickname: "WinDs", role: "Membre" },
+      { nickname: "Jackmanhero", role: "Membre" },
+      { nickname: "stfffff", role: "Membre" },
+      { nickname: "melmel22061", role: "Membre" },
+      { nickname: "V3nus4reall", role: "Membre" },
+      { nickname: "thonyoelmago", role: "Membre" },
+      { nickname: "Franceaz", role: "Membre" },
+      { nickname: "SAINT TROPEZ Fr", role: "Membre" },
+      { nickname: "kenshiro683", role: "Membre" },
+      { nickname: "DragonHeart38", role: "Membre" },
+      { nickname: "Gsxr1216", role: "Membre" },
+      { nickname: "reginom", role: "Membre" },
+      { nickname: "RomKi13", role: "Membre" },
+      { nickname: "FuFu5735", role: "Membre" },
+      { nickname: "Lowlola", role: "Membre" },
+      { nickname: "Wipa213", role: "Membre" },
+      { nickname: "Psychrok", role: "Membre" },
+      { nickname: "Jet320", role: "Membre" },
+      { nickname: "Sasou571", role: "Membre" },
+      { nickname: "xIMarmotte Bigleuse", role: "Membre" },
+      { nickname: "Soäm", role: "Membre" },
+      { nickname: "FinalSolid", role: "Membre" },
+      { nickname: "Ninfa10K", role: "Membre" },
+      { nickname: "tiker69", role: "Membre" },
+      { nickname: "thésée", role: "Membre" },
+      { nickname: "Poulpyplette", role: "Membre" },
+      { nickname: "FraEmme", role: "Membre" },
+      { nickname: "tevaa", role: "Membre" },
+      { nickname: "Valkor77", role: "Membre" },
+      { nickname: "Lionel E", role: "Membre" },
+      { nickname: "lennyxd 23", role: "Membre" },
+      { nickname: "PASA 35", role: "Membre" },
+      { nickname: "Sersil", role: "Membre" },
+      { nickname: "LuluVator", role: "Membre" },
+      { nickname: "Yu gi ho", role: "Membre" },
+      { nickname: "Gaetano6957", role: "Membre" },
+      { nickname: "XepBam", role: "Membre" },
+      { nickname: "Backalive10", role: "Membre" },
+      { nickname: "La Kaye", role: "Membre" },
+      { nickname: "Pym85", role: "Membre" },
+      { nickname: "AFURO", role: "Membre" },
+      { nickname: "Next x", role: "Membre" },
+      { nickname: "RAGNAR59", role: "Membre" },
+      { nickname: "AlexBeGood", role: "Membre" },
+      { nickname: "zimnyZywiec", role: "Membre" },
+      { nickname: "ElFuguro", role: "Membre" },
+      { nickname: "asticot57 330", role: "Membre" },
+      { nickname: "brutus213", role: "Membre" },
+      { nickname: "Marry Poppins 66", role: "Membre" },
+      { nickname: "TheProfAsh", role: "Membre" },
+      { nickname: "pollo 2", role: "Membre" },
+      { nickname: "Le goéland", role: "Membre" },
+      { nickname: "laboulange83", role: "Membre" },
+      { nickname: "Wladcaognia", role: "Membre" },
+      { nickname: "rdbl2", role: "Membre" },
+      { nickname: "Shambhala 5LE", role: "Membre" },
+      { nickname: "Task12", role: "Membre" }
+    ];
+
     function createDemoPlayers() {
       const now = Date.now();
-      return [
-        { id: uid("player"), nickname: "FuryX571", role: "R4", status: "active", team: "", power: "", note: "", createdAt: new Date(now - 4000).toISOString(), isDemo: true },
-        { id: uid("player"), nickname: "Aiko5LE", role: "R5", status: "active", team: "", power: "", note: "", createdAt: new Date(now - 3000).toISOString(), isDemo: true },
-        { id: uid("player"), nickname: "Marmotte", role: "Membre", status: "active", team: "", power: "", note: "", createdAt: new Date(now - 2000).toISOString(), isDemo: true },
-        { id: uid("player"), nickname: "Twazou", role: "Membre", status: "active", team: "", power: "", note: "", createdAt: new Date(now - 1000).toISOString(), isDemo: true },
-        { id: uid("player"), nickname: "Danycef", role: "Membre", status: "active", team: "", power: "", note: "", createdAt: new Date(now).toISOString(), isDemo: true }
-      ];
+      return ALLIANCE_ROSTER.map(function (entry, index) {
+        return {
+          id: uid("player"),
+          nickname: entry.nickname,
+          role: entry.role,
+          status: "active",
+          team: "",
+          power: "",
+          note: "",
+          createdAt: new Date(now - (ALLIANCE_ROSTER.length - index) * 1000).toISOString(),
+          isDemo: false
+        };
+      });
+    }
+
+    /** Ajoute les joueurs du roster manquants (sans écraser les existants). */
+    function ensureAllianceRoster() {
+      let added = 0;
+      let updated = 0;
+      const byNick = {};
+      state.players.forEach(function (p) {
+        byNick[p.nickname.toLowerCase()] = p;
+      });
+
+      ALLIANCE_ROSTER.forEach(function (entry, index) {
+        const key = entry.nickname.toLowerCase();
+        const existing = byNick[key];
+        if (existing) {
+          if (existing.role !== entry.role) {
+            existing.role = entry.role;
+            existing.isDemo = false;
+            updated++;
+          }
+          return;
+        }
+        const player = {
+          id: uid("player"),
+          nickname: entry.nickname,
+          role: entry.role,
+          status: "active",
+          team: "",
+          power: "",
+          note: "",
+          createdAt: new Date(Date.now() - (ALLIANCE_ROSTER.length - index) * 1000).toISOString(),
+          isDemo: false
+        };
+        state.players.push(player);
+        byNick[key] = player;
+        added++;
+      });
+
+      return { added: added, updated: updated };
     }
 
     function uid(prefix) {
@@ -1680,6 +2362,7 @@
           players: Array.isArray(data.players) ? data.players.map(normalizePlayer).filter(Boolean) : [],
           settings: data.settings && typeof data.settings === "object" ? data.settings : base.settings,
           train: normalizeTrain(data.train),
+          teamVille: normalizeTeamVille(data.teamVille),
           teams: Array.isArray(data.teams) ? data.teams : base.teams,
           templates: Array.isArray(data.templates) ? data.templates : base.templates,
           history: Array.isArray(data.history) ? data.history : base.history
@@ -1817,6 +2500,7 @@
         state.players = state.players.filter(function (p) { return p.id !== id; });
         selectedIds.delete(id);
         Train.clearPlayerAssignments(id);
+        TeamVille.clearPlayer(id);
         Storage.persist();
       },
 
@@ -1826,6 +2510,7 @@
         ids.forEach(function (id) {
           selectedIds.delete(id);
           Train.clearPlayerAssignments(id);
+          TeamVille.clearPlayer(id);
         });
         Storage.persist();
       },
@@ -1846,7 +2531,10 @@
         state.players = state.players.filter(function (p) {
           return !(p.isDemo || CONFIG.demoNicknames.includes(p.nickname));
         });
-        removedPlayers.forEach(function (p) { Train.clearPlayerAssignments(p.id); });
+        removedPlayers.forEach(function (p) {
+          Train.clearPlayerAssignments(p.id);
+          TeamVille.clearPlayer(p.id);
+        });
         const removed = before - state.players.length;
         selectedIds.clear();
         Storage.persist();
@@ -2023,6 +2711,7 @@
         Selection.syncUI();
         Stats.render();
         if (typeof Train !== "undefined") Train.refresh();
+        if (typeof TeamVille !== "undefined") TeamVille.refresh();
       },
 
       roleBadge(role) {
@@ -2161,6 +2850,8 @@
       adjusting: false,
       drag: null,
       daysBuilt: false,
+      openDay: null,
+      highlightIndex: -1,
 
       ensureState() {
         state.train = normalizeTrain(state.train);
@@ -2193,6 +2884,23 @@
         return used;
       },
 
+      getEligiblePlayers(day, query) {
+        const allowDup = !!state.train.allowDuplicates;
+        const current = state.train.assignments[day] || "";
+        const used = allowDup ? new Set() : this.getUsedIds(day);
+        const q = (query || "").trim().toLowerCase();
+        return state.players
+          .slice()
+          .filter(function (p) {
+            if (used.has(p.id) && p.id !== current) return false;
+            if (q && p.nickname.toLowerCase().indexOf(q) === -1) return false;
+            return true;
+          })
+          .sort(function (a, b) {
+            return a.nickname.localeCompare(b.nickname, "fr", { sensitivity: "base" });
+          });
+      },
+
       buildDayRows() {
         if (this.daysBuilt) return;
         const list = document.getElementById("trainDayList");
@@ -2200,14 +2908,115 @@
           return (
             '<div class="train-day-row" data-day="' + d.key + '">' +
               '<div class="train-day-label">' + d.label + "</div>" +
-              '<select class="form-control train-day-select" id="train-select-' + d.key + '" data-day="' + d.key + '" aria-label="' + d.label + '">' +
-                '<option value="">— Choisir un joueur —</option>' +
-              "</select>" +
+              '<div class="train-combo" id="train-select-' + d.key + '" data-day="' + d.key + '">' +
+                '<button type="button" class="train-combo-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="' + d.label + '">' +
+                  '<span class="train-combo-value placeholder">Choisir un joueur</span>' +
+                  '<span class="train-combo-caret">▾</span>' +
+                "</button>" +
+                '<div class="train-combo-dropdown" hidden>' +
+                  '<div class="train-combo-search-wrap">' +
+                    '<input type="search" class="train-combo-search form-control" placeholder="🔎 Rechercher un joueur..." autocomplete="off" enterkeyhint="search" />' +
+                  "</div>" +
+                  '<div class="train-combo-options" role="listbox"></div>' +
+                "</div>" +
+              "</div>" +
               '<button type="button" class="train-clear-day" data-day="' + d.key + '" title="Vider" aria-label="Vider ' + d.label + '">×</button>' +
             "</div>"
           );
         }).join("");
         this.daysBuilt = true;
+      },
+
+      updateTriggerLabel(day) {
+        const combo = document.getElementById("train-select-" + day);
+        if (!combo) return;
+        const valueEl = combo.querySelector(".train-combo-value");
+        const player = this.getPlayer(state.train.assignments[day]);
+        if (player) {
+          valueEl.textContent = player.nickname;
+          valueEl.classList.remove("placeholder");
+        } else {
+          valueEl.textContent = "Choisir un joueur";
+          valueEl.classList.add("placeholder");
+        }
+      },
+
+      renderComboOptions(day, query) {
+        const combo = document.getElementById("train-select-" + day);
+        if (!combo) return;
+        const optionsEl = combo.querySelector(".train-combo-options");
+        const current = state.train.assignments[day] || "";
+        const players = this.getEligiblePlayers(day, query);
+
+        if (!players.length) {
+          optionsEl.innerHTML = '<div class="train-combo-empty">Aucun joueur trouvé</div>';
+          this.highlightIndex = -1;
+          return;
+        }
+
+        optionsEl.innerHTML = players.map(function (p, idx) {
+          const selected = p.id === current ? " selected" : "";
+          return (
+            '<button type="button" class="train-combo-option' + selected + '" role="option" data-id="' +
+            escapeHtml(p.id) + '" data-index="' + idx + '" aria-selected="' + (p.id === current ? "true" : "false") + '">' +
+              "<span>" + escapeHtml(p.nickname) + "</span>" +
+              '<span class="role-mini">' + escapeHtml(p.role) + "</span>" +
+            "</button>"
+          );
+        }).join("");
+
+        this.highlightIndex = players.findIndex(function (p) { return p.id === current; });
+        if (this.highlightIndex < 0) this.highlightIndex = 0;
+        this.syncHighlight(day);
+      },
+
+      syncHighlight(day) {
+        const combo = document.getElementById("train-select-" + day);
+        if (!combo) return;
+        const options = combo.querySelectorAll(".train-combo-option");
+        options.forEach(function (opt, idx) {
+          opt.classList.toggle("active", idx === Train.highlightIndex);
+        });
+        const active = options[this.highlightIndex];
+        if (active && typeof active.scrollIntoView === "function") {
+          active.scrollIntoView({ block: "nearest" });
+        }
+      },
+
+      openCombo(day) {
+        if (this.openDay && this.openDay !== day) this.closeCombo();
+        const combo = document.getElementById("train-select-" + day);
+        if (!combo) return;
+        const dropdown = combo.querySelector(".train-combo-dropdown");
+        const search = combo.querySelector(".train-combo-search");
+        const trigger = combo.querySelector(".train-combo-trigger");
+        combo.classList.add("open");
+        dropdown.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+        this.openDay = day;
+        search.value = "";
+        this.renderComboOptions(day, "");
+        setTimeout(function () {
+          search.focus();
+          if (typeof search.select === "function") search.select();
+        }, 10);
+      },
+
+      closeCombo() {
+        if (!this.openDay) return;
+        const day = this.openDay;
+        const combo = document.getElementById("train-select-" + day);
+        if (combo) {
+          combo.classList.remove("open");
+          const dropdown = combo.querySelector(".train-combo-dropdown");
+          const trigger = combo.querySelector(".train-combo-trigger");
+          const search = combo.querySelector(".train-combo-search");
+          if (dropdown) dropdown.hidden = true;
+          if (trigger) trigger.setAttribute("aria-expanded", "false");
+          if (search) search.value = "";
+        }
+        this.openDay = null;
+        this.highlightIndex = -1;
       },
 
       refreshSelects() {
@@ -2218,31 +3027,22 @@
         if (dupBox) dupBox.checked = allowDup;
         document.getElementById("allowDuplicatesLabel").classList.toggle("active", allowDup);
 
+        let changed = false;
         CONFIG.trainDays.forEach(function (d) {
-          const select = document.getElementById("train-select-" + d.key);
-          if (!select) return;
           const current = state.train.assignments[d.key] || "";
-          const used = allowDup ? new Set() : Train.getUsedIds(d.key);
-          const players = state.players.slice().sort(function (a, b) {
-            return a.nickname.localeCompare(b.nickname, "fr", { sensitivity: "base" });
-          });
-
-          let html = '<option value="">— Choisir un joueur —</option>';
-          players.forEach(function (p) {
-            if (used.has(p.id) && p.id !== current) return;
-            const selected = p.id === current ? " selected" : "";
-            html += '<option value="' + escapeHtml(p.id) + '"' + selected + ">" + escapeHtml(p.nickname) + "</option>";
-          });
-
-          // Si le joueur assigné a disparu, garder une option fantôme vide
-          if (current && !players.some(function (p) { return p.id === current; })) {
+          if (current && !state.players.some(function (p) { return p.id === current; })) {
             state.train.assignments[d.key] = "";
-            Storage.persist();
+            changed = true;
           }
-
-          select.innerHTML = html;
-          select.value = state.train.assignments[d.key] || "";
+          Train.updateTriggerLabel(d.key);
         });
+        if (changed) Storage.persist();
+
+        if (this.openDay) {
+          const combo = document.getElementById("train-select-" + this.openDay);
+          const search = combo ? combo.querySelector(".train-combo-search") : null;
+          this.renderComboOptions(this.openDay, search ? search.value : "");
+        }
       },
 
       applySlotStyles() {
@@ -2264,7 +3064,10 @@
           const el = document.getElementById("slot-" + d.key);
           const textEl = el.querySelector(".train-slot-text") || el;
           const player = Train.getPlayer(state.train.assignments[d.key]);
-          fitTextToBox(textEl, player ? player.nickname : "", 26, 8);
+          fitSingleLineText(textEl, player ? player.nickname : "", {
+            maxSize: 26,
+            minSize: 7
+          });
         });
       },
 
@@ -2281,6 +3084,7 @@
         this.ensureState();
         state.train.assignments[day] = playerId || "";
         Storage.persist();
+        this.closeCombo();
         this.refresh();
       },
 
@@ -2402,7 +3206,14 @@
               const y = (pos.top / 100) * canvas.height;
               const w = (pos.width / 100) * canvas.width;
               const h = (pos.height / 100) * canvas.height;
-              drawFittedText(ctx, player.nickname, x, y, w, h);
+              drawSingleLineFittedText(ctx, player.nickname, x, y, w, h, {
+                color: "#1b1208",
+                align: "center",
+                baseline: "middle",
+                weight: "800",
+                maxSize: Math.min(h * 0.42, w * 0.34, 48),
+                minSize: 10
+              });
             });
 
             const date = new Date();
@@ -2410,22 +3221,7 @@
             const mm = String(date.getMonth() + 1).padStart(2, "0");
             const dd = String(date.getDate()).padStart(2, "0");
             const filename = "train-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
-
-            canvas.toBlob(function (blob) {
-              if (!blob) {
-                Notifications.show("Export impossible", "error");
-                return;
-              }
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = filename;
-              document.body.appendChild(a);
-              a.click();
-              a.remove();
-              URL.revokeObjectURL(url);
-              Notifications.show("Image exportée", "success");
-            }, "image/png");
+            handleImageExport(canvas, filename);
           } catch (err) {
             console.error(err);
             Notifications.show("Export impossible (image protégée)", "error");
@@ -2453,16 +3249,76 @@
         if (img.complete && img.naturalWidth === 0) err.classList.add("visible");
         if (img.complete && img.naturalWidth > 0) refreshTrainTextSizing();
 
-        document.getElementById("trainDayList").addEventListener("change", function (e) {
-          const select = e.target.closest(".train-day-select");
-          if (!select) return;
-          Train.setAssignment(select.dataset.day, select.value);
+        document.getElementById("trainDayList").addEventListener("click", function (e) {
+          const clearBtn = e.target.closest(".train-clear-day");
+          if (clearBtn) {
+            e.preventDefault();
+            Train.closeCombo();
+            Train.setAssignment(clearBtn.dataset.day, "");
+            return;
+          }
+
+          const option = e.target.closest(".train-combo-option");
+          if (option) {
+            e.preventDefault();
+            const combo = option.closest(".train-combo");
+            if (!combo) return;
+            Train.setAssignment(combo.dataset.day, option.dataset.id);
+            return;
+          }
+
+          const trigger = e.target.closest(".train-combo-trigger");
+          if (trigger) {
+            e.preventDefault();
+            const combo = trigger.closest(".train-combo");
+            if (!combo) return;
+            if (Train.openDay === combo.dataset.day) Train.closeCombo();
+            else Train.openCombo(combo.dataset.day);
+          }
         });
 
-        document.getElementById("trainDayList").addEventListener("click", function (e) {
-          const btn = e.target.closest(".train-clear-day");
-          if (!btn) return;
-          Train.setAssignment(btn.dataset.day, "");
+        document.getElementById("trainDayList").addEventListener("input", function (e) {
+          const search = e.target.closest(".train-combo-search");
+          if (!search) return;
+          const combo = search.closest(".train-combo");
+          if (!combo) return;
+          Train.renderComboOptions(combo.dataset.day, search.value);
+        });
+
+        document.getElementById("trainDayList").addEventListener("keydown", function (e) {
+          if (!Train.openDay) return;
+          const combo = document.getElementById("train-select-" + Train.openDay);
+          if (!combo) return;
+          const options = combo.querySelectorAll(".train-combo-option");
+
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (!options.length) return;
+            Train.highlightIndex = Math.min(options.length - 1, Train.highlightIndex + 1);
+            if (Train.highlightIndex < 0) Train.highlightIndex = 0;
+            Train.syncHighlight(Train.openDay);
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (!options.length) return;
+            Train.highlightIndex = Math.max(0, Train.highlightIndex - 1);
+            Train.syncHighlight(Train.openDay);
+          } else if (e.key === "Enter") {
+            const active = options[Train.highlightIndex];
+            if (active) {
+              e.preventDefault();
+              Train.setAssignment(Train.openDay, active.dataset.id);
+            }
+          } else if (e.key === "Escape") {
+            e.preventDefault();
+            e.stopPropagation();
+            Train.closeCombo();
+          }
+        });
+
+        document.addEventListener("click", function (e) {
+          if (!Train.openDay) return;
+          if (e.target.closest(".train-combo")) return;
+          Train.closeCombo();
         });
 
         document.getElementById("allowDuplicates").addEventListener("change", function (e) {
@@ -2517,57 +3373,49 @@
       }
     };
 
-    /* ---------- Train text helpers ---------- */
-    function fitTextToBox(element, text, maxFontSize, minFontSize) {
-      if (!element) return;
-      const max = maxFontSize == null ? 26 : maxFontSize;
-      const min = minFontSize == null ? 8 : minFontSize;
+    /* ============================= */
+    /* HELPERS IMAGES (communs)      */
+    /* ============================= */
+    let mobileExportObjectUrl = null;
+    let mobileExportBlob = null;
+    let mobileExportFilename = "5le-export.png";
+
+    function fitSingleLineText(element, text, options) {
+      if (!element) return 0;
+      options = options || {};
+      const maxSize = options.maxSize != null ? options.maxSize : 22;
+      const minSize = options.minSize != null ? options.minSize : 7;
+      const box = options.box || (
+        element.parentElement && element.parentElement.classList.contains("train-slot-label")
+          ? element.parentElement
+          : element
+      );
+
       element.textContent = text || "";
-      if (!text) {
-        element.style.fontSize = "";
-        return;
-      }
-
-      // Taille max proportionnelle à la case affichée (pas à l'écran)
-      const box = element.parentElement && element.parentElement.classList.contains("train-slot-label")
-        ? element.parentElement
-        : element;
-      const boxH = box.clientHeight || 40;
-      const boxW = box.clientWidth || 60;
-      let size = Math.min(max, Math.floor(boxH * 0.42), Math.floor(boxW * 0.34));
-      size = Math.max(min, size);
-
-      element.style.fontSize = size + "px";
+      element.style.whiteSpace = "nowrap";
+      element.style.wordBreak = "normal";
+      element.style.overflowWrap = "normal";
+      element.style.hyphens = "none";
+      element.style.webkitHyphens = "none";
       element.style.lineHeight = "1.05";
 
-      let guard = 40;
-      while (
-        guard-- > 0 &&
-        size > min &&
-        (element.scrollWidth > element.clientWidth + 1 ||
-          element.scrollHeight > element.clientHeight + 1 ||
-          (box.clientHeight > 0 && element.scrollHeight > box.clientHeight - 4))
-      ) {
-        size -= 1;
-        element.style.fontSize = size + "px";
+      if (!text) {
+        element.style.fontSize = "";
+        return 0;
       }
 
-      // Sécurité 2 lignes max : si encore trop haut, réduire encore
-      const maxTwoLines = size * 1.05 * 2 + 2;
-      guard = 20;
-      while (guard-- > 0 && size > min && element.scrollHeight > maxTwoLines + 1) {
+      const boxH = box.clientHeight || 40;
+      const boxW = box.clientWidth || 60;
+      let size = Math.min(maxSize, Math.floor(boxH * 0.55), Math.floor(boxW * 0.42));
+      size = Math.max(minSize, size);
+      element.style.fontSize = size + "px";
+
+      let guard = 60;
+      while (guard-- > 0 && size > minSize && element.scrollWidth > element.clientWidth + 1) {
         size -= 1;
         element.style.fontSize = size + "px";
       }
-      while (
-        guard-- > 0 &&
-        size > min &&
-        (element.scrollWidth > element.clientWidth + 1 ||
-          element.scrollHeight > box.clientHeight - 2)
-      ) {
-        size -= 1;
-        element.style.fontSize = size + "px";
-      }
+      return size;
     }
 
     function refreshTrainTextSizing() {
@@ -2576,116 +3424,829 @@
         if (!el) return;
         const textEl = el.querySelector(".train-slot-text") || el;
         const player = Train.getPlayer(state.train.assignments[d.key]);
-        fitTextToBox(textEl, player ? player.nickname : "", 26, 8);
+        fitSingleLineText(textEl, player ? player.nickname : "", { maxSize: 26, minSize: 7, box: el });
       });
     }
 
-    function splitTextForCanvas(ctx, text, maxWidth) {
-      const words = String(text).trim().split(/\s+/);
-      if (words.length >= 2) {
-        // Cherche la meilleure coupure sur espaces
-        let best = null;
-        for (let i = 1; i < words.length; i++) {
-          const line1 = words.slice(0, i).join(" ");
-          const line2 = words.slice(i).join(" ");
-          const w1 = ctx.measureText(line1).width;
-          const w2 = ctx.measureText(line2).width;
-          const score = Math.max(w1, w2);
-          if (score <= maxWidth && (!best || score < best.score)) {
-            best = { lines: [line1, line2], score: score };
-          }
-        }
-        if (best) return best.lines;
-        // Sinon coupe au milieu des mots
-        let mid = Math.ceil(words.length / 2);
-        return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
-      }
-
-      // Pseudo sans espace : 1 ligne prioritaire ; split milieu seulement si trop long au min size
-      return [text];
-    }
-
-    function drawFittedText(ctx, text, x, y, width, height) {
+    function drawSingleLineFittedText(ctx, text, x, y, width, height, options) {
       if (!text) return;
+      options = options || {};
+      const color = options.color || "#1b1208";
+      const align = options.align || "center";
+      const baseline = options.baseline || "middle";
+      const weight = options.weight || "800";
+      const fontFamily = options.fontFamily || "Segoe UI, system-ui, sans-serif";
+      const minSize = options.minSize != null ? options.minSize : 8;
+      const padX = options.padX != null ? options.padX : Math.max(3, width * 0.04);
+      const maxW = Math.max(4, width - padX * 2);
+      let size = options.maxSize != null
+        ? options.maxSize
+        : Math.min(height * 0.55, width * 0.34, 48);
+      size = Math.max(minSize, Math.floor(size));
+
       ctx.save();
-      ctx.fillStyle = "#1b1208";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
+      ctx.fillStyle = color;
+      ctx.textAlign = align;
+      ctx.textBaseline = baseline;
 
-      const padX = Math.max(4, width * 0.04);
-      const padY = Math.max(4, height * 0.06);
-      const maxW = width - padX * 2;
-      const maxH = height - padY * 2;
-      const cx = x + width / 2;
-      const cy = y + height / 2;
-      const minSize = 10;
-      let size = Math.min(Math.floor(maxH * 0.42), Math.floor(maxW * 0.34), 48);
-      size = Math.max(minSize, size);
-
-      function font(s) {
-        ctx.font = "800 " + s + "px Segoe UI, system-ui, sans-serif";
-      }
-
-      let lines = [text];
-      let fitted = false;
-
-      // 1) Essayer une seule ligne en réduisant
-      while (size >= minSize) {
-        font(size);
-        if (ctx.measureText(text).width <= maxW && size * 1.05 <= maxH) {
-          lines = [text];
-          fitted = true;
-          break;
-        }
+      while (size > minSize) {
+        ctx.font = weight + " " + size + "px " + fontFamily;
+        if (ctx.measureText(text).width <= maxW) break;
         size -= 1;
       }
+      ctx.font = weight + " " + size + "px " + fontFamily;
 
-      // 2) Si nécessaire : deux lignes (espaces ou coupure)
-      if (!fitted) {
-        size = Math.min(Math.floor(maxH * 0.36), Math.floor(maxW * 0.3), 40);
-        size = Math.max(minSize, size);
-        while (size >= minSize) {
-          font(size);
-          const candidate = splitTextForCanvas(ctx, text, maxW);
-          if (candidate.length === 1 && ctx.measureText(text).width > maxW) {
-            // Force split milieu pour très longs sans espace
-            const mid = Math.ceil(text.length / 2);
-            candidate[0] = text.slice(0, mid);
-            candidate[1] = text.slice(mid);
+      let drawX = x + width / 2;
+      if (align === "left") drawX = x + padX;
+      else if (align === "right") drawX = x + width - padX;
+
+      let drawY = y + height / 2;
+      if (baseline === "top") drawY = y + (options.padY != null ? options.padY : 2);
+      else if (baseline === "bottom") drawY = y + height - 2;
+
+      ctx.fillText(text, drawX, drawY);
+      ctx.restore();
+      return size;
+    }
+
+    function isMobileDevice() {
+      try {
+        if (window.matchMedia("(pointer: coarse)").matches) return true;
+        if (window.matchMedia("(hover: none) and (max-width: 900px)").matches) return true;
+      } catch (e) { /* ignore */ }
+      return Math.min(window.innerWidth, window.innerHeight) <= 820 &&
+        ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    }
+
+    function downloadCanvas(canvas, filename) {
+      canvas.toBlob(function (blob) {
+        if (!blob) {
+          try {
+            const a = document.createElement("a");
+            a.href = canvas.toDataURL("image/png");
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            Notifications.show("Image exportée", "success");
+          } catch (err) {
+            Notifications.show("Export impossible", "error");
           }
-          const useLines = candidate.length > 2 ? candidate.slice(0, 2) : candidate;
-          const lineH = size * 1.05;
-          const blockH = lineH * useLines.length;
-          let maxLineW = 0;
-          useLines.forEach(function (ln) {
-            maxLineW = Math.max(maxLineW, ctx.measureText(ln).width);
-          });
-          if (maxLineW <= maxW && blockH <= maxH) {
-            lines = useLines;
-            fitted = true;
-            break;
+          return;
+        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        Notifications.show("Image exportée", "success");
+      }, "image/png");
+    }
+
+    function closeMobileImageExport() {
+      const modal = document.getElementById("mobileExportModal");
+      modal.classList.remove("open");
+      const img = document.getElementById("mobileExportImage");
+      img.removeAttribute("src");
+      if (mobileExportObjectUrl) {
+        URL.revokeObjectURL(mobileExportObjectUrl);
+        mobileExportObjectUrl = null;
+      }
+      mobileExportBlob = null;
+      document.getElementById("mobileExportShare").hidden = true;
+    }
+
+    function showMobileImageExport(canvas, filename) {
+      mobileExportFilename = filename || "5le-export.png";
+      const modal = document.getElementById("mobileExportModal");
+      const img = document.getElementById("mobileExportImage");
+      const shareBtn = document.getElementById("mobileExportShare");
+      const hint = document.getElementById("mobileExportHint");
+
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      hint.textContent = isIOS
+        ? "Appui long sur l'image → Enregistrer dans Photos"
+        : "Maintenez votre doigt sur l'image puis choisissez « Enregistrer dans Photos » ou « Enregistrer l'image ».";
+
+      function assignSrc(src, blob) {
+        if (mobileExportObjectUrl) {
+          URL.revokeObjectURL(mobileExportObjectUrl);
+          mobileExportObjectUrl = null;
+        }
+        mobileExportBlob = blob || null;
+        if (blob) mobileExportObjectUrl = src;
+        img.src = src;
+        modal.classList.add("open");
+
+        let canShare = false;
+        try {
+          if (navigator.share && navigator.canShare && blob) {
+            const file = new File([blob], mobileExportFilename, { type: "image/png" });
+            canShare = navigator.canShare({ files: [file] });
           }
-          size -= 1;
+        } catch (err) {
+          canShare = false;
         }
-        if (!fitted) {
-          font(minSize);
-          size = minSize;
-          const mid = Math.ceil(text.length / 2);
-          lines = text.indexOf(" ") === -1
-            ? [text.slice(0, mid), text.slice(mid)]
-            : splitTextForCanvas(ctx, text, maxW).slice(0, 2);
-        }
+        shareBtn.hidden = !canShare;
       }
 
-      font(size);
-      const lineH = size * 1.05;
-      const blockH = lineH * lines.length;
-      let startY = cy - blockH / 2 + lineH / 2;
-      lines.forEach(function (ln, i) {
-        ctx.fillText(ln, cx, startY + i * lineH, maxW);
-      });
-      ctx.restore();
+      canvas.toBlob(function (blob) {
+        if (blob) {
+          assignSrc(URL.createObjectURL(blob), blob);
+          return;
+        }
+        try {
+          assignSrc(canvas.toDataURL("image/png"), null);
+        } catch (err) {
+          Notifications.show("Export impossible", "error");
+        }
+      }, "image/png");
     }
+
+    function handleImageExport(canvas, filename) {
+      if (!canvas) {
+        Notifications.show("Export impossible", "error");
+        return;
+      }
+      if (isMobileDevice()) {
+        showMobileImageExport(canvas, filename);
+      } else {
+        downloadCanvas(canvas, filename);
+      }
+    }
+
+    /* ============================= */
+    /* TEAM VILLE                    */
+    /* ============================= */
+    const TeamVille = {
+      adjusting: false,
+      drag: null,
+      openTeam: null,
+      highlightIndex: -1,
+      built: false,
+      dragMember: null,
+
+      ensureState() {
+        state.teamVille = normalizeTeamVille(state.teamVille);
+      },
+
+      clearPlayer(playerId) {
+        this.ensureState();
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          state.teamVille[key] = state.teamVille[key].filter(function (id) { return id !== playerId; });
+        });
+      },
+
+      getPlayer(id) {
+        return state.players.find(function (p) { return p.id === id; }) || null;
+      },
+
+      getUsedIds(exceptTeam) {
+        const used = new Set();
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          if (key === exceptTeam) return;
+          state.teamVille[key].forEach(function (id) { used.add(id); });
+        });
+        return used;
+      },
+
+      getEligiblePlayers(teamKey, query) {
+        this.ensureState();
+        const allowDup = !!state.teamVille.allowDuplicates;
+        const currentIds = new Set(state.teamVille[teamKey] || []);
+        const used = allowDup ? new Set() : this.getUsedIds(teamKey);
+        const q = (query || "").trim().toLowerCase();
+
+        return state.players
+          .slice()
+          .filter(function (p) {
+            if (currentIds.has(p.id)) return false;
+            if (used.has(p.id)) return false;
+            if (q && p.nickname.toLowerCase().indexOf(q) === -1) return false;
+            return true;
+          })
+          .sort(function (a, b) {
+            const ao = a.status === "active" ? 0 : 1;
+            const bo = b.status === "active" ? 0 : 1;
+            if (ao !== bo) return ao - bo;
+            return a.nickname.localeCompare(b.nickname, "fr", { sensitivity: "base" });
+          });
+      },
+
+      buildBlocks() {
+        if (this.built) return;
+        const grid = document.getElementById("tvTeamsGrid");
+        grid.innerHTML = TEAM_VILLE_KEYS.map(function (key) {
+          return (
+            '<div class="tv-team-block ' + key + '" data-team="' + key + '">' +
+              '<div class="tv-team-header">' +
+                "<h3>" + TEAM_VILLE_LABELS[key] + "</h3>" +
+                '<span class="tv-team-count" id="tv-count-' + key + '">0 joueur</span>' +
+              "</div>" +
+              '<div class="tv-member-list" id="tv-members-' + key + '" data-team="' + key + '"></div>' +
+              '<div class="tv-add-wrap train-combo" id="tv-combo-' + key + '" data-team="' + key + '">' +
+                '<button type="button" class="btn btn-secondary btn-block train-combo-trigger tv-add-btn" aria-haspopup="listbox" aria-expanded="false">+ Ajouter un joueur</button>' +
+                '<div class="train-combo-dropdown" hidden>' +
+                  '<div class="train-combo-search-wrap">' +
+                    '<input type="search" class="train-combo-search form-control" placeholder="🔎 Rechercher un joueur..." autocomplete="off" enterkeyhint="search" />' +
+                  "</div>" +
+                  '<div class="train-combo-options" role="listbox"></div>' +
+                "</div>" +
+              "</div>" +
+            "</div>"
+          );
+        }).join("");
+        this.built = true;
+      },
+
+      refreshMembersUI() {
+        this.ensureState();
+        this.buildBlocks();
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          const ids = state.teamVille[key] || [];
+          const countEl = document.getElementById("tv-count-" + key);
+          const listEl = document.getElementById("tv-members-" + key);
+          countEl.textContent = ids.length + " joueur" + (ids.length !== 1 ? "s" : "");
+
+          if (!ids.length) {
+            listEl.innerHTML = '<div class="tv-empty">Aucun joueur</div>';
+            return;
+          }
+
+          listEl.innerHTML = ids.map(function (id, index) {
+            const player = TeamVille.getPlayer(id);
+            const name = player ? player.nickname : "(supprimé)";
+            return (
+              '<div class="tv-member-row" draggable="true" data-team="' + key + '" data-id="' + escapeHtml(id) + '" data-index="' + index + '">' +
+                '<span class="tv-member-num">' + (index + 1) + "</span>" +
+                '<span class="tv-member-name">' + escapeHtml(name) + "</span>" +
+                '<div class="tv-member-actions">' +
+                  '<button type="button" class="tv-icon-btn tv-move-up" data-team="' + key + '" data-index="' + index + '" title="Monter">↑</button>' +
+                  '<button type="button" class="tv-icon-btn tv-move-down" data-team="' + key + '" data-index="' + index + '" title="Descendre">↓</button>' +
+                "</div>" +
+                '<button type="button" class="tv-icon-btn danger tv-remove" data-team="' + key + '" data-id="' + escapeHtml(id) + '" title="Retirer">×</button>' +
+              "</div>"
+            );
+          }).join("");
+        });
+      },
+
+      applySlotStyles() {
+        this.ensureState();
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          const el = document.getElementById("tv-slot-" + key);
+          const pos = state.teamVille.slotPositions[key] || teamVillePositions[key];
+          el.style.left = pos.left + "%";
+          el.style.top = pos.top + "%";
+          el.style.width = pos.width + "%";
+          el.style.height = pos.height + "%";
+        });
+      },
+
+      calcFontSize(count, boxHeight) {
+        if (count <= 0) return 16;
+        const available = Math.max(40, boxHeight - 8);
+        const line = available / count;
+        let size = Math.floor(line * 0.82);
+        if (count <= 15) size = Math.min(size, 18);
+        else if (count <= 25) size = Math.min(size, 14);
+        else size = Math.min(size, 11);
+        return Math.max(7, Math.min(18, size));
+      },
+
+      refreshOverlay() {
+        this.ensureState();
+        this.applySlotStyles();
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          const listEl = document.getElementById("tv-list-" + key);
+          const slot = document.getElementById("tv-slot-" + key);
+          const ids = state.teamVille[key] || [];
+          const fontSize = TeamVille.calcFontSize(ids.length, slot.clientHeight || 200);
+          listEl.style.fontSize = fontSize + "px";
+
+          listEl.innerHTML = ids.map(function (id, index) {
+            const player = TeamVille.getPlayer(id);
+            if (!player) return "";
+            return (
+              '<div class="tv-line">' +
+                '<span class="tv-num">' + (index + 1) + ".</span>" +
+                '<span class="tv-nick">' + escapeHtml(player.nickname) + "</span>" +
+              "</div>"
+            );
+          }).join("");
+
+          requestAnimationFrame(function () {
+            Array.prototype.forEach.call(listEl.querySelectorAll(".tv-line"), function (line) {
+              const nick = line.querySelector(".tv-nick");
+              if (!nick) return;
+              const text = nick.textContent;
+              nick.style.fontSize = "";
+              fitSingleLineText(nick, text, {
+                maxSize: fontSize,
+                minSize: 6,
+                box: nick
+              });
+            });
+          });
+        });
+      },
+
+      refresh() {
+        this.ensureState();
+        const dup = document.getElementById("tvAllowDuplicates");
+        if (dup) {
+          dup.checked = !!state.teamVille.allowDuplicates;
+          document.getElementById("tvAllowDuplicatesLabel").classList.toggle("active", !!state.teamVille.allowDuplicates);
+        }
+        // Purge IDs orphelins
+        let changed = false;
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          const before = state.teamVille[key].length;
+          state.teamVille[key] = state.teamVille[key].filter(function (id) {
+            return !!TeamVille.getPlayer(id);
+          });
+          if (state.teamVille[key].length !== before) changed = true;
+        });
+        if (changed) Storage.persist();
+
+        this.refreshMembersUI();
+        this.refreshOverlay();
+        if (this.openTeam) {
+          const combo = document.getElementById("tv-combo-" + this.openTeam);
+          const search = combo ? combo.querySelector(".train-combo-search") : null;
+          this.renderComboOptions(this.openTeam, search ? search.value : "");
+        }
+      },
+
+      addPlayer(teamKey, playerId) {
+        this.ensureState();
+        if (!playerId) return;
+        if (!this.getPlayer(playerId)) return;
+        if (!state.teamVille.allowDuplicates) {
+          TEAM_VILLE_KEYS.forEach(function (key) {
+            state.teamVille[key] = state.teamVille[key].filter(function (id) { return id !== playerId; });
+          });
+        }
+        if (state.teamVille[teamKey].indexOf(playerId) === -1) {
+          state.teamVille[teamKey].push(playerId);
+        }
+        Storage.persist();
+        this.closeCombo();
+        this.refresh();
+      },
+
+      removeFromTeam(teamKey, playerId) {
+        this.ensureState();
+        state.teamVille[teamKey] = state.teamVille[teamKey].filter(function (id) { return id !== playerId; });
+        Storage.persist();
+        this.refresh();
+      },
+
+      movePlayer(teamKey, fromIndex, toIndex) {
+        this.ensureState();
+        const arr = state.teamVille[teamKey];
+        if (fromIndex < 0 || toIndex < 0 || fromIndex >= arr.length || toIndex >= arr.length) return;
+        const item = arr.splice(fromIndex, 1)[0];
+        arr.splice(toIndex, 0, item);
+        Storage.persist();
+        this.refresh();
+      },
+
+      clearAll() {
+        this.ensureState();
+        TEAM_VILLE_KEYS.forEach(function (key) { state.teamVille[key] = []; });
+        Storage.persist();
+        this.refresh();
+      },
+
+      autoDistribute() {
+        this.ensureState();
+        const used = new Set();
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          state.teamVille[key].forEach(function (id) { used.add(id); });
+        });
+        const pool = state.players
+          .filter(function (p) { return p.status === "active" && !used.has(p.id); })
+          .sort(function (a, b) {
+            return a.nickname.localeCompare(b.nickname, "fr", { sensitivity: "base" });
+          });
+
+        if (!pool.length) {
+          Notifications.show("Aucun joueur actif à répartir", "info");
+          return;
+        }
+
+        pool.forEach(function (p, i) {
+          const key = TEAM_VILLE_KEYS[i % 3];
+          state.teamVille[key].push(p.id);
+        });
+        Storage.persist();
+        this.refresh();
+        Notifications.show(pool.length + " joueur(s) réparti(s)", "success");
+      },
+
+      resetPositions() {
+        this.ensureState();
+        state.teamVille.slotPositions = clonePositions(teamVillePositions);
+        state.teamVille.positionsVersion = TEAM_VILLE_POSITIONS_VERSION;
+        Storage.persist();
+        this.refreshOverlay();
+        Notifications.show("Positions réinitialisées", "success");
+      },
+
+      setAdjustMode(on) {
+        this.adjusting = !!on;
+        const stage = document.getElementById("tvStage");
+        const btn = document.getElementById("btnAdjustTeamVille");
+        const hint = document.getElementById("tvAdjustHint");
+        stage.classList.toggle("adjusting", this.adjusting);
+        btn.classList.toggle("btn-primary", this.adjusting);
+        btn.classList.toggle("btn-secondary", !this.adjusting);
+        btn.textContent = this.adjusting ? "Terminer l'ajustement" : "Ajuster les positions";
+        hint.hidden = !this.adjusting;
+        if (!this.adjusting) this.refreshOverlay();
+      },
+
+      openCombo(teamKey) {
+        if (this.openTeam && this.openTeam !== teamKey) this.closeCombo();
+        const combo = document.getElementById("tv-combo-" + teamKey);
+        if (!combo) return;
+        const dropdown = combo.querySelector(".train-combo-dropdown");
+        const search = combo.querySelector(".train-combo-search");
+        const trigger = combo.querySelector(".train-combo-trigger");
+        combo.classList.add("open");
+        dropdown.hidden = false;
+        trigger.setAttribute("aria-expanded", "true");
+        this.openTeam = teamKey;
+        search.value = "";
+        this.renderComboOptions(teamKey, "");
+        setTimeout(function () { search.focus(); }, 10);
+      },
+
+      closeCombo() {
+        if (!this.openTeam) return;
+        const combo = document.getElementById("tv-combo-" + this.openTeam);
+        if (combo) {
+          combo.classList.remove("open");
+          const dropdown = combo.querySelector(".train-combo-dropdown");
+          const trigger = combo.querySelector(".train-combo-trigger");
+          const search = combo.querySelector(".train-combo-search");
+          if (dropdown) dropdown.hidden = true;
+          if (trigger) trigger.setAttribute("aria-expanded", "false");
+          if (search) search.value = "";
+        }
+        this.openTeam = null;
+        this.highlightIndex = -1;
+      },
+
+      renderComboOptions(teamKey, query) {
+        const combo = document.getElementById("tv-combo-" + teamKey);
+        if (!combo) return;
+        const optionsEl = combo.querySelector(".train-combo-options");
+        const players = this.getEligiblePlayers(teamKey, query);
+        if (!players.length) {
+          optionsEl.innerHTML = '<div class="train-combo-empty">Aucun joueur trouvé</div>';
+          this.highlightIndex = -1;
+          return;
+        }
+        optionsEl.innerHTML = players.map(function (p, idx) {
+          const inactive = p.status !== "active" ? ' style="opacity:0.7"' : "";
+          return (
+            '<button type="button" class="train-combo-option" role="option" data-id="' +
+            escapeHtml(p.id) + '" data-index="' + idx + '"' + inactive + ">" +
+              "<span>" + escapeHtml(p.nickname) + "</span>" +
+              '<span class="role-mini">' + escapeHtml(p.role) + "</span>" +
+            "</button>"
+          );
+        }).join("");
+        this.highlightIndex = 0;
+        this.syncHighlight(teamKey);
+      },
+
+      syncHighlight(teamKey) {
+        const combo = document.getElementById("tv-combo-" + teamKey);
+        if (!combo) return;
+        const options = combo.querySelectorAll(".train-combo-option");
+        options.forEach(function (opt, idx) {
+          opt.classList.toggle("active", idx === TeamVille.highlightIndex);
+        });
+        const active = options[this.highlightIndex];
+        if (active) active.scrollIntoView({ block: "nearest" });
+      },
+
+      onPointerDown(e) {
+        if (!this.adjusting) return;
+        const handle = e.target.closest(".tv-slot-handle");
+        const slot = e.target.closest(".tv-slot");
+        if (!slot) return;
+        e.preventDefault();
+        const stage = document.getElementById("tvStage");
+        const rect = stage.getBoundingClientRect();
+        const team = slot.dataset.team;
+        const pos = state.teamVille.slotPositions[team];
+        this.drag = {
+          mode: handle ? "resize" : "move",
+          team: team,
+          el: slot,
+          startX: e.clientX,
+          startY: e.clientY,
+          origLeft: pos.left,
+          origTop: pos.top,
+          origWidth: pos.width,
+          origHeight: pos.height,
+          stageW: rect.width,
+          stageH: rect.height
+        };
+        slot.classList.add("dragging");
+        slot.setPointerCapture(e.pointerId);
+      },
+
+      onPointerMove(e) {
+        if (!this.drag) return;
+        e.preventDefault();
+        const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
+        const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
+        const pos = state.teamVille.slotPositions[this.drag.team];
+        if (this.drag.mode === "resize") {
+          let width = Math.max(8, Math.min(40, this.drag.origWidth + dx));
+          let height = Math.max(10, Math.min(70, this.drag.origHeight + dy));
+          if (this.drag.origLeft + width > 100) width = 100 - this.drag.origLeft;
+          if (this.drag.origTop + height > 100) height = 100 - this.drag.origTop;
+          pos.width = Math.round(width * 100) / 100;
+          pos.height = Math.round(height * 100) / 100;
+          this.drag.el.style.width = pos.width + "%";
+          this.drag.el.style.height = pos.height + "%";
+        } else {
+          let left = Math.max(0, Math.min(100 - pos.width, this.drag.origLeft + dx));
+          let top = Math.max(0, Math.min(100 - pos.height, this.drag.origTop + dy));
+          pos.left = Math.round(left * 100) / 100;
+          pos.top = Math.round(top * 100) / 100;
+          this.drag.el.style.left = pos.left + "%";
+          this.drag.el.style.top = pos.top + "%";
+        }
+      },
+
+      onPointerUp(e) {
+        if (!this.drag) return;
+        this.drag.el.classList.remove("dragging");
+        try { this.drag.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        this.drag = null;
+        state.teamVille.positionsVersion = TEAM_VILLE_POSITIONS_VERSION;
+        Storage.persist();
+        this.refreshOverlay();
+      },
+
+      exportPng() {
+        this.ensureState();
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = function () {
+          try {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            const colors = {
+              team1: { text: "#f3e6c8", num: "#d4af37" },
+              team2: { text: "#d9e9ff", num: "#7eb6ff" },
+              team3: { text: "#ffd9d9", num: "#ff8a7a" }
+            };
+
+            TEAM_VILLE_KEYS.forEach(function (key) {
+              const ids = state.teamVille[key] || [];
+              if (!ids.length) return;
+              const pos = state.teamVille.slotPositions[key];
+              const x = (pos.left / 100) * canvas.width;
+              const y = (pos.top / 100) * canvas.height;
+              const w = (pos.width / 100) * canvas.width;
+              const h = (pos.height / 100) * canvas.height;
+              const pad = 6;
+              const fontSize = TeamVille.calcFontSize(ids.length, h);
+              const lineH = fontSize * 1.15;
+              ctx.textBaseline = "top";
+
+              ids.forEach(function (id, index) {
+                const player = TeamVille.getPlayer(id);
+                if (!player) return;
+                const ly = y + pad + index * lineH;
+                if (ly + lineH > y + h) return;
+                const num = (index + 1) + ".";
+                ctx.font = "800 " + fontSize + "px Segoe UI, system-ui, sans-serif";
+                ctx.fillStyle = colors[key].num;
+                ctx.textAlign = "left";
+                ctx.fillText(num, x + pad, ly);
+                const numW = ctx.measureText(num + " ").width;
+                const nickX = x + pad + numW;
+                const nickW = Math.max(8, w - pad * 2 - numW);
+                drawSingleLineFittedText(ctx, player.nickname, nickX, ly, nickW, lineH, {
+                  color: colors[key].text,
+                  align: "left",
+                  baseline: "top",
+                  weight: "700",
+                  maxSize: fontSize,
+                  minSize: 6,
+                  padX: 0,
+                  padY: 0
+                });
+              });
+            });
+
+            const date = new Date();
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, "0");
+            const dd = String(date.getDate()).padStart(2, "0");
+            const filename = "team-ville-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
+            handleImageExport(canvas, filename);
+          } catch (err) {
+            console.error(err);
+            Notifications.show("Export impossible (image protégée)", "error");
+          }
+        };
+        img.onerror = function () {
+          Notifications.show("Impossible de charger le modèle Team Ville.", "error");
+        };
+        img.src = "images/teamville.png?t=" + Date.now();
+      },
+
+      bind() {
+        this.refresh();
+
+        const img = document.getElementById("tvImage");
+        const err = document.getElementById("tvImageError");
+        img.addEventListener("error", function () { err.classList.add("visible"); });
+        img.addEventListener("load", function () {
+          err.classList.remove("visible");
+          TeamVille.refreshOverlay();
+        });
+        if (img.complete && img.naturalWidth === 0) err.classList.add("visible");
+        if (img.complete && img.naturalWidth > 0) this.refreshOverlay();
+
+        const grid = document.getElementById("tvTeamsGrid");
+
+        grid.addEventListener("click", function (e) {
+          const removeBtn = e.target.closest(".tv-remove");
+          if (removeBtn) {
+            TeamVille.removeFromTeam(removeBtn.dataset.team, removeBtn.dataset.id);
+            return;
+          }
+          const up = e.target.closest(".tv-move-up");
+          if (up) {
+            const i = Number(up.dataset.index);
+            TeamVille.movePlayer(up.dataset.team, i, i - 1);
+            return;
+          }
+          const down = e.target.closest(".tv-move-down");
+          if (down) {
+            const i = Number(down.dataset.index);
+            TeamVille.movePlayer(down.dataset.team, i, i + 1);
+            return;
+          }
+          const option = e.target.closest(".train-combo-option");
+          if (option && option.closest("#tvTeamsGrid")) {
+            const combo = option.closest(".train-combo");
+            TeamVille.addPlayer(combo.dataset.team, option.dataset.id);
+            return;
+          }
+          const trigger = e.target.closest(".train-combo-trigger");
+          if (trigger && trigger.closest("#tvTeamsGrid")) {
+            const combo = trigger.closest(".train-combo");
+            if (TeamVille.openTeam === combo.dataset.team) TeamVille.closeCombo();
+            else TeamVille.openCombo(combo.dataset.team);
+          }
+        });
+
+        grid.addEventListener("input", function (e) {
+          const search = e.target.closest(".train-combo-search");
+          if (!search || !search.closest("#tvTeamsGrid")) return;
+          const combo = search.closest(".train-combo");
+          TeamVille.renderComboOptions(combo.dataset.team, search.value);
+        });
+
+        grid.addEventListener("keydown", function (e) {
+          if (!TeamVille.openTeam) return;
+          const combo = document.getElementById("tv-combo-" + TeamVille.openTeam);
+          if (!combo) return;
+          const options = combo.querySelectorAll(".train-combo-option");
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (!options.length) return;
+            TeamVille.highlightIndex = Math.min(options.length - 1, Math.max(0, TeamVille.highlightIndex + 1));
+            TeamVille.syncHighlight(TeamVille.openTeam);
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (!options.length) return;
+            TeamVille.highlightIndex = Math.max(0, TeamVille.highlightIndex - 1);
+            TeamVille.syncHighlight(TeamVille.openTeam);
+          } else if (e.key === "Enter") {
+            const active = options[TeamVille.highlightIndex];
+            if (active) {
+              e.preventDefault();
+              TeamVille.addPlayer(TeamVille.openTeam, active.dataset.id);
+            }
+          } else if (e.key === "Escape") {
+            e.preventDefault();
+            e.stopPropagation();
+            TeamVille.closeCombo();
+          }
+        });
+
+        // Drag & drop réordonnancement
+        grid.addEventListener("dragstart", function (e) {
+          const row = e.target.closest(".tv-member-row");
+          if (!row) return;
+          TeamVille.dragMember = { team: row.dataset.team, id: row.dataset.id, index: Number(row.dataset.index) };
+          row.classList.add("dragging-row");
+          e.dataTransfer.effectAllowed = "move";
+        });
+        grid.addEventListener("dragend", function (e) {
+          const row = e.target.closest(".tv-member-row");
+          if (row) row.classList.remove("dragging-row");
+          TeamVille.dragMember = null;
+        });
+        grid.addEventListener("dragover", function (e) {
+          const row = e.target.closest(".tv-member-row");
+          if (!row || !TeamVille.dragMember) return;
+          if (row.dataset.team !== TeamVille.dragMember.team) return;
+          e.preventDefault();
+        });
+        grid.addEventListener("drop", function (e) {
+          const row = e.target.closest(".tv-member-row");
+          if (!row || !TeamVille.dragMember) return;
+          if (row.dataset.team !== TeamVille.dragMember.team) return;
+          e.preventDefault();
+          TeamVille.movePlayer(TeamVille.dragMember.team, TeamVille.dragMember.index, Number(row.dataset.index));
+        });
+
+        document.addEventListener("click", function (e) {
+          if (!TeamVille.openTeam) return;
+          if (e.target.closest("#tv-combo-" + TeamVille.openTeam)) return;
+          TeamVille.closeCombo();
+        });
+
+        document.getElementById("tvAllowDuplicates").addEventListener("change", function (e) {
+          state.teamVille.allowDuplicates = !!e.target.checked;
+          Storage.persist();
+          TeamVille.refresh();
+        });
+
+        document.getElementById("btnClearTeamVille").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Vider les équipes",
+            message: "Vider TEAM 1, TEAM 2 et TEAM 3 ? Les joueurs ne seront pas supprimés de l'application.",
+            okLabel: "Vider",
+            onConfirm: function () {
+              TeamVille.clearAll();
+              Notifications.show("Équipes vidées", "success");
+            }
+          });
+        });
+
+        document.getElementById("btnAutoTeamVille").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Répartir automatiquement",
+            message: "Répartir équitablement tous les joueurs actifs non affectés entre TEAM 1, 2 et 3 ?",
+            okLabel: "Répartir",
+            danger: false,
+            onConfirm: function () { TeamVille.autoDistribute(); }
+          });
+        });
+
+        document.getElementById("btnAdjustTeamVille").addEventListener("click", function () {
+          TeamVille.setAdjustMode(!TeamVille.adjusting);
+        });
+
+        document.getElementById("btnResetTeamVillePos").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser les positions",
+            message: "Remettre les 3 colonnes aux positions par défaut ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () { TeamVille.resetPositions(); }
+          });
+        });
+
+        document.getElementById("btnExportTeamVille").addEventListener("click", function () {
+          TeamVille.exportPng();
+        });
+
+        const stage = document.getElementById("tvStage");
+        stage.addEventListener("pointerdown", function (e) { TeamVille.onPointerDown(e); });
+        stage.addEventListener("pointermove", function (e) { TeamVille.onPointerMove(e); });
+        stage.addEventListener("pointerup", function (e) { TeamVille.onPointerUp(e); });
+        stage.addEventListener("pointercancel", function (e) { TeamVille.onPointerUp(e); });
+
+        let resizeTimer = null;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () { TeamVille.refreshOverlay(); }, 80);
+        });
+      }
+    };
 
     /* ============================= */
     /* NAVIGATION                    */
@@ -2703,6 +4264,10 @@
         if (page === "train") {
           Train.refresh();
           setTimeout(refreshTrainTextSizing, 50);
+        }
+        if (page === "teamville") {
+          TeamVille.refresh();
+          setTimeout(function () { TeamVille.refreshOverlay(); }, 50);
         }
       },
 
@@ -2778,6 +4343,22 @@
     /* ============================= */
     function bindEvents() {
       Train.bind();
+      TeamVille.bind();
+
+      document.getElementById("mobileExportClose").addEventListener("click", closeMobileImageExport);
+      document.getElementById("mobileExportDone").addEventListener("click", closeMobileImageExport);
+      document.getElementById("mobileExportModal").addEventListener("click", function (e) {
+        if (e.target === this) closeMobileImageExport();
+      });
+      document.getElementById("mobileExportShare").addEventListener("click", function () {
+        if (!mobileExportBlob || !navigator.share) return;
+        const file = new File([mobileExportBlob], mobileExportFilename, { type: "image/png" });
+        navigator.share({
+          files: [file],
+          title: "5LE Manager",
+          text: mobileExportFilename
+        }).catch(function () { /* annulé */ });
+      });
 
       document.getElementById("mainNav").addEventListener("click", function (e) {
         const btn = e.target.closest(".nav-btn");
@@ -2978,8 +4559,12 @@
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
           if (document.getElementById("confirmModal").classList.contains("open")) Modal.closeConfirm();
+          else if (document.getElementById("mobileExportModal").classList.contains("open")) closeMobileImageExport();
           else if (document.getElementById("playerModal").classList.contains("open")) Modal.closePlayer();
+          else if (Train.openDay) Train.closeCombo();
+          else if (TeamVille.openTeam) TeamVille.closeCombo();
           else if (Train.adjusting) Train.setAdjustMode(false);
+          else if (TeamVille.adjusting) TeamVille.setAdjustMode(false);
           else Nav.closeSidebar();
         }
       });
@@ -2998,9 +4583,14 @@
       }
       // Normalise + migre les anciennes positions trop basses (v1 → v2)
       state.train = normalizeTrain(state.train);
+      state.teamVille = normalizeTeamVille(state.teamVille);
+      const rosterResult = ensureAllianceRoster();
       Storage.persist();
       bindEvents();
       PlayersUI.render();
+      if (rosterResult.added > 0) {
+        Notifications.show(rosterResult.added + " joueur(s) 5LE ajouté(s)", "success");
+      }
     }
 
     init();
