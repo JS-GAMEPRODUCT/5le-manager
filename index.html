@@ -861,6 +861,196 @@
       .player-cards { display: none !important; }
       .table-wrap { display: block; }
     }
+
+    /* ---------- Train module ---------- */
+    .train-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .train-toolbar .btn { flex: 0 1 auto; }
+
+    .train-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      min-height: 48px;
+      padding: 0.55rem 0.9rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .train-option input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--gold);
+    }
+
+    .train-option.active {
+      color: var(--gold);
+      border-color: rgba(212, 175, 55, 0.4);
+      background: var(--gold-dim);
+    }
+
+    .train-day-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .train-day-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 48px;
+      gap: 0.55rem;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.65rem 0.75rem;
+    }
+
+    .train-day-label {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--gold-soft);
+      font-size: 0.95rem;
+    }
+
+    .train-day-row select.form-control {
+      min-height: 48px;
+      width: 100%;
+    }
+
+    .train-clear-day {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .train-clear-day:hover {
+      color: #ff8a7a;
+      border-color: rgba(192, 57, 43, 0.45);
+      background: var(--red-dim);
+    }
+
+    .train-preview-panel {
+      margin-top: 0.25rem;
+    }
+
+    .train-preview-panel h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.75rem;
+      color: var(--gold-soft);
+    }
+
+    .train-stage {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+      touch-action: none;
+    }
+
+    .train-stage img {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+    .train-slot {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 800;
+      color: #1a1408;
+      line-height: 1.1;
+      overflow: hidden;
+      padding: 2px 4px;
+      word-break: break-word;
+      user-select: none;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    .train-stage.adjusting .train-slot {
+      pointer-events: auto;
+      cursor: grab;
+      outline: 2px dashed rgba(212, 175, 55, 0.85);
+      background: rgba(212, 175, 55, 0.18);
+      z-index: 2;
+    }
+
+    .train-stage.adjusting .train-slot:active {
+      cursor: grabbing;
+    }
+
+    .train-stage.adjusting .train-slot.dragging {
+      outline-color: var(--blue-bright);
+      background: rgba(58, 123, 213, 0.25);
+      z-index: 5;
+    }
+
+    .train-error {
+      display: none;
+      margin-top: 0.85rem;
+      padding: 0.9rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--red-dim);
+      border: 1px solid rgba(192, 57, 43, 0.45);
+      color: #ff8a7a;
+      font-weight: 700;
+    }
+
+    .train-error.visible { display: block; }
+
+    .train-hint {
+      margin-top: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 900px) {
+      .train-day-row {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+          "label clear"
+          "select select";
+        gap: 0.5rem;
+      }
+
+      .train-day-label { grid-area: label; }
+      .train-day-row select.form-control { grid-area: select; }
+      .train-clear-day { grid-area: clear; }
+
+      .train-toolbar .btn,
+      .train-toolbar .train-option {
+        flex: 1 1 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1027,13 +1217,41 @@
           <div class="page-header">
             <div>
               <h1>Train</h1>
-              <p>Planning hebdomadaire des trains</p>
+              <p>Planning hebdomadaire</p>
             </div>
           </div>
-          <div class="coming-soon">
-            <div class="badge">Bientôt</div>
-            <h2>Module bientôt disponible</h2>
-            <p>Assignez les joueurs au train du lundi au dimanche et gérez les créneaux.</p>
+
+          <div class="train-toolbar">
+            <button type="button" class="btn btn-primary" id="btnExportTrain">Exporter l'image</button>
+            <button type="button" class="btn btn-secondary" id="btnAdjustPositions">Ajuster les positions</button>
+            <button type="button" class="btn btn-ghost" id="btnResetPositions">Réinitialiser les positions</button>
+            <button type="button" class="btn btn-danger" id="btnResetWeek">Réinitialiser la semaine</button>
+            <label class="train-option" id="allowDuplicatesLabel">
+              <input type="checkbox" id="allowDuplicates" />
+              Autoriser les doublons
+            </label>
+          </div>
+
+          <div class="train-day-list" id="trainDayList">
+            <!-- filled by JS -->
+          </div>
+
+          <div class="panel train-preview-panel">
+            <h2>Aperçu</h2>
+            <div class="train-stage" id="trainStage">
+              <img id="trainImage" src="images/train.png" alt="Modèle Train 5LE" />
+              <div class="train-slot" data-day="lundi" id="slot-lundi"></div>
+              <div class="train-slot" data-day="mardi" id="slot-mardi"></div>
+              <div class="train-slot" data-day="mercredi" id="slot-mercredi"></div>
+              <div class="train-slot" data-day="jeudi" id="slot-jeudi"></div>
+              <div class="train-slot" data-day="vendredi" id="slot-vendredi"></div>
+              <div class="train-slot" data-day="samedi" id="slot-samedi"></div>
+              <div class="train-slot" data-day="dimanche" id="slot-dimanche"></div>
+            </div>
+            <div class="train-error" id="trainImageError">Impossible de charger le modèle Train.</div>
+            <p class="train-hint" id="trainAdjustHint" hidden>
+              Mode ajustement actif : déplacez chaque zone au doigt ou à la souris. Les positions sont sauvegardées automatiquement.
+            </p>
           </div>
         </section>
 
@@ -1203,7 +1421,29 @@
       version: 1,
       toastDuration: 3200,
       demoNicknames: ["FuryX571", "Aiko5LE", "Marmotte", "Twazou", "Danycef"],
-      roleOrder: { R5: 0, R4: 1, Membre: 2 }
+      roleOrder: { R5: 0, R4: 1, Membre: 2 },
+      trainImageSrc: "images/train.png",
+      trainDays: [
+        { key: "lundi", label: "Lundi" },
+        { key: "mardi", label: "Mardi" },
+        { key: "mercredi", label: "Mercredi" },
+        { key: "jeudi", label: "Jeudi" },
+        { key: "vendredi", label: "Vendredi" },
+        { key: "samedi", label: "Samedi" },
+        { key: "dimanche", label: "Dimanche" }
+      ]
+    };
+
+    /* Positions par défaut des zones de pseudos (en % de l'image).
+       Modifiables via "Ajuster les positions" ou directement ici. */
+    const DEFAULT_TRAIN_SLOT_POSITIONS = {
+      lundi:    { left: 2,    top: 62, width: 13, height: 14 },
+      mardi:    { left: 15.5, top: 62, width: 13, height: 14 },
+      mercredi: { left: 29,   top: 62, width: 13, height: 14 },
+      jeudi:    { left: 42.5, top: 62, width: 13, height: 14 },
+      vendredi: { left: 56,   top: 62, width: 13, height: 14 },
+      samedi:   { left: 69.5, top: 62, width: 13, height: 14 },
+      dimanche: { left: 83,   top: 62, width: 13, height: 14 }
     };
 
     /* ============================= */
@@ -1219,10 +1459,58 @@
         version: CONFIG.version,
         players: [],
         settings: {},
-        train: {},
+        train: createDefaultTrain(),
         teams: [],
         templates: [],
         history: []
+      };
+    }
+
+    function createDefaultTrain() {
+      const assignments = {};
+      CONFIG.trainDays.forEach(function (d) { assignments[d.key] = ""; });
+      return {
+        assignments: assignments,
+        slotPositions: clonePositions(DEFAULT_TRAIN_SLOT_POSITIONS),
+        allowDuplicates: false
+      };
+    }
+
+    function clonePositions(src) {
+      const out = {};
+      Object.keys(src).forEach(function (key) {
+        out[key] = {
+          left: Number(src[key].left) || 0,
+          top: Number(src[key].top) || 0,
+          width: Number(src[key].width) || 0,
+          height: Number(src[key].height) || 0
+        };
+      });
+      return out;
+    }
+
+    function normalizeTrain(train) {
+      const base = createDefaultTrain();
+      if (!train || typeof train !== "object") return base;
+      const assignments = {};
+      CONFIG.trainDays.forEach(function (d) {
+        const val = train.assignments && train.assignments[d.key];
+        assignments[d.key] = val ? String(val) : "";
+      });
+      const slotPositions = {};
+      CONFIG.trainDays.forEach(function (d) {
+        const src = (train.slotPositions && train.slotPositions[d.key]) || DEFAULT_TRAIN_SLOT_POSITIONS[d.key];
+        slotPositions[d.key] = {
+          left: Number(src.left) || 0,
+          top: Number(src.top) || 0,
+          width: Number(src.width) || 0,
+          height: Number(src.height) || 0
+        };
+      });
+      return {
+        assignments: assignments,
+        slotPositions: slotPositions,
+        allowDuplicates: !!train.allowDuplicates
       };
     }
 
@@ -1275,7 +1563,7 @@
           version: data.version || CONFIG.version,
           players: Array.isArray(data.players) ? data.players.map(normalizePlayer).filter(Boolean) : [],
           settings: data.settings && typeof data.settings === "object" ? data.settings : base.settings,
-          train: data.train && typeof data.train === "object" ? data.train : base.train,
+          train: normalizeTrain(data.train),
           teams: Array.isArray(data.teams) ? data.teams : base.teams,
           templates: Array.isArray(data.templates) ? data.templates : base.templates,
           history: Array.isArray(data.history) ? data.history : base.history
@@ -1412,13 +1700,17 @@
       remove(id) {
         state.players = state.players.filter(function (p) { return p.id !== id; });
         selectedIds.delete(id);
+        Train.clearPlayerAssignments(id);
         Storage.persist();
       },
 
       removeMany(ids) {
         const set = new Set(ids);
         state.players = state.players.filter(function (p) { return !set.has(p.id); });
-        ids.forEach(function (id) { selectedIds.delete(id); });
+        ids.forEach(function (id) {
+          selectedIds.delete(id);
+          Train.clearPlayerAssignments(id);
+        });
         Storage.persist();
       },
 
@@ -1432,9 +1724,13 @@
 
       removeDemo() {
         const before = state.players.length;
+        const removedPlayers = state.players.filter(function (p) {
+          return p.isDemo || CONFIG.demoNicknames.includes(p.nickname);
+        });
         state.players = state.players.filter(function (p) {
           return !(p.isDemo || CONFIG.demoNicknames.includes(p.nickname));
         });
+        removedPlayers.forEach(function (p) { Train.clearPlayerAssignments(p.id); });
         const removed = before - state.players.length;
         selectedIds.clear();
         Storage.persist();
@@ -1610,6 +1906,7 @@
           list.length + " / " + state.players.length + " joueur" + (state.players.length !== 1 ? "s" : "");
         Selection.syncUI();
         Stats.render();
+        if (typeof Train !== "undefined") Train.refresh();
       },
 
       roleBadge(role) {
@@ -1742,6 +2039,389 @@
     };
 
     /* ============================= */
+    /* TRAIN                         */
+    /* ============================= */
+    const Train = {
+      adjusting: false,
+      drag: null,
+      daysBuilt: false,
+
+      ensureState() {
+        state.train = normalizeTrain(state.train);
+      },
+
+      clearPlayerAssignments(playerId) {
+        this.ensureState();
+        let changed = false;
+        CONFIG.trainDays.forEach(function (d) {
+          if (state.train.assignments[d.key] === playerId) {
+            state.train.assignments[d.key] = "";
+            changed = true;
+          }
+        });
+        return changed;
+      },
+
+      getPlayer(id) {
+        if (!id) return null;
+        return state.players.find(function (p) { return p.id === id; }) || null;
+      },
+
+      getUsedIds(exceptDay) {
+        const used = new Set();
+        CONFIG.trainDays.forEach(function (d) {
+          if (d.key === exceptDay) return;
+          const id = state.train.assignments[d.key];
+          if (id) used.add(id);
+        });
+        return used;
+      },
+
+      buildDayRows() {
+        if (this.daysBuilt) return;
+        const list = document.getElementById("trainDayList");
+        list.innerHTML = CONFIG.trainDays.map(function (d) {
+          return (
+            '<div class="train-day-row" data-day="' + d.key + '">' +
+              '<div class="train-day-label">' + d.label + "</div>" +
+              '<select class="form-control train-day-select" id="train-select-' + d.key + '" data-day="' + d.key + '" aria-label="' + d.label + '">' +
+                '<option value="">— Choisir un joueur —</option>' +
+              "</select>" +
+              '<button type="button" class="train-clear-day" data-day="' + d.key + '" title="Vider" aria-label="Vider ' + d.label + '">×</button>' +
+            "</div>"
+          );
+        }).join("");
+        this.daysBuilt = true;
+      },
+
+      refreshSelects() {
+        this.ensureState();
+        this.buildDayRows();
+        const allowDup = !!state.train.allowDuplicates;
+        const dupBox = document.getElementById("allowDuplicates");
+        if (dupBox) dupBox.checked = allowDup;
+        document.getElementById("allowDuplicatesLabel").classList.toggle("active", allowDup);
+
+        CONFIG.trainDays.forEach(function (d) {
+          const select = document.getElementById("train-select-" + d.key);
+          if (!select) return;
+          const current = state.train.assignments[d.key] || "";
+          const used = allowDup ? new Set() : Train.getUsedIds(d.key);
+          const players = state.players.slice().sort(function (a, b) {
+            return a.nickname.localeCompare(b.nickname, "fr", { sensitivity: "base" });
+          });
+
+          let html = '<option value="">— Choisir un joueur —</option>';
+          players.forEach(function (p) {
+            if (used.has(p.id) && p.id !== current) return;
+            const selected = p.id === current ? " selected" : "";
+            html += '<option value="' + escapeHtml(p.id) + '"' + selected + ">" + escapeHtml(p.nickname) + "</option>";
+          });
+
+          // Si le joueur assigné a disparu, garder une option fantôme vide
+          if (current && !players.some(function (p) { return p.id === current; })) {
+            state.train.assignments[d.key] = "";
+            Storage.persist();
+          }
+
+          select.innerHTML = html;
+          select.value = state.train.assignments[d.key] || "";
+        });
+      },
+
+      applySlotStyles() {
+        this.ensureState();
+        CONFIG.trainDays.forEach(function (d) {
+          const el = document.getElementById("slot-" + d.key);
+          const pos = state.train.slotPositions[d.key] || DEFAULT_TRAIN_SLOT_POSITIONS[d.key];
+          el.style.left = pos.left + "%";
+          el.style.top = pos.top + "%";
+          el.style.width = pos.width + "%";
+          el.style.height = pos.height + "%";
+        });
+      },
+
+      refreshSlots() {
+        this.ensureState();
+        this.applySlotStyles();
+        CONFIG.trainDays.forEach(function (d) {
+          const el = document.getElementById("slot-" + d.key);
+          const player = Train.getPlayer(state.train.assignments[d.key]);
+          el.textContent = player ? player.nickname : "";
+          Train.fitText(el);
+        });
+      },
+
+      fitText(el) {
+        if (!el) return;
+        if (!el.textContent) {
+          el.style.fontSize = "";
+          return;
+        }
+        const max = 28;
+        const min = 7;
+        let size = max;
+        el.style.fontSize = size + "px";
+        // Boucle de réduction pour rester dans la case
+        let guard = 40;
+        while (guard-- > 0 && size > min &&
+          (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)) {
+          size -= 0.5;
+          el.style.fontSize = size + "px";
+        }
+      },
+
+      fitAllTexts() {
+        CONFIG.trainDays.forEach(function (d) {
+          Train.fitText(document.getElementById("slot-" + d.key));
+        });
+      },
+
+      refresh() {
+        this.refreshSelects();
+        this.refreshSlots();
+      },
+
+      setAssignment(day, playerId) {
+        this.ensureState();
+        state.train.assignments[day] = playerId || "";
+        Storage.persist();
+        this.refresh();
+      },
+
+      resetWeek() {
+        this.ensureState();
+        CONFIG.trainDays.forEach(function (d) {
+          state.train.assignments[d.key] = "";
+        });
+        Storage.persist();
+        this.refresh();
+      },
+
+      resetPositions() {
+        this.ensureState();
+        state.train.slotPositions = clonePositions(DEFAULT_TRAIN_SLOT_POSITIONS);
+        Storage.persist();
+        this.refreshSlots();
+        Notifications.show("Positions réinitialisées", "success");
+      },
+
+      setAdjustMode(on) {
+        this.adjusting = !!on;
+        const stage = document.getElementById("trainStage");
+        const btn = document.getElementById("btnAdjustPositions");
+        const hint = document.getElementById("trainAdjustHint");
+        stage.classList.toggle("adjusting", this.adjusting);
+        btn.classList.toggle("btn-primary", this.adjusting);
+        btn.classList.toggle("btn-secondary", !this.adjusting);
+        btn.textContent = this.adjusting ? "Terminer l'ajustement" : "Ajuster les positions";
+        hint.hidden = !this.adjusting;
+      },
+
+      onPointerDown(e) {
+        if (!this.adjusting) return;
+        const slot = e.target.closest(".train-slot");
+        if (!slot) return;
+        e.preventDefault();
+        const stage = document.getElementById("trainStage");
+        const rect = stage.getBoundingClientRect();
+        const day = slot.dataset.day;
+        const pos = state.train.slotPositions[day];
+        this.drag = {
+          day: day,
+          el: slot,
+          startX: e.clientX,
+          startY: e.clientY,
+          origLeft: pos.left,
+          origTop: pos.top,
+          stageW: rect.width,
+          stageH: rect.height
+        };
+        slot.classList.add("dragging");
+        slot.setPointerCapture(e.pointerId);
+      },
+
+      onPointerMove(e) {
+        if (!this.drag) return;
+        e.preventDefault();
+        const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
+        const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
+        const pos = state.train.slotPositions[this.drag.day];
+        let left = this.drag.origLeft + dx;
+        let top = this.drag.origTop + dy;
+        left = Math.max(0, Math.min(100 - pos.width, left));
+        top = Math.max(0, Math.min(100 - pos.height, top));
+        pos.left = Math.round(left * 100) / 100;
+        pos.top = Math.round(top * 100) / 100;
+        this.drag.el.style.left = pos.left + "%";
+        this.drag.el.style.top = pos.top + "%";
+      },
+
+      onPointerUp(e) {
+        if (!this.drag) return;
+        this.drag.el.classList.remove("dragging");
+        try { this.drag.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        this.drag = null;
+        Storage.persist();
+        this.fitAllTexts();
+      },
+
+      exportPng() {
+        this.ensureState();
+        const img = new Image();
+        // Même origine sur GitHub Pages — nécessaire pour canvas non-tainted
+        img.crossOrigin = "anonymous";
+        img.onload = function () {
+          try {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.naturalWidth;
+            canvas.height = img.naturalHeight;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            CONFIG.trainDays.forEach(function (d) {
+              const player = Train.getPlayer(state.train.assignments[d.key]);
+              if (!player) return;
+              const pos = state.train.slotPositions[d.key];
+              const x = (pos.left / 100) * canvas.width;
+              const y = (pos.top / 100) * canvas.height;
+              const w = (pos.width / 100) * canvas.width;
+              const h = (pos.height / 100) * canvas.height;
+              Train.drawFittedText(ctx, player.nickname, x, y, w, h);
+            });
+
+            const date = new Date();
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, "0");
+            const dd = String(date.getDate()).padStart(2, "0");
+            const filename = "train-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
+
+            canvas.toBlob(function (blob) {
+              if (!blob) {
+                Notifications.show("Export impossible", "error");
+                return;
+              }
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = filename;
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              URL.revokeObjectURL(url);
+              Notifications.show("Image exportée", "success");
+            }, "image/png");
+          } catch (err) {
+            console.error(err);
+            Notifications.show("Export impossible (image protégée)", "error");
+          }
+        };
+        img.onerror = function () {
+          Notifications.show("Impossible de charger le modèle Train.", "error");
+        };
+        img.src = CONFIG.trainImageSrc + "?t=" + Date.now();
+      },
+
+      drawFittedText(ctx, text, x, y, w, h) {
+        ctx.save();
+        ctx.fillStyle = "#1a1408";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "800 48px Segoe UI, system-ui, sans-serif";
+
+        let size = Math.min(h * 0.55, w * 0.28, 64);
+        const min = 10;
+        while (size > min) {
+          ctx.font = "800 " + size + "px Segoe UI, system-ui, sans-serif";
+          const metrics = ctx.measureText(text);
+          if (metrics.width <= w * 0.92) break;
+          size -= 1;
+        }
+        ctx.font = "800 " + size + "px Segoe UI, system-ui, sans-serif";
+        ctx.fillText(text, x + w / 2, y + h / 2, w * 0.96);
+        ctx.restore();
+      },
+
+      bind() {
+        this.buildDayRows();
+        this.refresh();
+
+        const img = document.getElementById("trainImage");
+        const err = document.getElementById("trainImageError");
+        img.addEventListener("error", function () {
+          err.classList.add("visible");
+        });
+        img.addEventListener("load", function () {
+          err.classList.remove("visible");
+          Train.fitAllTexts();
+        });
+        // Re-déclencher si déjà en cache
+        if (img.complete && img.naturalWidth === 0) err.classList.add("visible");
+        if (img.complete && img.naturalWidth > 0) Train.fitAllTexts();
+
+        document.getElementById("trainDayList").addEventListener("change", function (e) {
+          const select = e.target.closest(".train-day-select");
+          if (!select) return;
+          Train.setAssignment(select.dataset.day, select.value);
+        });
+
+        document.getElementById("trainDayList").addEventListener("click", function (e) {
+          const btn = e.target.closest(".train-clear-day");
+          if (!btn) return;
+          Train.setAssignment(btn.dataset.day, "");
+        });
+
+        document.getElementById("allowDuplicates").addEventListener("change", function (e) {
+          state.train.allowDuplicates = !!e.target.checked;
+          Storage.persist();
+          Train.refreshSelects();
+          document.getElementById("allowDuplicatesLabel").classList.toggle("active", e.target.checked);
+        });
+
+        document.getElementById("btnResetWeek").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser la semaine",
+            message: "Voulez-vous vraiment vider toutes les affectations de la semaine ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () {
+              Train.resetWeek();
+              Notifications.show("Semaine réinitialisée", "success");
+            }
+          });
+        });
+
+        document.getElementById("btnAdjustPositions").addEventListener("click", function () {
+          Train.setAdjustMode(!Train.adjusting);
+        });
+
+        document.getElementById("btnResetPositions").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser les positions",
+            message: "Remettre les zones de pseudos aux positions par défaut ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () {
+              Train.resetPositions();
+            }
+          });
+        });
+
+        document.getElementById("btnExportTrain").addEventListener("click", function () {
+          Train.exportPng();
+        });
+
+        const stage = document.getElementById("trainStage");
+        stage.addEventListener("pointerdown", function (e) { Train.onPointerDown(e); });
+        stage.addEventListener("pointermove", function (e) { Train.onPointerMove(e); });
+        stage.addEventListener("pointerup", function (e) { Train.onPointerUp(e); });
+        stage.addEventListener("pointercancel", function (e) { Train.onPointerUp(e); });
+
+        window.addEventListener("resize", function () {
+          Train.fitAllTexts();
+        });
+      }
+    };
+
+    /* ============================= */
     /* NAVIGATION                    */
     /* ============================= */
     const Nav = {
@@ -1754,6 +2434,10 @@
         });
         this.closeSidebar();
         window.scrollTo(0, 0);
+        if (page === "train") {
+          Train.refresh();
+          setTimeout(function () { Train.fitAllTexts(); }, 50);
+        }
       },
 
       openSidebar() {
@@ -1827,6 +2511,8 @@
     /* ÉVÉNEMENTS                    */
     /* ============================= */
     function bindEvents() {
+      Train.bind();
+
       document.getElementById("mainNav").addEventListener("click", function (e) {
         const btn = e.target.closest(".nav-btn");
         if (!btn) return;
@@ -2027,6 +2713,7 @@
         if (e.key === "Escape") {
           if (document.getElementById("confirmModal").classList.contains("open")) Modal.closeConfirm();
           else if (document.getElementById("playerModal").classList.contains("open")) Modal.closePlayer();
+          else if (Train.adjusting) Train.setAdjustMode(false);
           else Nav.closeSidebar();
         }
       });
@@ -2044,6 +2731,7 @@
         state.players = createDemoPlayers();
         Storage.persist();
       }
+      state.train = normalizeTrain(state.train);
       bindEvents();
       PlayersUI.render();
     }
