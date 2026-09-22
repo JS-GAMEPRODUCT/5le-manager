@@ -975,8 +975,12 @@
       flex: 1;
       min-width: 0;
       overflow: hidden;
-      text-overflow: ellipsis;
+      text-overflow: clip;
       white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      -webkit-hyphens: none;
     }
 
     .train-combo-value.placeholder {
@@ -1182,11 +1186,18 @@
       pointer-events: none;
     }
 
+    @media (max-width: 900px) {
+      .train-slot-label {
+        padding: 2px 1px;
+      }
+    }
+
     .train-slot-text {
       display: block;
       width: 100%;
       max-width: 100%;
       overflow: hidden;
+      text-overflow: clip;
       text-align: center;
       line-height: 1.05;
       white-space: nowrap;
@@ -1521,6 +1532,7 @@
       overflow-wrap: normal;
       hyphens: none;
       -webkit-hyphens: none;
+      text-overflow: clip;
       overflow: hidden;
       line-height: 1.15;
       font-weight: 700;
@@ -1979,6 +1991,17 @@
       margin-bottom: 1rem;
     }
 
+    .vs-description {
+      color: var(--text-muted);
+      line-height: 1.4;
+      max-width: 900px;
+    }
+
+    /* Desktop : les 3 boutons mode restent dans le flux flex de la toolbar */
+    .vs-mobile-quick-actions {
+      display: contents;
+    }
+
     .vs-mode-btn.push-mode {
       border-color: rgba(239, 98, 48, 0.55);
       color: #ffb089;
@@ -2160,7 +2183,30 @@
     }
 
     @media (max-width: 900px) {
-      .vs-toolbar .btn {
+      .vs-description {
+        font-size: 14px;
+      }
+
+      .vs-mobile-quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        width: 100%;
+        flex: 1 1 100%;
+      }
+
+      .vs-mobile-quick-actions > .btn {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: 0;
+        padding: 0.55rem 0.3rem;
+        font-size: 0.76rem;
+        line-height: 1.2;
+        text-align: center;
+        white-space: normal;
+      }
+
+      .vs-toolbar > .btn {
         flex: 1 1 100%;
       }
 
@@ -2173,6 +2219,137 @@
       }
 
       .vs-day-actions .btn {
+        flex: 1 1 auto;
+      }
+    }
+
+    /* ---------- Historique ---------- */
+    .history-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .history-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .history-filter-btn {
+      padding: 0.45rem 0.85rem;
+      min-height: 40px;
+      font-size: 0.85rem;
+    }
+
+    .history-filter-btn.active {
+      background: var(--blue-dim);
+      border-color: rgba(59, 130, 246, 0.55);
+      color: var(--blue-bright);
+    }
+
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .history-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      min-width: 0;
+    }
+
+    .history-thumb-wrap {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .history-thumb {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .history-meta h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .history-meta p {
+      margin: 0.25rem 0 0;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .history-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      align-items: stretch;
+    }
+
+    .history-actions .btn {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.88rem;
+    }
+
+    .history-actions .history-delete {
+      flex: 0 0 auto;
+      min-width: 48px;
+      padding-left: 0.7rem;
+      padding-right: 0.7rem;
+      font-size: 1.15rem;
+      line-height: 1;
+    }
+
+    .history-empty {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-muted);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    .history-empty h2 {
+      margin: 0 0 0.4rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    @media (max-width: 900px) {
+      .history-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .history-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .history-filters {
+        width: 100%;
+      }
+
+      .history-filter-btn {
         flex: 1 1 auto;
       }
     }
@@ -2505,14 +2682,16 @@
           <div class="page-header">
             <div>
               <h1>VS</h1>
-              <p>Planning hebdomadaire VS</p>
+              <p class="vs-description">Sélectionne PUSH ou ÉCO et clique sur le jour que tu souhaites changer (directement sur l'image) ou utilise la sélection plus bas.</p>
             </div>
           </div>
 
           <div class="train-toolbar vs-toolbar">
-            <button type="button" class="btn btn-secondary vs-mode-btn push-mode" id="btnVsModePush" data-mode="push">PUSH</button>
-            <button type="button" class="btn btn-secondary vs-mode-btn eco-mode" id="btnVsModeEco" data-mode="eco">ÉCO</button>
-            <button type="button" class="btn btn-secondary vs-mode-btn clear-mode" id="btnVsModeClear" data-mode="clear">Effacer le jour</button>
+            <div class="vs-mobile-quick-actions">
+              <button type="button" class="btn btn-secondary vs-mode-btn push-mode" id="btnVsModePush" data-mode="push">PUSH</button>
+              <button type="button" class="btn btn-secondary vs-mode-btn eco-mode" id="btnVsModeEco" data-mode="eco">ÉCO</button>
+              <button type="button" class="btn btn-secondary vs-mode-btn clear-mode" id="btnVsModeClear" data-mode="clear">Effacer le jour</button>
+            </div>
             <button type="button" class="btn btn-secondary" id="btnVsAllPush">Tout PUSH</button>
             <button type="button" class="btn btn-secondary" id="btnVsAllEco">Tout ÉCO</button>
             <button type="button" class="btn btn-primary" id="btnExportVs">Exporter l'image</button>
@@ -2574,14 +2753,26 @@
           <div class="page-header">
             <div>
               <h1>Historique</h1>
-              <p>Journal des actions et annonces</p>
+              <p>Images exportées depuis les modules</p>
             </div>
           </div>
-          <div class="coming-soon">
-            <div class="badge">Bientôt</div>
-            <h2>Module bientôt disponible</h2>
-            <p>Retrouvez ici l'historique des opérations et des exports.</p>
+
+          <div class="history-toolbar">
+            <div class="history-filters" id="historyFilters" role="tablist" aria-label="Filtres historique">
+              <button type="button" class="btn btn-secondary history-filter-btn active" data-filter="all">Tous</button>
+              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="train">Train</button>
+              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="teamville">Team Ville</button>
+              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="tempete">Tempête</button>
+              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="vs">VS</button>
+            </div>
+            <button type="button" class="btn btn-danger" id="btnClearHistory">Vider l'historique</button>
           </div>
+
+          <div class="history-empty" id="historyEmpty" hidden>
+            <h2>Aucune image</h2>
+            <p>Les exports Train, Team Ville, Tempête et VS apparaîtront ici automatiquement.</p>
+          </div>
+          <div class="history-grid" id="historyList"></div>
         </section>
 
         <!-- Paramètres -->
@@ -4098,9 +4289,10 @@
         const valueEl = combo.querySelector(".train-combo-value");
         const player = this.getPlayer(state.train.assignments[day]);
         if (player) {
-          valueEl.textContent = player.nickname;
           valueEl.classList.remove("placeholder");
+          fitUiNickname(valueEl, player.nickname);
         } else {
+          valueEl.style.fontSize = "";
           valueEl.textContent = "Choisir un joueur";
           valueEl.classList.add("placeholder");
         }
@@ -4387,7 +4579,11 @@
             const mm = String(date.getMonth() + 1).padStart(2, "0");
             const dd = String(date.getDate()).padStart(2, "0");
             const filename = "train-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
-            handleImageExport(canvas, filename);
+            finalizeImageExport(canvas, {
+              module: "train",
+              title: "Train",
+              filename: filename
+            });
           } catch (err) {
             console.error(err);
             Notifications.show("Export impossible (image protégée)", "error");
@@ -4546,11 +4742,25 @@
     let mobileExportBlob = null;
     let mobileExportFilename = "5le-export.png";
 
+    /* Plancher technique uniquement : le pseudo entier prime toujours sur la lisibilité. */
+    const FIT_TEXT_ABSOLUTE_MIN = 1;
+    const fitTextMeasureCtx = document.createElement("canvas").getContext("2d");
+
+    function measureElementTextWidth(element, text, size) {
+      const cs = window.getComputedStyle(element);
+      fitTextMeasureCtx.font = (cs.fontStyle || "normal") + " " + (cs.fontWeight || "700") + " " +
+        size + "px " + (cs.fontFamily || "sans-serif");
+      let w = fitTextMeasureCtx.measureText(text).width;
+      const ls = parseFloat(cs.letterSpacing);
+      if (!isNaN(ls) && ls > 0) w += ls * text.length;
+      return w;
+    }
+
     function fitSingleLineText(element, text, options) {
       if (!element) return 0;
       options = options || {};
       const maxSize = options.maxSize != null ? options.maxSize : 22;
-      const minSize = options.minSize != null ? options.minSize : 7;
+      const minSize = options.minSize != null ? options.minSize : 6;
       const box = options.box || (
         element.parentElement && element.parentElement.classList.contains("train-slot-label")
           ? element.parentElement
@@ -4563,25 +4773,54 @@
       element.style.overflowWrap = "normal";
       element.style.hyphens = "none";
       element.style.webkitHyphens = "none";
-      element.style.lineHeight = "1.05";
+      element.style.textOverflow = "clip";
+      element.style.lineHeight = options.lineHeight != null ? options.lineHeight : "1.05";
 
       if (!text) {
         element.style.fontSize = "";
         return 0;
       }
 
-      const boxH = box.clientHeight || 40;
-      const boxW = box.clientWidth || 60;
-      let size = Math.min(maxSize, Math.floor(boxH * 0.55), Math.floor(boxW * 0.42));
+      let size = maxSize;
+      if (options.useBoxLimits !== false) {
+        const boxH = box.clientHeight || 40;
+        const boxW = box.clientWidth || 60;
+        size = Math.min(maxSize, Math.floor(boxH * 0.55), Math.floor(boxW * 0.42));
+      }
       size = Math.max(minSize, size);
       element.style.fontSize = size + "px";
 
-      let guard = 60;
-      while (guard-- > 0 && size > minSize && element.scrollWidth > element.clientWidth + 1) {
-        size -= 1;
+      /* Onglet masqué : pas de mesure possible, recalcul à l'affichage. */
+      const availW = element.clientWidth;
+      if (!availW) return size;
+
+      const measured = measureElementTextWidth(element, text, size);
+      if (element.scrollWidth > availW || measured > availW + 0.5) {
+        const naturalW = Math.max(measured, element.scrollWidth);
+        size = Math.max(FIT_TEXT_ABSOLUTE_MIN, Math.floor((size * availW / naturalW) * 0.97 * 2) / 2);
+        element.style.fontSize = size + "px";
+      }
+
+      let guard = 80;
+      while (guard-- > 0 && size > FIT_TEXT_ABSOLUTE_MIN && element.scrollWidth > element.clientWidth) {
+        size = Math.max(FIT_TEXT_ABSOLUTE_MIN, size - 0.5);
         element.style.fontSize = size + "px";
       }
       return size;
+    }
+
+    function fitUiNickname(element, text) {
+      if (!element) return;
+      element.style.fontSize = "";
+      element.style.lineHeight = "";
+      const base = parseFloat(window.getComputedStyle(element).fontSize) || 15;
+      fitSingleLineText(element, text, {
+        maxSize: base,
+        minSize: base,
+        box: element,
+        useBoxLimits: false,
+        lineHeight: ""
+      });
     }
 
     function refreshTrainTextSizing() {
@@ -4591,6 +4830,7 @@
         const textEl = el.querySelector(".train-slot-text") || el;
         const player = Train.getPlayer(state.train.assignments[d.key]);
         fitSingleLineText(textEl, player ? player.nickname : "", { maxSize: 26, minSize: 7, box: el });
+        Train.updateTriggerLabel(d.key);
       });
     }
 
@@ -4615,12 +4855,20 @@
       ctx.textAlign = align;
       ctx.textBaseline = baseline;
 
-      while (size > minSize) {
-        ctx.font = weight + " " + size + "px " + fontFamily;
-        if (ctx.measureText(text).width <= maxW) break;
-        size -= 1;
-      }
+      /* minSize n'est qu'une taille préférée : le pseudo entier prime sur la taille. */
       ctx.font = weight + " " + size + "px " + fontFamily;
+      let textW = ctx.measureText(text).width;
+      if (textW > maxW) {
+        size = Math.max(FIT_TEXT_ABSOLUTE_MIN, size * maxW / textW);
+        ctx.font = weight + " " + size + "px " + fontFamily;
+        textW = ctx.measureText(text).width;
+      }
+      let guard = 80;
+      while (guard-- > 0 && textW > maxW && size > FIT_TEXT_ABSOLUTE_MIN) {
+        size = Math.max(FIT_TEXT_ABSOLUTE_MIN, size - 0.25);
+        ctx.font = weight + " " + size + "px " + fontFamily;
+        textW = ctx.measureText(text).width;
+      }
 
       let drawX = x + width / 2;
       if (align === "left") drawX = x + padX;
@@ -4644,6 +4892,43 @@
         ("ontouchstart" in window || navigator.maxTouchPoints > 0);
     }
 
+    function canvasToPngBlob(canvas) {
+      return new Promise(function (resolve, reject) {
+        try {
+          canvas.toBlob(function (blob) {
+            if (blob) {
+              resolve(blob);
+              return;
+            }
+            try {
+              const dataUrl = canvas.toDataURL("image/png");
+              const parts = dataUrl.split(",");
+              const bin = atob(parts[1] || "");
+              const arr = new Uint8Array(bin.length);
+              for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+              resolve(new Blob([arr], { type: "image/png" }));
+            } catch (err) {
+              reject(err);
+            }
+          }, "image/png");
+        } catch (err) {
+          reject(err);
+        }
+      });
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename || "5le-export.png";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      Notifications.show("Image exportée", "success");
+    }
+
     function downloadCanvas(canvas, filename) {
       canvas.toBlob(function (blob) {
         if (!blob) {
@@ -4660,15 +4945,7 @@
           }
           return;
         }
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-        Notifications.show("Image exportée", "success");
+        downloadBlob(blob, filename);
       }, "image/png");
     }
 
@@ -4677,6 +4954,7 @@
       modal.classList.remove("open");
       const img = document.getElementById("mobileExportImage");
       img.removeAttribute("src");
+      document.getElementById("mobileExportTitle").textContent = "Image prête";
       if (mobileExportObjectUrl) {
         URL.revokeObjectURL(mobileExportObjectUrl);
         mobileExportObjectUrl = null;
@@ -4685,12 +4963,13 @@
       document.getElementById("mobileExportShare").hidden = true;
     }
 
-    function showMobileImageExport(canvas, filename) {
+    function showMobileImageExportFromBlob(blob, filename, title) {
       mobileExportFilename = filename || "5le-export.png";
       const modal = document.getElementById("mobileExportModal");
       const img = document.getElementById("mobileExportImage");
       const shareBtn = document.getElementById("mobileExportShare");
       const hint = document.getElementById("mobileExportHint");
+      document.getElementById("mobileExportTitle").textContent = title || "Image prête";
 
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
         (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
@@ -4698,39 +4977,50 @@
         ? "Appui long sur l'image → Enregistrer dans Photos"
         : "Maintenez votre doigt sur l'image puis choisissez « Enregistrer dans Photos » ou « Enregistrer l'image ».";
 
-      function assignSrc(src, blob) {
-        if (mobileExportObjectUrl) {
-          URL.revokeObjectURL(mobileExportObjectUrl);
-          mobileExportObjectUrl = null;
-        }
-        mobileExportBlob = blob || null;
-        if (blob) mobileExportObjectUrl = src;
-        img.src = src;
-        modal.classList.add("open");
-
-        let canShare = false;
-        try {
-          if (navigator.share && navigator.canShare && blob) {
-            const file = new File([blob], mobileExportFilename, { type: "image/png" });
-            canShare = navigator.canShare({ files: [file] });
-          }
-        } catch (err) {
-          canShare = false;
-        }
-        shareBtn.hidden = !canShare;
+      if (mobileExportObjectUrl) {
+        URL.revokeObjectURL(mobileExportObjectUrl);
+        mobileExportObjectUrl = null;
       }
 
-      canvas.toBlob(function (blob) {
-        if (blob) {
-          assignSrc(URL.createObjectURL(blob), blob);
-          return;
+      if (!blob) {
+        Notifications.show("Export impossible", "error");
+        return;
+      }
+
+      mobileExportBlob = blob;
+      mobileExportObjectUrl = URL.createObjectURL(blob);
+      img.src = mobileExportObjectUrl;
+      modal.classList.add("open");
+
+      let canShare = false;
+      try {
+        if (navigator.share && navigator.canShare) {
+          const file = new File([blob], mobileExportFilename, { type: "image/png" });
+          canShare = navigator.canShare({ files: [file] });
         }
+      } catch (err) {
+        canShare = false;
+      }
+      shareBtn.hidden = !canShare;
+    }
+
+    function showMobileImageExport(canvas, filename) {
+      canvasToPngBlob(canvas).then(function (blob) {
+        showMobileImageExportFromBlob(blob, filename, "Image prête");
+      }).catch(function () {
         try {
-          assignSrc(canvas.toDataURL("image/png"), null);
+          mobileExportFilename = filename || "5le-export.png";
+          const modal = document.getElementById("mobileExportModal");
+          const img = document.getElementById("mobileExportImage");
+          document.getElementById("mobileExportTitle").textContent = "Image prête";
+          img.src = canvas.toDataURL("image/png");
+          mobileExportBlob = null;
+          modal.classList.add("open");
+          document.getElementById("mobileExportShare").hidden = true;
         } catch (err) {
           Notifications.show("Export impossible", "error");
         }
-      }, "image/png");
+      });
     }
 
     function handleImageExport(canvas, filename) {
@@ -4744,6 +5034,355 @@
         downloadCanvas(canvas, filename);
       }
     }
+
+    function handleBlobImageExport(blob, filename, title) {
+      if (!blob) {
+        Notifications.show("Export impossible", "error");
+        return;
+      }
+      if (isMobileDevice()) {
+        showMobileImageExportFromBlob(blob, filename, title || "Image prête");
+      } else {
+        downloadBlob(blob, filename);
+      }
+    }
+
+    /* ============================= */
+    /* HISTORIQUE (IndexedDB)        */
+    /* ============================= */
+    const HistoryDB = {
+      NAME: "5LE_MANAGER_DB",
+      STORE: "historyImages",
+      VERSION: 1,
+      _db: null,
+
+      open() {
+        const self = this;
+        if (self._db) return Promise.resolve(self._db);
+        if (!window.indexedDB) {
+          return Promise.reject(new Error("IndexedDB indisponible"));
+        }
+        return new Promise(function (resolve, reject) {
+          const req = indexedDB.open(self.NAME, self.VERSION);
+          req.onupgradeneeded = function (e) {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(self.STORE)) {
+              const store = db.createObjectStore(self.STORE, { keyPath: "id" });
+              store.createIndex("createdAt", "createdAt", { unique: false });
+              store.createIndex("module", "module", { unique: false });
+            }
+          };
+          req.onsuccess = function (e) {
+            self._db = e.target.result;
+            self._db.onversionchange = function () {
+              try { self._db.close(); } catch (err) { /* ignore */ }
+              self._db = null;
+            };
+            resolve(self._db);
+          };
+          req.onerror = function () {
+            reject(req.error || new Error("Ouverture IndexedDB impossible"));
+          };
+        });
+      },
+
+      put(entry) {
+        return this.open().then(function (db) {
+          return new Promise(function (resolve, reject) {
+            const tx = db.transaction(HistoryDB.STORE, "readwrite");
+            tx.oncomplete = function () { resolve(entry); };
+            tx.onerror = function () { reject(tx.error || new Error("Écriture historique impossible")); };
+            tx.objectStore(HistoryDB.STORE).put(entry);
+          });
+        });
+      },
+
+      get(id) {
+        return this.open().then(function (db) {
+          return new Promise(function (resolve, reject) {
+            const tx = db.transaction(HistoryDB.STORE, "readonly");
+            const req = tx.objectStore(HistoryDB.STORE).get(id);
+            req.onsuccess = function () { resolve(req.result || null); };
+            req.onerror = function () { reject(req.error); };
+          });
+        });
+      },
+
+      getAll() {
+        return this.open().then(function (db) {
+          return new Promise(function (resolve, reject) {
+            const tx = db.transaction(HistoryDB.STORE, "readonly");
+            const req = tx.objectStore(HistoryDB.STORE).getAll();
+            req.onsuccess = function () {
+              const items = req.result || [];
+              items.sort(function (a, b) {
+                return String(b.createdAt || "").localeCompare(String(a.createdAt || ""));
+              });
+              resolve(items);
+            };
+            req.onerror = function () { reject(req.error); };
+          });
+        });
+      },
+
+      remove(id) {
+        return this.open().then(function (db) {
+          return new Promise(function (resolve, reject) {
+            const tx = db.transaction(HistoryDB.STORE, "readwrite");
+            tx.oncomplete = function () { resolve(); };
+            tx.onerror = function () { reject(tx.error); };
+            tx.objectStore(HistoryDB.STORE).delete(id);
+          });
+        });
+      },
+
+      clear() {
+        return this.open().then(function (db) {
+          return new Promise(function (resolve, reject) {
+            const tx = db.transaction(HistoryDB.STORE, "readwrite");
+            tx.oncomplete = function () { resolve(); };
+            tx.onerror = function () { reject(tx.error); };
+            tx.objectStore(HistoryDB.STORE).clear();
+          });
+        });
+      }
+    };
+
+    function createHistoryId() {
+      return "history_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 10);
+    }
+
+    function formatHistoryDate(iso) {
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return "";
+      const date = d.toLocaleDateString("fr-FR");
+      const time = d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+      return date + " à " + time;
+    }
+
+    async function saveGeneratedImageToHistory(canvas, options) {
+      const opts = options || {};
+      if (!canvas) throw new Error("Canvas manquant");
+      const blob = await canvasToPngBlob(canvas);
+      const entry = {
+        id: createHistoryId(),
+        module: opts.module || "unknown",
+        title: opts.title || "Export",
+        createdAt: new Date().toISOString(),
+        filename: opts.filename || "5le-export.png",
+        blob: blob
+      };
+      await HistoryDB.put(entry);
+      if (document.getElementById("page-history") &&
+          document.getElementById("page-history").classList.contains("active")) {
+        HistoryUI.refresh();
+      }
+      return entry;
+    }
+
+    function finalizeImageExport(canvas, options) {
+      const opts = options || {};
+      return saveGeneratedImageToHistory(canvas, opts)
+        .catch(function (err) {
+          console.warn(err);
+          Notifications.show("Image exportée, mais impossible de l'ajouter à l'historique.", "info");
+        })
+        .then(function () {
+          handleImageExport(canvas, opts.filename);
+        });
+    }
+
+    const HistoryUI = {
+      filter: "all",
+      urls: {},
+      bound: false,
+
+      revokeUrls() {
+        const map = this.urls;
+        Object.keys(map).forEach(function (id) {
+          try { URL.revokeObjectURL(map[id]); } catch (err) { /* ignore */ }
+        });
+        this.urls = {};
+      },
+
+      matchesFilter(entry) {
+        const f = this.filter || "all";
+        if (f === "all") return true;
+        if (f === "tempete") {
+          return entry.module === "tempete" ||
+            entry.module === "tempete-a" ||
+            entry.module === "tempete-b" ||
+            String(entry.module || "").indexOf("tempete") === 0;
+        }
+        return entry.module === f;
+      },
+
+      refresh() {
+        const self = this;
+        const list = document.getElementById("historyList");
+        const empty = document.getElementById("historyEmpty");
+        const clearBtn = document.getElementById("btnClearHistory");
+        if (!list || !empty) return;
+
+        HistoryDB.getAll().then(function (items) {
+          self.revokeUrls();
+          const filtered = items.filter(function (item) {
+            return self.matchesFilter(item);
+          });
+
+          if (clearBtn) clearBtn.disabled = !items.length;
+
+          if (!filtered.length) {
+            list.innerHTML = "";
+            empty.hidden = false;
+            empty.querySelector("h2").textContent = items.length
+              ? "Aucune image pour ce filtre"
+              : "Aucune image";
+            empty.querySelector("p").textContent = items.length
+              ? "Change de filtre ou exporte une image depuis un module."
+              : "Les exports Train, Team Ville, Tempête et VS apparaîtront ici automatiquement.";
+            return;
+          }
+
+          empty.hidden = true;
+          list.innerHTML = filtered.map(function (entry) {
+            let src = "";
+            if (entry.blob) {
+              src = URL.createObjectURL(entry.blob);
+              self.urls[entry.id] = src;
+            }
+            return (
+              '<article class="history-card" data-id="' + escapeHtml(entry.id) + '">' +
+                '<div class="history-thumb-wrap">' +
+                  (src
+                    ? '<img class="history-thumb" src="' + src + '" alt="' + escapeHtml(entry.title) + '" loading="lazy" />'
+                    : '<div class="history-thumb" style="height:120px"></div>') +
+                "</div>" +
+                '<div class="history-meta">' +
+                  "<h3>" + escapeHtml(entry.title) + "</h3>" +
+                  "<p>" + escapeHtml(formatHistoryDate(entry.createdAt)) + "</p>" +
+                "</div>" +
+                '<div class="history-actions">' +
+                  '<button type="button" class="btn btn-secondary history-view">Voir</button>' +
+                  '<button type="button" class="btn btn-primary history-save">Enregistrer</button>' +
+                  '<button type="button" class="btn btn-ghost history-delete" aria-label="Supprimer" title="Supprimer">×</button>' +
+                "</div>" +
+              "</article>"
+            );
+          }).join("");
+        }).catch(function (err) {
+          console.warn(err);
+          self.revokeUrls();
+          list.innerHTML = "";
+          empty.hidden = false;
+          empty.querySelector("h2").textContent = "Historique indisponible";
+          empty.querySelector("p").textContent = "Impossible d'accéder au stockage local des images.";
+          if (clearBtn) clearBtn.disabled = true;
+        });
+      },
+
+      setFilter(filter) {
+        this.filter = filter || "all";
+        document.querySelectorAll(".history-filter-btn").forEach(function (btn) {
+          btn.classList.toggle("active", btn.dataset.filter === HistoryUI.filter);
+        });
+        this.refresh();
+      },
+
+      view(id) {
+        HistoryDB.get(id).then(function (entry) {
+          if (!entry || !entry.blob) {
+            Notifications.show("Image introuvable", "error");
+            return;
+          }
+          showMobileImageExportFromBlob(entry.blob, entry.filename, entry.title || "Aperçu");
+        }).catch(function () {
+          Notifications.show("Impossible d'ouvrir l'image", "error");
+        });
+      },
+
+      save(id) {
+        HistoryDB.get(id).then(function (entry) {
+          if (!entry || !entry.blob) {
+            Notifications.show("Image introuvable", "error");
+            return;
+          }
+          handleBlobImageExport(entry.blob, entry.filename, entry.title || "Image prête");
+        }).catch(function () {
+          Notifications.show("Impossible d'enregistrer l'image", "error");
+        });
+      },
+
+      remove(id) {
+        Modal.confirm({
+          title: "Supprimer",
+          message: "Supprimer cette image de l'historique ?",
+          okLabel: "Supprimer",
+          onConfirm: function () {
+            HistoryDB.remove(id).then(function () {
+              Notifications.show("Image supprimée de l'historique", "success");
+              HistoryUI.refresh();
+            }).catch(function () {
+              Notifications.show("Suppression impossible", "error");
+            });
+          }
+        });
+      },
+
+      clearAll() {
+        Modal.confirm({
+          title: "Vider l'historique",
+          message: "Supprimer toutes les images de l'historique ? Les modules et les joueurs ne seront pas touchés.",
+          okLabel: "Vider",
+          onConfirm: function () {
+            HistoryDB.clear().then(function () {
+              Notifications.show("Historique vidé", "success");
+              HistoryUI.refresh();
+            }).catch(function () {
+              Notifications.show("Impossible de vider l'historique", "error");
+            });
+          }
+        });
+      },
+
+      bind() {
+        if (this.bound) return;
+        this.bound = true;
+        const filters = document.getElementById("historyFilters");
+        if (filters) {
+          filters.addEventListener("click", function (e) {
+            const btn = e.target.closest(".history-filter-btn");
+            if (!btn) return;
+            HistoryUI.setFilter(btn.dataset.filter);
+          });
+        }
+        const clearBtn = document.getElementById("btnClearHistory");
+        if (clearBtn) {
+          clearBtn.addEventListener("click", function () {
+            HistoryUI.clearAll();
+          });
+        }
+        const list = document.getElementById("historyList");
+        if (list) {
+          list.addEventListener("click", function (e) {
+            const card = e.target.closest(".history-card");
+            if (!card) return;
+            const id = card.dataset.id;
+            if (e.target.closest(".history-view")) {
+              HistoryUI.view(id);
+              return;
+            }
+            if (e.target.closest(".history-save")) {
+              HistoryUI.save(id);
+              return;
+            }
+            if (e.target.closest(".history-delete")) {
+              HistoryUI.remove(id);
+            }
+          });
+        }
+      }
+    };
 
     /* ============================= */
     /* TEAM VILLE                    */
@@ -4858,6 +5497,15 @@
               "</div>"
             );
           }).join("");
+        });
+        this.fitMemberNames();
+      },
+
+      fitMemberNames() {
+        const grid = document.getElementById("tvTeamsGrid");
+        if (!grid) return;
+        Array.prototype.forEach.call(grid.querySelectorAll(".tv-member-name"), function (el) {
+          fitUiNickname(el, el.textContent);
         });
       },
 
@@ -5258,7 +5906,11 @@
             const mm = String(date.getMonth() + 1).padStart(2, "0");
             const dd = String(date.getDate()).padStart(2, "0");
             const filename = "team-ville-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
-            handleImageExport(canvas, filename);
+            finalizeImageExport(canvas, {
+              module: "teamville",
+              title: "Team Ville",
+              filename: filename
+            });
           } catch (err) {
             console.error(err);
             Notifications.show("Export impossible (image protégée)", "error");
@@ -5439,7 +6091,10 @@
         let resizeTimer = null;
         window.addEventListener("resize", function () {
           clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(function () { TeamVille.refreshOverlay(); }, 80);
+          resizeTimer = setTimeout(function () {
+            TeamVille.refreshOverlay();
+            TeamVille.fitMemberNames();
+          }, 80);
         });
       }
     };
@@ -6229,7 +6884,11 @@
             const mm = String(date.getMonth() + 1).padStart(2, "0");
             const dd = String(date.getDate()).padStart(2, "0");
             const filename = meta.exportPrefix + "-" + yyyy + "-" + mm + "-" + dd + ".png";
-            handleImageExport(canvas, filename);
+            finalizeImageExport(canvas, {
+              module: "tempete",
+              title: "Tempête du désert — Plan " + meta.letter,
+              filename: filename
+            });
           } catch (err) {
             console.error(err);
             Notifications.show("Export impossible (image protégée)", "error");
@@ -6765,7 +7424,12 @@
             const yyyy = date.getFullYear();
             const mm = String(date.getMonth() + 1).padStart(2, "0");
             const dd = String(date.getDate()).padStart(2, "0");
-            handleImageExport(canvas, "vs-hebdomadaire-5le-" + yyyy + "-" + mm + "-" + dd + ".png");
+            const filename = "vs-hebdomadaire-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
+            finalizeImageExport(canvas, {
+              module: "vs",
+              title: "VS",
+              filename: filename
+            });
           } catch (err) {
             console.error(err);
             Notifications.show("Export impossible (image protégée)", "error");
@@ -6910,6 +7574,9 @@
           Vs.refresh();
           setTimeout(function () { Vs.renderVsPreview(); }, 50);
         }
+        if (page === "history") {
+          HistoryUI.refresh();
+        }
       },
 
       openSidebar() {
@@ -6988,6 +7655,7 @@
       TeamVille.bind();
       Tempete.bind();
       Vs.bind();
+      HistoryUI.bind();
 
       document.getElementById("mobileExportClose").addEventListener("click", closeMobileImageExport);
       document.getElementById("mobileExportDone").addEventListener("click", closeMobileImageExport);
