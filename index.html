@@ -163,6 +163,23 @@
       letter-spacing: 0.05em;
     }
 
+    .autosave-status {
+      margin-top: 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+
+    .autosave-status.saved {
+      color: var(--green);
+    }
+
+    .autosave-status.error {
+      color: #ff8a7a;
+    }
+
     .main {
       flex: 1;
       margin-left: var(--sidebar-w);
@@ -1278,6 +1295,7 @@
     /* ---------- Team Ville ---------- */
     .tv-teams-section {
       margin-top: 0.25rem;
+      overflow: visible;
     }
 
     .tv-teams-section > h2 {
@@ -1290,6 +1308,8 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
+      overflow: visible;
+      align-items: start;
     }
 
     .tv-team-block {
@@ -1298,6 +1318,12 @@
       border-radius: var(--radius);
       padding: 0.9rem;
       min-width: 0;
+      overflow: visible;
+      position: relative;
+    }
+
+    .tv-team-block.open-picker {
+      z-index: 50;
     }
 
     .tv-team-block.team1 { border-top: 3px solid var(--gold); }
@@ -1397,8 +1423,75 @@
       background: var(--red-dim);
     }
 
-    .tv-add-wrap {
+    .tv-add-wrap,
+    .team-player-picker-wrapper {
       position: relative;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .tv-add-wrap.open,
+    .team-player-picker-wrapper.open {
+      z-index: 100;
+    }
+
+    .tv-add-wrap .train-combo-dropdown,
+    .team-player-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      max-height: min(360px, 55vh);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tv-team-block.team1 .tv-add-wrap.open .train-combo-dropdown,
+    .tv-team-block.team1 .team-player-dropdown {
+      border-color: rgba(212, 175, 55, 0.55);
+    }
+
+    .tv-team-block.team2 .tv-add-wrap.open .train-combo-dropdown,
+    .tv-team-block.team2 .team-player-dropdown {
+      border-color: rgba(79, 143, 240, 0.55);
+    }
+
+    .tv-team-block.team3 .tv-add-wrap.open .train-combo-dropdown,
+    .tv-team-block.team3 .team-player-dropdown {
+      border-color: rgba(231, 76, 60, 0.55);
+    }
+
+    .tv-add-wrap .train-combo-dropdown[hidden],
+    .team-player-dropdown[hidden] {
+      display: none !important;
+    }
+
+    .tv-add-wrap .train-combo-dropdown.open-up,
+    .team-player-dropdown.open-up {
+      top: auto;
+      bottom: calc(100% + 8px);
+    }
+
+    .tv-add-wrap .train-combo-search-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      flex-shrink: 0;
+      background: var(--bg-card);
+    }
+
+    .tv-add-wrap .train-combo-options {
+      max-height: none;
+      flex: 1 1 auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
     }
 
     .tv-slot {
@@ -1511,6 +1604,333 @@
       }
     }
 
+
+    /* ---------- Tempête du désert ---------- */
+    .td-plan {
+      margin-bottom: 2.25rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .td-plan:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .td-plan-title {
+      margin: 0 0 0.85rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: var(--gold);
+    }
+
+    .td-plan-title span {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin-left: 0.35rem;
+    }
+
+    .td-toolbar {
+      margin-bottom: 1rem;
+    }
+
+    .td-preview-section {
+      margin-bottom: 1.25rem;
+    }
+
+    .td-stage {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: #05070c;
+      touch-action: none;
+    }
+
+    .td-stage img {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .td-zone {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      box-sizing: border-box;
+      padding: 2px 3px;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .td-zone-list {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .td-line {
+      display: flex;
+      align-items: center;
+      gap: 0.15em;
+      min-width: 0;
+      line-height: 1.05;
+      font-weight: 700;
+      color: #f5f7fb;
+      text-shadow:
+        0 0 2px rgba(0, 0, 0, 0.95),
+        0 1px 2px rgba(0, 0, 0, 0.9),
+        0 0 8px rgba(0, 0, 0, 0.55);
+    }
+
+    .td-line .td-num {
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+
+    .td-line .td-nick {
+      min-width: 0;
+      flex: 1;
+      white-space: nowrap;
+      word-break: normal;
+      overflow-wrap: normal;
+      hyphens: none;
+      -webkit-hyphens: none;
+      overflow: hidden;
+    }
+
+    .td-zone[data-team="team1"] .td-line,
+    .td-zone[data-building].team1 .td-line { color: #dbeafe; }
+    .td-zone[data-team="team1"] .td-num,
+    .td-zone[data-building].team1 .td-num { color: #60a5fa; }
+
+    .td-zone[data-team="team2"] .td-line,
+    .td-zone[data-building].team2 .td-line { color: #ffedd5; }
+    .td-zone[data-team="team2"] .td-num,
+    .td-zone[data-building].team2 .td-num { color: #fb923c; }
+
+    .td-zone[data-team="team3"] .td-line,
+    .td-zone[data-building].team3 .td-line { color: #dcfce7; }
+    .td-zone[data-team="team3"] .td-num,
+    .td-zone[data-building].team3 .td-num { color: #4ade80; }
+
+    .td-zone[data-team="team4"] .td-line,
+    .td-zone[data-building].team4 .td-line { color: #f3e8ff; }
+    .td-zone[data-team="team4"] .td-num,
+    .td-zone[data-building].team4 .td-num { color: #c084fc; }
+
+    .td-zone[data-team="team5"] .td-line,
+    .td-zone[data-building].team5 .td-line { color: #fce7f3; }
+    .td-zone[data-team="team5"] .td-num,
+    .td-zone[data-building].team5 .td-num { color: #f472b6; }
+
+    .td-zone[data-team="team6"] .td-line,
+    .td-zone[data-building].team6 .td-line { color: #fee2e2; }
+    .td-zone[data-team="team6"] .td-num,
+    .td-zone[data-building].team6 .td-num { color: #f87171; }
+
+    .td-stage.adjusting {
+      cursor: grab;
+    }
+
+    .td-stage.adjusting .td-zone {
+      pointer-events: auto;
+      outline: 1px dashed rgba(212, 175, 55, 0.85);
+      background: rgba(8, 14, 28, 0.28);
+      cursor: move;
+      touch-action: none;
+    }
+
+    .td-stage.adjusting .td-zone::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -1.1rem;
+      left: 0;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .td-stage.adjusting .td-zone.dragging {
+      outline-color: var(--blue-bright);
+      background: rgba(59, 130, 246, 0.18);
+      z-index: 5;
+    }
+
+    .td-stage.adjusting .td-zone-handle {
+      display: block;
+    }
+
+    .td-zone-handle {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 2px 0 0 0;
+      cursor: nwse-resize;
+      touch-action: none;
+      z-index: 3;
+    }
+
+    .td-teams-section > h2 {
+      margin: 0 0 0.85rem;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .td-teams-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .td-team-block {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.85rem;
+      position: relative;
+      overflow: visible;
+    }
+
+    .td-team-block.open-picker {
+      z-index: 40;
+    }
+
+    .td-team-block.team1 { border-top: 3px solid #3b82f6; }
+    .td-team-block.team2 { border-top: 3px solid #f97316; }
+    .td-team-block.team3 { border-top: 3px solid #22c55e; }
+    .td-team-block.team4 { border-top: 3px solid #a855f7; }
+    .td-team-block.team5 { border-top: 3px solid #ec4899; }
+    .td-team-block.team6 { border-top: 3px solid #ef4444; }
+
+    .td-team-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .td-team-header h3 {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .td-team-block.team1 .td-team-header h3 { color: #60a5fa; }
+    .td-team-block.team2 .td-team-header h3 { color: #fb923c; }
+    .td-team-block.team3 .td-team-header h3 { color: #4ade80; }
+    .td-team-block.team4 .td-team-header h3 { color: #c084fc; }
+    .td-team-block.team5 .td-team-header h3 { color: #f472b6; }
+    .td-team-block.team6 .td-team-header h3 { color: #f87171; }
+
+    .td-team-count {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .td-team-count.full {
+      color: var(--gold);
+    }
+
+    .td-add-wrap {
+      position: relative;
+      margin-top: 0.55rem;
+      z-index: 1;
+    }
+
+    .td-add-wrap.open,
+    .td-team-block.open-picker .td-add-wrap {
+      z-index: 50;
+    }
+
+    .td-add-wrap .train-combo-dropdown,
+    .td-add-wrap .team-player-dropdown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 6px);
+      z-index: 9999;
+      max-height: min(360px, 55vh);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #0b1220;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+    }
+
+    .td-add-wrap .train-combo-dropdown[hidden],
+    .td-add-wrap .team-player-dropdown[hidden] {
+      display: none !important;
+    }
+
+    .td-add-wrap .train-combo-dropdown.open-up,
+    .td-add-wrap .team-player-dropdown.open-up {
+      top: auto;
+      bottom: calc(100% + 6px);
+    }
+
+    .td-add-wrap .train-combo-search-wrap {
+      flex-shrink: 0;
+      padding: 0.55rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .td-add-wrap .train-combo-options {
+      overflow-y: auto;
+      max-height: min(300px, calc(55vh - 52px));
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .td-full-msg {
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: rgba(212, 175, 55, 0.08);
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .td-teams-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .td-toolbar .btn,
+      .td-toolbar .train-option {
+        flex: 1 1 100%;
+      }
+    }
+
     /* ---------- Mobile image export ---------- */
     .mobile-export-modal .modal {
       max-width: 560px;
@@ -1584,8 +2004,8 @@
         <button type="button" class="nav-btn" data-page="teamville">
           <span class="nav-icon">▤</span> Team Ville
         </button>
-        <button type="button" class="nav-btn" data-page="templates">
-          <span class="nav-icon">▦</span> Modèles
+        <button type="button" class="nav-btn" data-page="tempete">
+          <span class="nav-icon">▦</span> Tempête du désert
         </button>
         <button type="button" class="nav-btn" data-page="history">
           <span class="nav-icon">◷</span> Historique
@@ -1594,7 +2014,10 @@
           <span class="nav-icon">⚙</span> Paramètres
         </button>
       </nav>
-      <div class="sidebar-footer">5LE · Last War · v1</div>
+      <div class="sidebar-footer">
+        <div>5LE · Last War · v1</div>
+        <div class="autosave-status" id="autosaveStatus">Sauvegarde auto activée</div>
+      </div>
     </aside>
 
     <div class="main">
@@ -1620,7 +2043,7 @@
             <h2>Bienvenue dans 5LE Manager</h2>
             <p>
               Gérez vos joueurs, préparez le train et vos équipes.
-              Les modules Train, Équipes, Modèles et Historique arriveront bientôt.
+              Préparez le train, Team Ville et la Tempête du désert depuis le menu.
             </p>
           </div>
         </section>
@@ -1817,19 +2240,15 @@
           </div>
         </section>
 
-        <!-- Modèles -->
-        <section class="page" id="page-templates" data-page="templates">
+        <!-- Tempête du désert -->
+        <section class="page" id="page-tempete" data-page="tempete">
           <div class="page-header">
             <div>
-              <h1>Modèles</h1>
-              <p>Templates d'annonces et génération d'images</p>
+              <h1>Tempête du désert</h1>
+              <p>Gestion des équipes A et B</p>
             </div>
           </div>
-          <div class="coming-soon">
-            <div class="badge">Bientôt</div>
-            <h2>Module bientôt disponible</h2>
-            <p>Importez vos images, placez les pseudos et exportez vos annonces en PNG.</p>
-          </div>
+          <div id="tempetePlansRoot"></div>
         </section>
 
         <!-- Historique -->
@@ -1864,12 +2283,6 @@
               <button type="button" class="btn btn-secondary" id="btnImport">Importer une sauvegarde</button>
               <input type="file" id="importFile" class="hidden-file" accept="application/json,.json" />
             </div>
-          </div>
-
-          <div class="panel settings-section">
-            <h2>Données de démonstration</h2>
-            <p>Supprime les joueurs de démo ajoutés au premier lancement (s'ils sont encore présents).</p>
-            <button type="button" class="btn btn-secondary" id="btnRemoveDemo">Supprimer les joueurs de démonstration</button>
           </div>
 
           <div class="danger-zone settings-section">
@@ -1987,7 +2400,6 @@
       storageKey: "5LE_MANAGER_DATA",
       version: 1,
       toastDuration: 3200,
-      demoNicknames: ["FuryX571", "Aiko5LE", "Marmotte", "Twazou", "Danycef"],
       roleOrder: { R5: 0, R4: 1, Membre: 2 },
       trainImageSrc: "images/train.png",
       trainDays: [
@@ -2026,6 +2438,95 @@
     const TEAM_VILLE_KEYS = ["team1", "team2", "team3"];
     const TEAM_VILLE_LABELS = { team1: "TEAM 1", team2: "TEAM 2", team3: "TEAM 3" };
 
+    const DESERT_TEAM_KEYS = ["team1", "team2", "team3", "team4", "team5", "team6"];
+    const DESERT_TEAM_LABELS = {
+      team1: "TEAM 1", team2: "TEAM 2", team3: "TEAM 3",
+      team4: "TEAM 4", team5: "TEAM 5", team6: "TEAM 6"
+    };
+    const DESERT_TEAM_COLORS = {
+      team1: { text: "#dbeafe", num: "#60a5fa", accent: "#3b82f6" },
+      team2: { text: "#ffedd5", num: "#fb923c", accent: "#f97316" },
+      team3: { text: "#dcfce7", num: "#4ade80", accent: "#22c55e" },
+      team4: { text: "#f3e8ff", num: "#c084fc", accent: "#a855f7" },
+      team5: { text: "#fce7f3", num: "#f472b6", accent: "#ec4899" },
+      team6: { text: "#fee2e2", num: "#f87171", accent: "#ef4444" }
+    };
+    const desertTeamBuildings = {
+      team1: { first: "infoCenter", second: "oilRefinery1" },
+      team2: { first: "fieldHospital1", second: "fieldHospital3" },
+      team3: { single: "arsenal" },
+      team4: { first: "fieldHospital4", second: "fieldHospital2" },
+      team5: { single: "mercenaryFactory" },
+      team6: { first: "oilRefinery2", second: "scienceHub" }
+    };
+    const DESERT_BUILDING_KEYS = [
+      "infoCenter", "oilRefinery1", "fieldHospital1", "fieldHospital3", "arsenal",
+      "fieldHospital4", "fieldHospital2", "mercenaryFactory", "oilRefinery2", "scienceHub"
+    ];
+    const DESERT_BUILDING_LABELS = {
+      infoCenter: "INFO CENTER",
+      oilRefinery1: "OIL REFINERY 1",
+      fieldHospital1: "FIELD HOSPITAL 1",
+      fieldHospital3: "FIELD HOSPITAL 3",
+      arsenal: "ARSENAL",
+      fieldHospital4: "FIELD HOSPITAL 4",
+      fieldHospital2: "FIELD HOSPITAL 2",
+      mercenaryFactory: "MERCENARY FACTORY",
+      oilRefinery2: "OIL REFINERY 2",
+      scienceHub: "SCIENCE HUB"
+    };
+    const DESERT_BUILDING_TEAM = {
+      infoCenter: "team1", oilRefinery1: "team1",
+      fieldHospital1: "team2", fieldHospital3: "team2",
+      arsenal: "team3",
+      fieldHospital4: "team4", fieldHospital2: "team4",
+      mercenaryFactory: "team5",
+      oilRefinery2: "team6", scienceHub: "team6"
+    };
+    /* Positions % — cases TEAM haut + zones sous bâtiments (ajustables) */
+    const desertDefaultPositions = {
+      team1Box: { left: 2.5, top: 11.0, width: 13.5, height: 7.8 },
+      team2Box: { left: 19.1, top: 11.0, width: 13.5, height: 7.8 },
+      team3Box: { left: 35.5, top: 11.0, width: 13.3, height: 7.8 },
+      team4Box: { left: 51.8, top: 11.0, width: 13.2, height: 7.8 },
+      team5Box: { left: 67.9, top: 11.0, width: 13.5, height: 7.8 },
+      team6Box: { left: 84.5, top: 11.0, width: 12.8, height: 7.8 },
+      infoCenter: { left: 17.5, top: 40.2, width: 14.5, height: 4.4 },
+      oilRefinery1: { left: 15.5, top: 49.0, width: 14.5, height: 4.4 },
+      fieldHospital1: { left: 6.5, top: 54.0, width: 14.5, height: 4.4 },
+      fieldHospital3: { left: 15.5, top: 62.8, width: 14.5, height: 4.4 },
+      arsenal: { left: 37.5, top: 37.5, width: 16.5, height: 8.8 },
+      fieldHospital4: { left: 69.5, top: 36.8, width: 14.5, height: 4.4 },
+      fieldHospital2: { left: 69.5, top: 47.5, width: 14.5, height: 4.4 },
+      mercenaryFactory: { left: 37.5, top: 63.5, width: 16.5, height: 8.8 },
+      oilRefinery2: { left: 65.5, top: 55.5, width: 14.5, height: 4.4 },
+      scienceHub: { left: 69.0, top: 66.5, width: 14.5, height: 4.4 }
+    };
+    const DESERT_POSITION_KEYS = Object.keys(desertDefaultPositions);
+    const TEMPETE_POSITIONS_VERSION = 1;
+    const TEMPETE_MAX_PER_TEAM = 4;
+    const TEMPETE_PLANS = [
+      {
+        key: "planA",
+        letter: "A",
+        title: "PLAN A",
+        schedule: "22h-22h30",
+        image: "images/tempetea.png",
+        positionsKey: "positionsA",
+        exportPrefix: "tempete-desert-A-5LE"
+      },
+      {
+        key: "planB",
+        letter: "B",
+        title: "PLAN B",
+        schedule: "13h-13h30",
+        image: "images/tempeteb.png",
+        positionsKey: "positionsB",
+        exportPrefix: "tempete-desert-B-5LE"
+      }
+    ];
+
+
     /* ============================= */
     /* STATE                         */
     /* ============================= */
@@ -2039,8 +2540,10 @@
         version: CONFIG.version,
         players: [],
         settings: {},
+        migrations: {},
         train: createDefaultTrain(),
         teamVille: createDefaultTeamVille(),
+        tempete: createDefaultTempete(),
         teams: [],
         templates: [],
         history: []
@@ -2163,6 +2666,77 @@
       return out;
     }
 
+    function createEmptyDesertPlan() {
+      return {
+        team1: [], team2: [], team3: [], team4: [], team5: [], team6: [],
+        allowDuplicates: false
+      };
+    }
+
+    function createDefaultTempete() {
+      return {
+        planA: createEmptyDesertPlan(),
+        planB: createEmptyDesertPlan(),
+        positionsA: clonePositions(desertDefaultPositions),
+        positionsB: clonePositions(desertDefaultPositions),
+        positionsVersion: TEMPETE_POSITIONS_VERSION,
+        compositions: []
+      };
+    }
+
+    function normalizeDesertPlan(plan) {
+      const out = createEmptyDesertPlan();
+      if (!plan || typeof plan !== "object") return out;
+      out.allowDuplicates = !!plan.allowDuplicates;
+      DESERT_TEAM_KEYS.forEach(function (key) {
+        const arr = Array.isArray(plan[key]) ? plan[key] : [];
+        const seen = new Set();
+        out[key] = [];
+        arr.forEach(function (id) {
+          const sid = String(id || "");
+          if (!sid || seen.has(sid)) return;
+          if (out[key].length >= TEMPETE_MAX_PER_TEAM) return;
+          seen.add(sid);
+          out[key].push(sid);
+        });
+      });
+      return out;
+    }
+
+    function normalizeDesertPositions(src) {
+      const out = clonePositions(desertDefaultPositions);
+      if (!src || typeof src !== "object") return out;
+      DESERT_POSITION_KEYS.forEach(function (key) {
+        const p = src[key] || desertDefaultPositions[key];
+        out[key] = {
+          left: Number(p.left) || 0,
+          top: Number(p.top) || 0,
+          width: Number(p.width) || 0,
+          height: Number(p.height) || 0
+        };
+      });
+      return out;
+    }
+
+    function normalizeTempete(data) {
+      const base = createDefaultTempete();
+      if (!data || typeof data !== "object") return base;
+      const version = Number(data.positionsVersion) || 0;
+      const out = {
+        planA: normalizeDesertPlan(data.planA),
+        planB: normalizeDesertPlan(data.planB),
+        positionsA: version >= TEMPETE_POSITIONS_VERSION
+          ? normalizeDesertPositions(data.positionsA)
+          : clonePositions(desertDefaultPositions),
+        positionsB: version >= TEMPETE_POSITIONS_VERSION
+          ? normalizeDesertPositions(data.positionsB)
+          : clonePositions(desertDefaultPositions),
+        positionsVersion: TEMPETE_POSITIONS_VERSION,
+        compositions: Array.isArray(data.compositions) ? data.compositions.slice() : []
+      };
+      return out;
+    }
+
     /* Roster alliance 5LE — R3/R2/R1 → Membre (rôles app : R5, R4, Membre) */
     const ALLIANCE_ROSTER = [
       { nickname: "Aiko5LE", role: "R5" },
@@ -2240,7 +2814,7 @@
       { nickname: "Lionel E", role: "Membre" },
       { nickname: "lennyxd 23", role: "Membre" },
       { nickname: "PASA 35", role: "Membre" },
-      { nickname: "Sersil", role: "Membre" },
+      { nickname: "Sersi1", role: "Membre" },
       { nickname: "LuluVator", role: "Membre" },
       { nickname: "Yu gi ho", role: "Membre" },
       { nickname: "Gaetano6957", role: "Membre" },
@@ -2267,60 +2841,118 @@
       { nickname: "Task12", role: "Membre" }
     ];
 
-    function createDemoPlayers() {
-      const now = Date.now();
-      return ALLIANCE_ROSTER.map(function (entry, index) {
-        return {
-          id: uid("player"),
-          nickname: entry.nickname,
-          role: entry.role,
-          status: "active",
-          team: "",
-          power: "",
-          note: "",
-          createdAt: new Date(now - (ALLIANCE_ROSTER.length - index) * 1000).toISOString(),
-          isDemo: false
-        };
-      });
+    /* Anciens pseudos de démo qui ne font PAS partie du roster réel */
+    const LEGACY_DEMO_ONLY_NICKNAMES = ["marmotte", "danycef"];
+
+    function remapPlayerReferences(idMap) {
+      if (state.train && state.train.assignments) {
+        CONFIG.trainDays.forEach(function (d) {
+          const cur = state.train.assignments[d.key];
+          if (!cur || !Object.prototype.hasOwnProperty.call(idMap, cur)) return;
+          state.train.assignments[d.key] = idMap[cur] || "";
+        });
+      }
+      if (state.teamVille) {
+        TEAM_VILLE_KEYS.forEach(function (key) {
+          if (!Array.isArray(state.teamVille[key])) return;
+          const seen = new Set();
+          state.teamVille[key] = state.teamVille[key]
+            .map(function (id) {
+              if (Object.prototype.hasOwnProperty.call(idMap, id)) return idMap[id] || "";
+              return id;
+            })
+            .filter(function (id) {
+              if (!id || seen.has(id)) return false;
+              seen.add(id);
+              return true;
+            });
+        });
+      }
+      if (state.tempete) {
+        ["planA", "planB"].forEach(function (planKey) {
+          const plan = state.tempete[planKey];
+          if (!plan) return;
+          DESERT_TEAM_KEYS.forEach(function (key) {
+            if (!Array.isArray(plan[key])) return;
+            const seen = new Set();
+            plan[key] = plan[key]
+              .map(function (id) {
+                if (Object.prototype.hasOwnProperty.call(idMap, id)) return idMap[id] || "";
+                return id;
+              })
+              .filter(function (id) {
+                if (!id || seen.has(id)) return false;
+                seen.add(id);
+                return true;
+              })
+              .slice(0, TEMPETE_MAX_PER_TEAM);
+          });
+        });
+      }
     }
 
-    /** Ajoute les joueurs du roster manquants (sans écraser les existants). */
-    function ensureAllianceRoster() {
-      let added = 0;
-      let updated = 0;
-      const byNick = {};
-      state.players.forEach(function (p) {
-        byNick[p.nickname.toLowerCase()] = p;
+    /**
+     * Migration unique : Sersi1, dédoublonnage, retrait des fausses entrées démo.
+     */
+    function migratePlayerData() {
+      if (!state.migrations || typeof state.migrations !== "object") state.migrations = {};
+      if (state.migrations.playerCleanupV1) {
+        return { ran: false, count: state.players.length };
+      }
+
+      const rosterSet = {};
+      ALLIANCE_ROSTER.forEach(function (entry) {
+        rosterSet[entry.nickname.trim().toLowerCase()] = entry;
       });
 
-      ALLIANCE_ROSTER.forEach(function (entry, index) {
-        const key = entry.nickname.toLowerCase();
-        const existing = byNick[key];
-        if (existing) {
-          if (existing.role !== entry.role) {
-            existing.role = entry.role;
-            existing.isDemo = false;
-            updated++;
-          }
+      // 1) Corriger Sersil → Sersi1
+      state.players.forEach(function (p) {
+        if (String(p.nickname || "").trim().toLowerCase() === "sersil") {
+          p.nickname = "Sersi1";
+        }
+      });
+
+      // 2) Grouper par pseudo normalisé
+      const groups = {};
+      state.players.forEach(function (p) {
+        const key = String(p.nickname || "").trim().toLowerCase();
+        if (!key) return;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(p);
+      });
+
+      const keepers = [];
+      const idMap = {};
+
+      Object.keys(groups).forEach(function (key) {
+        // Anciens joueurs de démo uniquement (pas dans le roster réel)
+        if (LEGACY_DEMO_ONLY_NICKNAMES.indexOf(key) !== -1 && !rosterSet[key]) {
+          groups[key].forEach(function (p) { idMap[p.id] = null; });
           return;
         }
-        const player = {
-          id: uid("player"),
-          nickname: entry.nickname,
-          role: entry.role,
-          status: "active",
-          team: "",
-          power: "",
-          note: "",
-          createdAt: new Date(Date.now() - (ALLIANCE_ROSTER.length - index) * 1000).toISOString(),
-          isDemo: false
-        };
-        state.players.push(player);
-        byNick[key] = player;
-        added++;
+
+        const group = groups[key].slice();
+        group.sort(function (a, b) {
+          const aDemo = !!a.isDemo;
+          const bDemo = !!b.isDemo;
+          if (aDemo !== bDemo) return aDemo ? 1 : -1;
+          return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+        });
+
+        const keep = group[0];
+        keep.nickname = rosterSet[key] ? rosterSet[key].nickname : String(keep.nickname).trim();
+        keep.isDemo = false;
+        keepers.push(keep);
+        group.forEach(function (p) {
+          idMap[p.id] = keep.id;
+        });
       });
 
-      return { added: added, updated: updated };
+      remapPlayerReferences(idMap);
+      state.players = keepers;
+      state.migrations.playerCleanupV1 = true;
+
+      return { ran: true, count: state.players.length };
     }
 
     function uid(prefix) {
@@ -2328,9 +2960,12 @@
     }
 
     /* ============================= */
-    /* STOCKAGE                      */
+    /* STOCKAGE (autosave immédiat)  */
     /* ============================= */
     const Storage = {
+      _debounceTimer: null,
+      _statusTimer: null,
+
       load() {
         try {
           const raw = localStorage.getItem(CONFIG.storageKey);
@@ -2350,6 +2985,7 @@
           return true;
         } catch (e) {
           console.error("5LE Manager: sauvegarde échouée", e);
+          this.setStatus("Erreur de sauvegarde", "error");
           Notifications.show("Erreur de sauvegarde", "error");
           return false;
         }
@@ -2361,16 +2997,74 @@
           version: data.version || CONFIG.version,
           players: Array.isArray(data.players) ? data.players.map(normalizePlayer).filter(Boolean) : [],
           settings: data.settings && typeof data.settings === "object" ? data.settings : base.settings,
+          migrations: data.migrations && typeof data.migrations === "object" ? data.migrations : {},
           train: normalizeTrain(data.train),
           teamVille: normalizeTeamVille(data.teamVille),
+          tempete: normalizeTempete(data.tempete),
           teams: Array.isArray(data.teams) ? data.teams : base.teams,
           templates: Array.isArray(data.templates) ? data.templates : base.templates,
           history: Array.isArray(data.history) ? data.history : base.history
         };
       },
 
+      /** Sauvegarde immédiate de tout l'état (joueurs, Train, Team Ville, etc.). */
       persist() {
-        return this.save(state);
+        if (this._debounceTimer) {
+          clearTimeout(this._debounceTimer);
+          this._debounceTimer = null;
+        }
+        const ok = this.save(state);
+        if (ok) this.setStatus("Enregistré à l'instant", "saved");
+        return ok;
+      },
+
+      /** Pendant un drag : sauvegarde rapide sans spammer localStorage. */
+      persistSoon(delayMs) {
+        const delay = delayMs == null ? 200 : delayMs;
+        if (this._debounceTimer) clearTimeout(this._debounceTimer);
+        const self = this;
+        this._debounceTimer = setTimeout(function () {
+          self._debounceTimer = null;
+          self.persist();
+        }, delay);
+      },
+
+      /** Force l'écriture immédiate (fermeture onglet / app en arrière-plan). */
+      flush() {
+        if (this._debounceTimer) {
+          clearTimeout(this._debounceTimer);
+          this._debounceTimer = null;
+        }
+        try {
+          localStorage.setItem(CONFIG.storageKey, JSON.stringify(state));
+          return true;
+        } catch (e) {
+          return false;
+        }
+      },
+
+      setStatus(message, type) {
+        const el = document.getElementById("autosaveStatus");
+        if (!el) return;
+        el.textContent = message;
+        el.classList.remove("saved", "error");
+        if (type) el.classList.add(type);
+        if (this._statusTimer) clearTimeout(this._statusTimer);
+        if (type === "saved") {
+          this._statusTimer = setTimeout(function () {
+            el.textContent = "Sauvegarde auto activée";
+            el.classList.remove("saved", "error");
+          }, 1800);
+        }
+      },
+
+      bindLifecycle() {
+        const self = this;
+        window.addEventListener("pagehide", function () { self.flush(); });
+        window.addEventListener("beforeunload", function () { self.flush(); });
+        document.addEventListener("visibilitychange", function () {
+          if (document.visibilityState === "hidden") self.flush();
+        });
       }
     };
 
@@ -2501,6 +3195,7 @@
         selectedIds.delete(id);
         Train.clearPlayerAssignments(id);
         TeamVille.clearPlayer(id);
+        Tempete.clearPlayer(id);
         Storage.persist();
       },
 
@@ -2511,6 +3206,7 @@
           selectedIds.delete(id);
           Train.clearPlayerAssignments(id);
           TeamVille.clearPlayer(id);
+          Tempete.clearPlayer(id);
         });
         Storage.persist();
       },
@@ -2521,24 +3217,6 @@
           if (set.has(p.id)) p.status = status;
         });
         Storage.persist();
-      },
-
-      removeDemo() {
-        const before = state.players.length;
-        const removedPlayers = state.players.filter(function (p) {
-          return p.isDemo || CONFIG.demoNicknames.includes(p.nickname);
-        });
-        state.players = state.players.filter(function (p) {
-          return !(p.isDemo || CONFIG.demoNicknames.includes(p.nickname));
-        });
-        removedPlayers.forEach(function (p) {
-          Train.clearPlayerAssignments(p.id);
-          TeamVille.clearPlayer(p.id);
-        });
-        const removed = before - state.players.length;
-        selectedIds.clear();
-        Storage.persist();
-        return removed;
       }
     };
 
@@ -2712,6 +3390,7 @@
         Stats.render();
         if (typeof Train !== "undefined") Train.refresh();
         if (typeof TeamVille !== "undefined") TeamVille.refresh();
+        if (typeof Tempete !== "undefined") Tempete.refresh();
       },
 
       roleBadge(role) {
@@ -3174,6 +3853,7 @@
           this.drag.el.style.left = pos.left + "%";
           this.drag.el.style.top = pos.top + "%";
         }
+        Storage.persistSoon(180);
       },
 
       onPointerUp(e) {
@@ -3648,9 +4328,9 @@
                 '<span class="tv-team-count" id="tv-count-' + key + '">0 joueur</span>' +
               "</div>" +
               '<div class="tv-member-list" id="tv-members-' + key + '" data-team="' + key + '"></div>' +
-              '<div class="tv-add-wrap train-combo" id="tv-combo-' + key + '" data-team="' + key + '">' +
+              '<div class="tv-add-wrap train-combo team-player-picker-wrapper" id="tv-combo-' + key + '" data-team="' + key + '">' +
                 '<button type="button" class="btn btn-secondary btn-block train-combo-trigger tv-add-btn" aria-haspopup="listbox" aria-expanded="false">+ Ajouter un joueur</button>' +
-                '<div class="train-combo-dropdown" hidden>' +
+                '<div class="train-combo-dropdown team-player-dropdown" hidden>' +
                   '<div class="train-combo-search-wrap">' +
                     '<input type="search" class="train-combo-search form-control" placeholder="🔎 Rechercher un joueur..." autocomplete="off" enterkeyhint="search" />' +
                   "</div>" +
@@ -3878,13 +4558,34 @@
         const dropdown = combo.querySelector(".train-combo-dropdown");
         const search = combo.querySelector(".train-combo-search");
         const trigger = combo.querySelector(".train-combo-trigger");
+        const block = combo.closest(".tv-team-block");
+
+        document.querySelectorAll(".tv-team-block.open-picker").forEach(function (el) {
+          el.classList.remove("open-picker");
+        });
+        if (block) block.classList.add("open-picker");
+
         combo.classList.add("open");
         dropdown.hidden = false;
+        dropdown.classList.remove("open-up");
         trigger.setAttribute("aria-expanded", "true");
         this.openTeam = teamKey;
         search.value = "";
         this.renderComboOptions(teamKey, "");
-        setTimeout(function () { search.focus(); }, 10);
+
+        // Ouvrir vers le haut s'il n'y a pas assez de place en bas
+        requestAnimationFrame(function () {
+          const rect = trigger.getBoundingClientRect();
+          const spaceBelow = window.innerHeight - rect.bottom;
+          const spaceAbove = rect.top;
+          const needed = Math.min(360, window.innerHeight * 0.55) + 16;
+          if (spaceBelow < needed && spaceAbove > spaceBelow) {
+            dropdown.classList.add("open-up");
+          } else {
+            dropdown.classList.remove("open-up");
+          }
+          search.focus();
+        });
       },
 
       closeCombo() {
@@ -3895,10 +4596,18 @@
           const dropdown = combo.querySelector(".train-combo-dropdown");
           const trigger = combo.querySelector(".train-combo-trigger");
           const search = combo.querySelector(".train-combo-search");
-          if (dropdown) dropdown.hidden = true;
+          const block = combo.closest(".tv-team-block");
+          if (dropdown) {
+            dropdown.hidden = true;
+            dropdown.classList.remove("open-up");
+          }
           if (trigger) trigger.setAttribute("aria-expanded", "false");
           if (search) search.value = "";
+          if (block) block.classList.remove("open-picker");
         }
+        document.querySelectorAll(".tv-team-block.open-picker").forEach(function (el) {
+          el.classList.remove("open-picker");
+        });
         this.openTeam = null;
         this.highlightIndex = -1;
       },
@@ -3988,6 +4697,7 @@
           this.drag.el.style.left = pos.left + "%";
           this.drag.el.style.top = pos.top + "%";
         }
+        Storage.persistSoon(180);
       },
 
       onPointerUp(e) {
@@ -4248,6 +4958,887 @@
       }
     };
 
+
+    /* ============================= */
+    /* TEMPÊTE DU DÉSERT             */
+    /* ============================= */
+    const Tempete = {
+      adjustingPlan: null,
+      drag: null,
+      openComboKey: null,
+      highlightIndex: -1,
+      built: false,
+
+      ensureState() {
+        state.tempete = normalizeTempete(state.tempete);
+      },
+
+      getPlanMeta(planKey) {
+        return TEMPETE_PLANS.find(function (p) { return p.key === planKey; }) || null;
+      },
+
+      getPlan(planKey) {
+        this.ensureState();
+        return state.tempete[planKey];
+      },
+
+      getPositions(planKey) {
+        this.ensureState();
+        const meta = this.getPlanMeta(planKey);
+        return state.tempete[meta.positionsKey];
+      },
+
+      getPlayer(id) {
+        return state.players.find(function (p) { return p.id === id; }) || null;
+      },
+
+      clearPlayer(playerId) {
+        this.ensureState();
+        TEMPETE_PLANS.forEach(function (meta) {
+          const plan = state.tempete[meta.key];
+          DESERT_TEAM_KEYS.forEach(function (teamKey) {
+            plan[teamKey] = plan[teamKey].filter(function (id) { return id !== playerId; });
+          });
+        });
+      },
+
+      getUsedIds(planKey, exceptTeam) {
+        const used = new Set();
+        const plan = this.getPlan(planKey);
+        DESERT_TEAM_KEYS.forEach(function (key) {
+          if (key === exceptTeam) return;
+          (plan[key] || []).forEach(function (id) { used.add(id); });
+        });
+        return used;
+      },
+
+      getEligiblePlayers(planKey, teamKey, query) {
+        const plan = this.getPlan(planKey);
+        const allowDup = !!plan.allowDuplicates;
+        const currentIds = new Set(plan[teamKey] || []);
+        const used = allowDup ? new Set() : this.getUsedIds(planKey, teamKey);
+        const q = (query || "").trim().toLowerCase();
+
+        return state.players
+          .slice()
+          .filter(function (p) {
+            if (currentIds.has(p.id)) return false;
+            if (used.has(p.id)) return false;
+            if (q && p.nickname.toLowerCase().indexOf(q) === -1) return false;
+            return true;
+          })
+          .sort(function (a, b) {
+            const ao = a.status === "active" ? 0 : 1;
+            const bo = b.status === "active" ? 0 : 1;
+            if (ao !== bo) return ao - bo;
+            return a.nickname.localeCompare(b.nickname, "fr", { sensitivity: "base" });
+          });
+      },
+
+      comboId(planKey, teamKey) {
+        return "td-combo-" + planKey + "-" + teamKey;
+      },
+
+      buildUI() {
+        if (this.built) return;
+        const root = document.getElementById("tempetePlansRoot");
+        root.innerHTML = TEMPETE_PLANS.map(function (meta) {
+          const zonesHtml = DESERT_POSITION_KEYS.map(function (zoneKey) {
+            const isTeamBox = /Box$/.test(zoneKey);
+            const teamKey = isTeamBox ? zoneKey.replace(/Box$/, "") : DESERT_BUILDING_TEAM[zoneKey];
+            const label = isTeamBox
+              ? DESERT_TEAM_LABELS[teamKey]
+              : DESERT_BUILDING_LABELS[zoneKey];
+            const extraClass = isTeamBox ? "" : (" " + teamKey);
+            const teamAttr = isTeamBox ? ' data-team="' + teamKey + '"' : "";
+            const buildingAttr = isTeamBox ? "" : ' data-building="' + zoneKey + '"';
+            return (
+              '<div class="td-zone' + extraClass + '" id="td-zone-' + meta.key + '-' + zoneKey + '"' +
+                ' data-plan="' + meta.key + '" data-zone="' + zoneKey + '" data-label="' + escapeHtml(label) + '"' +
+                teamAttr + buildingAttr + ">" +
+                '<div class="td-zone-list" id="td-list-' + meta.key + '-' + zoneKey + '"></div>' +
+                '<span class="td-zone-handle" data-resize="1"></span>' +
+              "</div>"
+            );
+          }).join("");
+
+          const teamsHtml = DESERT_TEAM_KEYS.map(function (teamKey) {
+            return (
+              '<div class="td-team-block ' + teamKey + '" data-plan="' + meta.key + '" data-team="' + teamKey + '">' +
+                '<div class="td-team-header">' +
+                  "<h3>" + DESERT_TEAM_LABELS[teamKey] + "</h3>" +
+                  '<span class="td-team-count" id="td-count-' + meta.key + '-' + teamKey + '">0/4</span>' +
+                "</div>" +
+                '<div class="tv-member-list" id="td-members-' + meta.key + '-' + teamKey + '"></div>' +
+                '<div class="td-add-wrap train-combo team-player-picker-wrapper" id="' + Tempete.comboId(meta.key, teamKey) + '" data-plan="' + meta.key + '" data-team="' + teamKey + '">' +
+                  '<button type="button" class="btn btn-secondary btn-block train-combo-trigger td-add-btn" aria-haspopup="listbox" aria-expanded="false">+ Ajouter un joueur</button>' +
+                  '<div class="train-combo-dropdown team-player-dropdown" hidden>' +
+                    '<div class="train-combo-search-wrap">' +
+                      '<input type="search" class="train-combo-search form-control" placeholder="🔎 Rechercher un joueur..." autocomplete="off" enterkeyhint="search" />' +
+                    "</div>" +
+                    '<div class="train-combo-options" role="listbox"></div>' +
+                  "</div>" +
+                "</div>" +
+                '<div class="td-full-msg" id="td-full-' + meta.key + '-' + teamKey + '" hidden>Équipe complète — 4/4</div>' +
+              "</div>"
+            );
+          }).join("");
+
+          return (
+            '<div class="td-plan" data-plan="' + meta.key + '" id="td-plan-' + meta.key + '">' +
+              '<h2 class="td-plan-title">' + meta.title + " <span>— " + meta.schedule + "</span></h2>" +
+              '<div class="train-toolbar tv-toolbar td-toolbar">' +
+                '<button type="button" class="btn btn-primary td-export" data-plan="' + meta.key + '">Exporter Plan ' + meta.letter + "</button>" +
+                '<button type="button" class="btn btn-secondary td-adjust" data-plan="' + meta.key + '" id="td-adjust-' + meta.key + '">Ajuster les positions</button>' +
+                '<button type="button" class="btn btn-ghost td-reset-pos" data-plan="' + meta.key + '">Réinitialiser les positions</button>' +
+                '<button type="button" class="btn btn-secondary td-save-comp" data-plan="' + meta.key + '">Sauvegarder la composition</button>' +
+                '<button type="button" class="btn btn-danger td-clear" data-plan="' + meta.key + '">Vider le Plan ' + meta.letter + "</button>" +
+                '<label class="train-option td-dup-label" id="td-dup-label-' + meta.key + '">' +
+                  '<input type="checkbox" class="td-dup" data-plan="' + meta.key + '" id="td-dup-' + meta.key + '" />' +
+                  "Autoriser les doublons" +
+                "</label>" +
+              "</div>" +
+              '<div class="train-preview-section td-preview-section">' +
+                '<div class="panel train-preview-panel">' +
+                  "<h2>Aperçu</h2>" +
+                  '<div class="train-stage train-preview td-stage" id="td-stage-' + meta.key + '" data-plan="' + meta.key + '">' +
+                    '<img id="td-img-' + meta.key + '" src="' + meta.image + '" alt="Plan intervention ' + meta.letter + ' Tempête du désert" />' +
+                    zonesHtml +
+                  "</div>" +
+                  '<div class="train-error" id="td-img-error-' + meta.key + '">Impossible de charger le plan ' + meta.letter + ".</div>" +
+                  '<p class="train-hint" id="td-adjust-hint-' + meta.key + '" hidden>' +
+                    "Mode ajustement : déplacez ou redimensionnez les zones. Sauvegarde automatique." +
+                  "</p>" +
+                "</div>" +
+              "</div>" +
+              '<div class="td-teams-section">' +
+                "<h2>Gestion des équipes — Plan " + meta.letter + "</h2>" +
+                '<div class="td-teams-grid" id="td-teams-' + meta.key + '">' + teamsHtml + "</div>" +
+              "</div>" +
+            "</div>"
+          );
+        }).join("");
+
+        this.built = true;
+      },
+
+      renderDesertPlan(planKey) {
+        this.ensureState();
+        this.buildUI();
+        const plan = this.getPlan(planKey);
+        const meta = this.getPlanMeta(planKey);
+        if (!plan || !meta) return;
+
+        const dup = document.getElementById("td-dup-" + planKey);
+        const dupLabel = document.getElementById("td-dup-label-" + planKey);
+        if (dup) {
+          dup.checked = !!plan.allowDuplicates;
+          if (dupLabel) dupLabel.classList.toggle("active", !!plan.allowDuplicates);
+        }
+
+        // purge orphan ids
+        let changed = false;
+        DESERT_TEAM_KEYS.forEach(function (teamKey) {
+          const before = plan[teamKey].length;
+          plan[teamKey] = plan[teamKey].filter(function (id) {
+            return !!Tempete.getPlayer(id);
+          }).slice(0, TEMPETE_MAX_PER_TEAM);
+          if (plan[teamKey].length !== before) changed = true;
+        });
+        if (changed) Storage.persist();
+
+        DESERT_TEAM_KEYS.forEach(function (teamKey) {
+          const ids = plan[teamKey] || [];
+          const countEl = document.getElementById("td-count-" + planKey + "-" + teamKey);
+          const listEl = document.getElementById("td-members-" + planKey + "-" + teamKey);
+          const combo = document.getElementById(Tempete.comboId(planKey, teamKey));
+          const fullMsg = document.getElementById("td-full-" + planKey + "-" + teamKey);
+          const block = listEl ? listEl.closest(".td-team-block") : null;
+          const titleEl = block ? block.querySelector(".td-team-header h3") : null;
+          const full = ids.length >= TEMPETE_MAX_PER_TEAM;
+
+          if (titleEl) {
+            titleEl.textContent = DESERT_TEAM_LABELS[teamKey] + " — " + ids.length + "/4";
+          }
+          if (countEl) {
+            countEl.textContent = ids.length + "/4";
+            countEl.classList.toggle("full", full);
+            countEl.hidden = true;
+          }
+
+          if (combo) combo.hidden = full;
+          if (fullMsg) fullMsg.hidden = !full;
+
+          if (!listEl) return;
+          if (!ids.length) {
+            listEl.innerHTML = '<div class="tv-empty">Aucun joueur</div>';
+            return;
+          }
+
+          listEl.innerHTML = ids.map(function (id, index) {
+            const player = Tempete.getPlayer(id);
+            const name = player ? player.nickname : "(supprimé)";
+            return (
+              '<div class="tv-member-row" data-plan="' + planKey + '" data-team="' + teamKey + '" data-id="' + escapeHtml(id) + '" data-index="' + index + '">' +
+                '<span class="tv-member-num">' + (index + 1) + "</span>" +
+                '<span class="tv-member-name">' + escapeHtml(name) + "</span>" +
+                '<div class="tv-member-actions">' +
+                  '<button type="button" class="tv-icon-btn td-move-up" data-plan="' + planKey + '" data-team="' + teamKey + '" data-index="' + index + '" title="Monter">↑</button>' +
+                  '<button type="button" class="tv-icon-btn td-move-down" data-plan="' + planKey + '" data-team="' + teamKey + '" data-index="' + index + '" title="Descendre">↓</button>' +
+                "</div>" +
+                '<button type="button" class="tv-icon-btn danger td-remove" data-plan="' + planKey + '" data-team="' + teamKey + '" data-id="' + escapeHtml(id) + '" title="Retirer">×</button>' +
+              "</div>"
+            );
+          }).join("");
+        });
+
+        this.refreshOverlay(planKey);
+
+        if (this.openComboKey && this.openComboKey.indexOf(planKey + ":") === 0) {
+          const parts = this.openComboKey.split(":");
+          const combo = document.getElementById(this.comboId(parts[0], parts[1]));
+          const search = combo ? combo.querySelector(".train-combo-search") : null;
+          this.renderComboOptions(parts[0], parts[1], search ? search.value : "");
+        }
+      },
+
+      calcFontSize(count, boxHeight) {
+        if (count <= 0) return 14;
+        const available = Math.max(24, boxHeight - 4);
+        const line = available / count;
+        let size = Math.floor(line * 0.78);
+        if (count <= 2) size = Math.min(size, 16);
+        else if (count <= 4) size = Math.min(size, 13);
+        else size = Math.min(size, 11);
+        return Math.max(6, Math.min(16, size));
+      },
+
+      getBuildingPlayerIds(planKey, buildingKey) {
+        const teamKey = DESERT_BUILDING_TEAM[buildingKey];
+        const plan = this.getPlan(planKey);
+        const ids = (plan[teamKey] || []).slice(0, TEMPETE_MAX_PER_TEAM);
+        const mapping = desertTeamBuildings[teamKey];
+        if (!mapping) return [];
+        if (mapping.single === buildingKey) return ids;
+        if (mapping.first === buildingKey) return ids.slice(0, 2);
+        if (mapping.second === buildingKey) return ids.slice(2, 4);
+        return [];
+      },
+
+      applyZoneStyles(planKey) {
+        const positions = this.getPositions(planKey);
+        DESERT_POSITION_KEYS.forEach(function (zoneKey) {
+          const el = document.getElementById("td-zone-" + planKey + "-" + zoneKey);
+          const pos = positions[zoneKey] || desertDefaultPositions[zoneKey];
+          if (!el || !pos) return;
+          el.style.left = pos.left + "%";
+          el.style.top = pos.top + "%";
+          el.style.width = pos.width + "%";
+          el.style.height = pos.height + "%";
+        });
+      },
+
+      fillZoneList(planKey, zoneKey, ids, numbered) {
+        const listEl = document.getElementById("td-list-" + planKey + "-" + zoneKey);
+        const zoneEl = document.getElementById("td-zone-" + planKey + "-" + zoneKey);
+        if (!listEl || !zoneEl) return;
+        const fontSize = this.calcFontSize(ids.length, zoneEl.clientHeight || 40);
+        listEl.style.fontSize = fontSize + "px";
+
+        listEl.innerHTML = ids.map(function (id, index) {
+          const player = Tempete.getPlayer(id);
+          if (!player) return "";
+          const numHtml = numbered
+            ? '<span class="td-num">' + (index + 1) + ".</span>"
+            : "";
+          return (
+            '<div class="td-line">' +
+              numHtml +
+              '<span class="td-nick">' + escapeHtml(player.nickname) + "</span>" +
+            "</div>"
+          );
+        }).join("");
+
+        requestAnimationFrame(function () {
+          Array.prototype.forEach.call(listEl.querySelectorAll(".td-line"), function (line) {
+            const nick = line.querySelector(".td-nick");
+            if (!nick) return;
+            const text = nick.textContent;
+            nick.style.fontSize = "";
+            fitSingleLineText(nick, text, {
+              maxSize: fontSize,
+              minSize: 5,
+              box: nick
+            });
+          });
+        });
+      },
+
+      refreshOverlay(planKey) {
+        this.ensureState();
+        this.applyZoneStyles(planKey);
+        const plan = this.getPlan(planKey);
+
+        DESERT_TEAM_KEYS.forEach(function (teamKey) {
+          Tempete.fillZoneList(planKey, teamKey + "Box", plan[teamKey] || [], true);
+        });
+
+        DESERT_BUILDING_KEYS.forEach(function (buildingKey) {
+          Tempete.fillZoneList(
+            planKey,
+            buildingKey,
+            Tempete.getBuildingPlayerIds(planKey, buildingKey),
+            false
+          );
+        });
+      },
+
+      refresh() {
+        this.ensureState();
+        this.buildUI();
+        TEMPETE_PLANS.forEach(function (meta) {
+          Tempete.renderDesertPlan(meta.key);
+        });
+      },
+
+      addPlayerToDesertTeam(planKey, teamKey, playerId) {
+        this.ensureState();
+        if (!playerId || !DESERT_TEAM_KEYS.includes(teamKey)) return;
+        if (!this.getPlayer(playerId)) return;
+        const plan = this.getPlan(planKey);
+        if ((plan[teamKey] || []).length >= TEMPETE_MAX_PER_TEAM) {
+          Notifications.show("Équipe complète — 4/4", "info");
+          return;
+        }
+        if (!plan.allowDuplicates) {
+          DESERT_TEAM_KEYS.forEach(function (key) {
+            plan[key] = plan[key].filter(function (id) { return id !== playerId; });
+          });
+        }
+        if (plan[teamKey].indexOf(playerId) === -1) {
+          plan[teamKey].push(playerId);
+        }
+        if (plan[teamKey].length > TEMPETE_MAX_PER_TEAM) {
+          plan[teamKey] = plan[teamKey].slice(0, TEMPETE_MAX_PER_TEAM);
+        }
+        Storage.persist();
+        this.closeCombo();
+        this.renderDesertPlan(planKey);
+      },
+
+      removePlayerFromDesertTeam(planKey, teamKey, playerId) {
+        this.ensureState();
+        const plan = this.getPlan(planKey);
+        plan[teamKey] = (plan[teamKey] || []).filter(function (id) { return id !== playerId; });
+        Storage.persist();
+        this.renderDesertPlan(planKey);
+      },
+
+      moveDesertPlayer(planKey, teamKey, index, direction) {
+        this.ensureState();
+        const plan = this.getPlan(planKey);
+        const arr = plan[teamKey] || [];
+        const toIndex = index + direction;
+        if (index < 0 || toIndex < 0 || index >= arr.length || toIndex >= arr.length) return;
+        const item = arr.splice(index, 1)[0];
+        arr.splice(toIndex, 0, item);
+        Storage.persist();
+        this.renderDesertPlan(planKey);
+      },
+
+      clearPlan(planKey) {
+        this.ensureState();
+        state.tempete[planKey] = createEmptyDesertPlan();
+        Storage.persist();
+        this.renderDesertPlan(planKey);
+      },
+
+      resetPositions(planKey) {
+        this.ensureState();
+        const meta = this.getPlanMeta(planKey);
+        state.tempete[meta.positionsKey] = clonePositions(desertDefaultPositions);
+        state.tempete.positionsVersion = TEMPETE_POSITIONS_VERSION;
+        Storage.persist();
+        this.refreshOverlay(planKey);
+        Notifications.show("Positions Plan " + meta.letter + " réinitialisées", "success");
+      },
+
+      saveComposition(planKey) {
+        this.ensureState();
+        const meta = this.getPlanMeta(planKey);
+        const plan = this.getPlan(planKey);
+        const date = new Date();
+        const labelDate = date.toLocaleDateString("fr-FR", {
+          day: "numeric",
+          month: "long"
+        });
+        const entry = {
+          id: uid("tempete"),
+          type: "tempete",
+          planKey: planKey,
+          title: "Tempête " + meta.letter + " - " + labelDate,
+          createdAt: date.toISOString(),
+          teams: {}
+        };
+        DESERT_TEAM_KEYS.forEach(function (key) {
+          entry.teams[key] = (plan[key] || []).slice();
+        });
+        if (!Array.isArray(state.tempete.compositions)) state.tempete.compositions = [];
+        state.tempete.compositions.unshift(entry);
+        if (!Array.isArray(state.history)) state.history = [];
+        state.history.unshift({
+          id: entry.id,
+          type: "tempete",
+          title: entry.title,
+          createdAt: entry.createdAt,
+          planKey: planKey
+        });
+        Storage.persist();
+        Notifications.show("Composition enregistrée : " + entry.title, "success");
+      },
+
+      setAdjustMode(planKey, on) {
+        if (this.adjustingPlan && this.adjustingPlan !== planKey) {
+          this.setAdjustMode(this.adjustingPlan, false);
+        }
+        this.adjustingPlan = on ? planKey : null;
+        TEMPETE_PLANS.forEach(function (meta) {
+          const stage = document.getElementById("td-stage-" + meta.key);
+          const btn = document.getElementById("td-adjust-" + meta.key);
+          const hint = document.getElementById("td-adjust-hint-" + meta.key);
+          const active = Tempete.adjustingPlan === meta.key;
+          if (stage) stage.classList.toggle("adjusting", active);
+          if (btn) {
+            btn.classList.toggle("btn-primary", active);
+            btn.classList.toggle("btn-secondary", !active);
+            btn.textContent = active ? "Terminer l'ajustement" : "Ajuster les positions";
+          }
+          if (hint) hint.hidden = !active;
+        });
+        if (!on && planKey) this.refreshOverlay(planKey);
+      },
+
+      openCombo(planKey, teamKey) {
+        const plan = this.getPlan(planKey);
+        if ((plan[teamKey] || []).length >= TEMPETE_MAX_PER_TEAM) return;
+
+        if (this.openComboKey) this.closeCombo();
+        const combo = document.getElementById(this.comboId(planKey, teamKey));
+        if (!combo) return;
+        const dropdown = combo.querySelector(".train-combo-dropdown");
+        const search = combo.querySelector(".train-combo-search");
+        const trigger = combo.querySelector(".train-combo-trigger");
+        const block = combo.closest(".td-team-block");
+
+        document.querySelectorAll(".td-team-block.open-picker").forEach(function (el) {
+          el.classList.remove("open-picker");
+        });
+        if (block) block.classList.add("open-picker");
+
+        combo.classList.add("open");
+        dropdown.hidden = false;
+        dropdown.classList.remove("open-up");
+        trigger.setAttribute("aria-expanded", "true");
+        this.openComboKey = planKey + ":" + teamKey;
+        search.value = "";
+        this.renderComboOptions(planKey, teamKey, "");
+
+        requestAnimationFrame(function () {
+          const rect = trigger.getBoundingClientRect();
+          const spaceBelow = window.innerHeight - rect.bottom;
+          const spaceAbove = rect.top;
+          const needed = Math.min(360, window.innerHeight * 0.55) + 16;
+          if (spaceBelow < needed && spaceAbove > spaceBelow) {
+            dropdown.classList.add("open-up");
+          } else {
+            dropdown.classList.remove("open-up");
+          }
+          search.focus();
+        });
+      },
+
+      closeCombo() {
+        if (!this.openComboKey) return;
+        const parts = this.openComboKey.split(":");
+        const combo = document.getElementById(this.comboId(parts[0], parts[1]));
+        if (combo) {
+          combo.classList.remove("open");
+          const dropdown = combo.querySelector(".train-combo-dropdown");
+          const trigger = combo.querySelector(".train-combo-trigger");
+          const search = combo.querySelector(".train-combo-search");
+          const block = combo.closest(".td-team-block");
+          if (dropdown) {
+            dropdown.hidden = true;
+            dropdown.classList.remove("open-up");
+          }
+          if (trigger) trigger.setAttribute("aria-expanded", "false");
+          if (search) search.value = "";
+          if (block) block.classList.remove("open-picker");
+        }
+        document.querySelectorAll(".td-team-block.open-picker").forEach(function (el) {
+          el.classList.remove("open-picker");
+        });
+        this.openComboKey = null;
+        this.highlightIndex = -1;
+      },
+
+      renderComboOptions(planKey, teamKey, query) {
+        const combo = document.getElementById(this.comboId(planKey, teamKey));
+        if (!combo) return;
+        const optionsEl = combo.querySelector(".train-combo-options");
+        const players = this.getEligiblePlayers(planKey, teamKey, query);
+        if (!players.length) {
+          optionsEl.innerHTML = '<div class="train-combo-empty">Aucun joueur trouvé</div>';
+          this.highlightIndex = -1;
+          return;
+        }
+        optionsEl.innerHTML = players.map(function (p, idx) {
+          const inactive = p.status !== "active" ? ' style="opacity:0.7"' : "";
+          return (
+            '<button type="button" class="train-combo-option" role="option" data-id="' +
+            escapeHtml(p.id) + '" data-index="' + idx + '"' + inactive + ">" +
+              "<span>" + escapeHtml(p.nickname) + "</span>" +
+              '<span class="role-mini">' + escapeHtml(p.role) + "</span>" +
+            "</button>"
+          );
+        }).join("");
+        this.highlightIndex = 0;
+        this.syncHighlight(planKey, teamKey);
+      },
+
+      syncHighlight(planKey, teamKey) {
+        const combo = document.getElementById(this.comboId(planKey, teamKey));
+        if (!combo) return;
+        const options = combo.querySelectorAll(".train-combo-option");
+        options.forEach(function (opt, idx) {
+          opt.classList.toggle("active", idx === Tempete.highlightIndex);
+        });
+        const active = options[this.highlightIndex];
+        if (active) active.scrollIntoView({ block: "nearest" });
+      },
+
+      onPointerDown(e) {
+        if (!this.adjustingPlan) return;
+        const stage = e.currentTarget;
+        if (stage.dataset.plan !== this.adjustingPlan) return;
+        const handle = e.target.closest(".td-zone-handle");
+        const zone = e.target.closest(".td-zone");
+        if (!zone || zone.dataset.plan !== this.adjustingPlan) return;
+        e.preventDefault();
+        const rect = stage.getBoundingClientRect();
+        const zoneKey = zone.dataset.zone;
+        const pos = this.getPositions(this.adjustingPlan)[zoneKey];
+        this.drag = {
+          mode: handle ? "resize" : "move",
+          planKey: this.adjustingPlan,
+          zoneKey: zoneKey,
+          el: zone,
+          startX: e.clientX,
+          startY: e.clientY,
+          origLeft: pos.left,
+          origTop: pos.top,
+          origWidth: pos.width,
+          origHeight: pos.height,
+          stageW: rect.width,
+          stageH: rect.height
+        };
+        zone.classList.add("dragging");
+        zone.setPointerCapture(e.pointerId);
+      },
+
+      onPointerMove(e) {
+        if (!this.drag) return;
+        e.preventDefault();
+        const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
+        const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
+        const pos = this.getPositions(this.drag.planKey)[this.drag.zoneKey];
+        if (this.drag.mode === "resize") {
+          let width = Math.max(6, Math.min(40, this.drag.origWidth + dx));
+          let height = Math.max(3, Math.min(30, this.drag.origHeight + dy));
+          if (this.drag.origLeft + width > 100) width = 100 - this.drag.origLeft;
+          if (this.drag.origTop + height > 100) height = 100 - this.drag.origTop;
+          pos.width = Math.round(width * 100) / 100;
+          pos.height = Math.round(height * 100) / 100;
+          this.drag.el.style.width = pos.width + "%";
+          this.drag.el.style.height = pos.height + "%";
+        } else {
+          let left = Math.max(0, Math.min(100 - pos.width, this.drag.origLeft + dx));
+          let top = Math.max(0, Math.min(100 - pos.height, this.drag.origTop + dy));
+          pos.left = Math.round(left * 100) / 100;
+          pos.top = Math.round(top * 100) / 100;
+          this.drag.el.style.left = pos.left + "%";
+          this.drag.el.style.top = pos.top + "%";
+        }
+        Storage.persistSoon(180);
+      },
+
+      onPointerUp(e) {
+        if (!this.drag) return;
+        this.drag.el.classList.remove("dragging");
+        try { this.drag.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        const planKey = this.drag.planKey;
+        this.drag = null;
+        state.tempete.positionsVersion = TEMPETE_POSITIONS_VERSION;
+        Storage.persist();
+        this.refreshOverlay(planKey);
+      },
+
+      renderDesertCanvas(planKey, img) {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        const positions = this.getPositions(planKey);
+        const plan = this.getPlan(planKey);
+
+        function drawZone(zoneKey, ids, numbered, teamKey) {
+          if (!ids.length) return;
+          const pos = positions[zoneKey];
+          if (!pos) return;
+          const colors = DESERT_TEAM_COLORS[teamKey] || DESERT_TEAM_COLORS.team1;
+          const x = (pos.left / 100) * canvas.width;
+          const y = (pos.top / 100) * canvas.height;
+          const w = (pos.width / 100) * canvas.width;
+          const h = (pos.height / 100) * canvas.height;
+          const pad = Math.max(2, w * 0.04);
+          const fontSize = Tempete.calcFontSize(ids.length, h);
+          const lineH = Math.min(fontSize * 1.12, (h - pad) / Math.max(1, ids.length));
+          ctx.textBaseline = "top";
+
+          ids.forEach(function (id, index) {
+            const player = Tempete.getPlayer(id);
+            if (!player) return;
+            const ly = y + pad + index * lineH;
+            if (ly + lineH * 0.5 > y + h) return;
+            let nickX = x + pad;
+            let nickW = Math.max(8, w - pad * 2);
+            if (numbered) {
+              const num = (index + 1) + ".";
+              ctx.font = "800 " + fontSize + "px Segoe UI, system-ui, sans-serif";
+              ctx.fillStyle = colors.num;
+              ctx.textAlign = "left";
+              ctx.fillText(num, x + pad, ly);
+              const numW = ctx.measureText(num + " ").width;
+              nickX = x + pad + numW;
+              nickW = Math.max(8, w - pad * 2 - numW);
+            }
+            drawSingleLineFittedText(ctx, player.nickname, nickX, ly, nickW, lineH, {
+              color: colors.text,
+              align: "left",
+              baseline: "top",
+              weight: "700",
+              maxSize: fontSize,
+              minSize: 5,
+              padX: 0,
+              padY: 0
+            });
+          });
+        }
+
+        DESERT_TEAM_KEYS.forEach(function (teamKey) {
+          drawZone(teamKey + "Box", plan[teamKey] || [], true, teamKey);
+        });
+        DESERT_BUILDING_KEYS.forEach(function (buildingKey) {
+          drawZone(
+            buildingKey,
+            Tempete.getBuildingPlayerIds(planKey, buildingKey),
+            false,
+            DESERT_BUILDING_TEAM[buildingKey]
+          );
+        });
+
+        return canvas;
+      },
+
+      exportDesertPlan(planKey) {
+        this.ensureState();
+        const meta = this.getPlanMeta(planKey);
+        if (!meta) return;
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = function () {
+          try {
+            const canvas = Tempete.renderDesertCanvas(planKey, img);
+            const date = new Date();
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, "0");
+            const dd = String(date.getDate()).padStart(2, "0");
+            const filename = meta.exportPrefix + "-" + yyyy + "-" + mm + "-" + dd + ".png";
+            handleImageExport(canvas, filename);
+          } catch (err) {
+            console.error(err);
+            Notifications.show("Export impossible (image protégée)", "error");
+          }
+        };
+        img.onerror = function () {
+          Notifications.show("Impossible de charger le plan " + meta.letter + ".", "error");
+        };
+        img.src = meta.image + "?t=" + Date.now();
+      },
+
+      bind() {
+        this.refresh();
+        const root = document.getElementById("tempetePlansRoot");
+
+        TEMPETE_PLANS.forEach(function (meta) {
+          const img = document.getElementById("td-img-" + meta.key);
+          const err = document.getElementById("td-img-error-" + meta.key);
+          if (!img) return;
+          img.addEventListener("error", function () { err.classList.add("visible"); });
+          img.addEventListener("load", function () {
+            err.classList.remove("visible");
+            Tempete.refreshOverlay(meta.key);
+          });
+          if (img.complete && img.naturalWidth === 0) err.classList.add("visible");
+          if (img.complete && img.naturalWidth > 0) Tempete.refreshOverlay(meta.key);
+
+          const stage = document.getElementById("td-stage-" + meta.key);
+          stage.addEventListener("pointerdown", function (e) { Tempete.onPointerDown(e); });
+          stage.addEventListener("pointermove", function (e) { Tempete.onPointerMove(e); });
+          stage.addEventListener("pointerup", function (e) { Tempete.onPointerUp(e); });
+          stage.addEventListener("pointercancel", function (e) { Tempete.onPointerUp(e); });
+        });
+
+        root.addEventListener("click", function (e) {
+          const removeBtn = e.target.closest(".td-remove");
+          if (removeBtn) {
+            Tempete.removePlayerFromDesertTeam(removeBtn.dataset.plan, removeBtn.dataset.team, removeBtn.dataset.id);
+            return;
+          }
+          const up = e.target.closest(".td-move-up");
+          if (up) {
+            Tempete.moveDesertPlayer(up.dataset.plan, up.dataset.team, Number(up.dataset.index), -1);
+            return;
+          }
+          const down = e.target.closest(".td-move-down");
+          if (down) {
+            Tempete.moveDesertPlayer(down.dataset.plan, down.dataset.team, Number(down.dataset.index), 1);
+            return;
+          }
+          const option = e.target.closest(".train-combo-option");
+          if (option && option.closest("#tempetePlansRoot")) {
+            const combo = option.closest(".train-combo");
+            Tempete.addPlayerToDesertTeam(combo.dataset.plan, combo.dataset.team, option.dataset.id);
+            return;
+          }
+          const trigger = e.target.closest(".train-combo-trigger");
+          if (trigger && trigger.closest("#tempetePlansRoot")) {
+            const combo = trigger.closest(".train-combo");
+            const key = combo.dataset.plan + ":" + combo.dataset.team;
+            if (Tempete.openComboKey === key) Tempete.closeCombo();
+            else Tempete.openCombo(combo.dataset.plan, combo.dataset.team);
+            return;
+          }
+          const exportBtn = e.target.closest(".td-export");
+          if (exportBtn) {
+            Tempete.exportDesertPlan(exportBtn.dataset.plan);
+            return;
+          }
+          const adjustBtn = e.target.closest(".td-adjust");
+          if (adjustBtn) {
+            const pk = adjustBtn.dataset.plan;
+            Tempete.setAdjustMode(pk, Tempete.adjustingPlan !== pk);
+            return;
+          }
+          const resetBtn = e.target.closest(".td-reset-pos");
+          if (resetBtn) {
+            const pk = resetBtn.dataset.plan;
+            const meta = Tempete.getPlanMeta(pk);
+            Modal.confirm({
+              title: "Réinitialiser les positions",
+              message: "Remettre les zones du Plan " + meta.letter + " aux positions par défaut ?",
+              okLabel: "Réinitialiser",
+              onConfirm: function () { Tempete.resetPositions(pk); }
+            });
+            return;
+          }
+          const saveBtn = e.target.closest(".td-save-comp");
+          if (saveBtn) {
+            Tempete.saveComposition(saveBtn.dataset.plan);
+            return;
+          }
+          const clearBtn = e.target.closest(".td-clear");
+          if (clearBtn) {
+            const pk = clearBtn.dataset.plan;
+            const meta = Tempete.getPlanMeta(pk);
+            Modal.confirm({
+              title: "Vider le Plan " + meta.letter,
+              message: "Vider toutes les équipes du Plan " + meta.letter + " ? Les joueurs ne seront pas supprimés de l'application.",
+              okLabel: "Vider",
+              onConfirm: function () {
+                Tempete.clearPlan(pk);
+                Notifications.show("Plan " + meta.letter + " vidé", "success");
+              }
+            });
+          }
+        });
+
+        root.addEventListener("change", function (e) {
+          const dup = e.target.closest(".td-dup");
+          if (!dup) return;
+          const plan = Tempete.getPlan(dup.dataset.plan);
+          plan.allowDuplicates = !!dup.checked;
+          Storage.persist();
+          Tempete.renderDesertPlan(dup.dataset.plan);
+        });
+
+        root.addEventListener("input", function (e) {
+          const search = e.target.closest(".train-combo-search");
+          if (!search || !search.closest("#tempetePlansRoot")) return;
+          const combo = search.closest(".train-combo");
+          Tempete.renderComboOptions(combo.dataset.plan, combo.dataset.team, search.value);
+        });
+
+        root.addEventListener("keydown", function (e) {
+          if (!Tempete.openComboKey) return;
+          const parts = Tempete.openComboKey.split(":");
+          const combo = document.getElementById(Tempete.comboId(parts[0], parts[1]));
+          if (!combo) return;
+          const options = combo.querySelectorAll(".train-combo-option");
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (!options.length) return;
+            Tempete.highlightIndex = Math.min(options.length - 1, Math.max(0, Tempete.highlightIndex + 1));
+            Tempete.syncHighlight(parts[0], parts[1]);
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (!options.length) return;
+            Tempete.highlightIndex = Math.max(0, Tempete.highlightIndex - 1);
+            Tempete.syncHighlight(parts[0], parts[1]);
+          } else if (e.key === "Enter") {
+            const active = options[Tempete.highlightIndex];
+            if (active) {
+              e.preventDefault();
+              Tempete.addPlayerToDesertTeam(parts[0], parts[1], active.dataset.id);
+            }
+          } else if (e.key === "Escape") {
+            e.preventDefault();
+            e.stopPropagation();
+            Tempete.closeCombo();
+          }
+        });
+
+        document.addEventListener("click", function (e) {
+          if (!Tempete.openComboKey) return;
+          const parts = Tempete.openComboKey.split(":");
+          if (e.target.closest("#" + Tempete.comboId(parts[0], parts[1]))) return;
+          Tempete.closeCombo();
+        });
+
+        let resizeTimer = null;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () {
+            TEMPETE_PLANS.forEach(function (meta) {
+              Tempete.refreshOverlay(meta.key);
+            });
+          }, 80);
+        });
+      }
+    };
+
     /* ============================= */
     /* NAVIGATION                    */
     /* ============================= */
@@ -4268,6 +5859,12 @@
         if (page === "teamville") {
           TeamVille.refresh();
           setTimeout(function () { TeamVille.refreshOverlay(); }, 50);
+        }
+        if (page === "tempete") {
+          Tempete.refresh();
+          setTimeout(function () {
+            TEMPETE_PLANS.forEach(function (meta) { Tempete.refreshOverlay(meta.key); });
+          }, 50);
         }
       },
 
@@ -4322,6 +5919,9 @@
               onConfirm: function () {
                 state = Storage.normalize(parsed);
                 selectedIds.clear();
+                // Nouvelle sauvegarde : relancer le nettoyage joueurs si besoin
+                if (state.migrations) state.migrations.playerCleanupV1 = false;
+                migratePlayerData();
                 Storage.persist();
                 PlayersUI.render();
                 Notifications.show("Sauvegarde importée", "success");
@@ -4344,6 +5944,7 @@
     function bindEvents() {
       Train.bind();
       TeamVille.bind();
+      Tempete.bind();
 
       document.getElementById("mobileExportClose").addEventListener("click", closeMobileImageExport);
       document.getElementById("mobileExportDone").addEventListener("click", closeMobileImageExport);
@@ -4525,13 +6126,6 @@
         e.target.value = "";
       });
 
-      document.getElementById("btnRemoveDemo").addEventListener("click", function () {
-        const removed = Players.removeDemo();
-        PlayersUI.render();
-        if (removed > 0) Notifications.show(removed + " joueur(s) de démonstration supprimé(s)", "success");
-        else Notifications.show("Aucun joueur de démonstration trouvé", "info");
-      });
-
       document.getElementById("btnWipeAll").addEventListener("click", function () {
         Modal.confirm({
           title: "Zone dangereuse",
@@ -4563,8 +6157,10 @@
           else if (document.getElementById("playerModal").classList.contains("open")) Modal.closePlayer();
           else if (Train.openDay) Train.closeCombo();
           else if (TeamVille.openTeam) TeamVille.closeCombo();
+          else if (Tempete.openComboKey) Tempete.closeCombo();
           else if (Train.adjusting) Train.setAdjustMode(false);
           else if (TeamVille.adjusting) TeamVille.setAdjustMode(false);
+          else if (Tempete.adjustingPlan) Tempete.setAdjustMode(Tempete.adjustingPlan, false);
           else Nav.closeSidebar();
         }
       });
@@ -4579,17 +6175,18 @@
         state = loaded;
       } else {
         state = createEmptyData();
-        state.players = createDemoPlayers();
       }
-      // Normalise + migre les anciennes positions trop basses (v1 → v2)
       state.train = normalizeTrain(state.train);
       state.teamVille = normalizeTeamVille(state.teamVille);
-      const rosterResult = ensureAllianceRoster();
+      state.tempete = normalizeTempete(state.tempete);
+      if (!state.migrations || typeof state.migrations !== "object") state.migrations = {};
+      const migration = migratePlayerData();
       Storage.persist();
+      Storage.bindLifecycle();
       bindEvents();
       PlayersUI.render();
-      if (rosterResult.added > 0) {
-        Notifications.show(rosterResult.added + " joueur(s) 5LE ajouté(s)", "success");
+      if (migration.ran) {
+        Notifications.show("Liste joueurs nettoyée : " + migration.count + " joueur(s)", "success");
       }
     }
 
