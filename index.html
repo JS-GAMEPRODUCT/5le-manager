@@ -1931,6 +1931,218 @@
       }
     }
 
+
+    /* ---------- VS ---------- */
+    .vs-toolbar {
+      margin-bottom: 1rem;
+    }
+
+    .vs-mode-btn.push-mode {
+      border-color: rgba(239, 98, 48, 0.55);
+      color: #ffb089;
+    }
+
+    .vs-mode-btn.push-mode.active,
+    .vs-mode-btn.push-mode.btn-primary {
+      background: linear-gradient(135deg, #c2410c, #ea580c);
+      border-color: #fb923c;
+      color: #fff7ed;
+      box-shadow: 0 0 0 1px rgba(251, 146, 60, 0.35), 0 8px 24px rgba(194, 65, 12, 0.35);
+    }
+
+    .vs-mode-btn.eco-mode {
+      border-color: rgba(16, 185, 129, 0.5);
+      color: #6ee7b7;
+    }
+
+    .vs-mode-btn.eco-mode.active,
+    .vs-mode-btn.eco-mode.btn-primary {
+      background: linear-gradient(135deg, #047857, #10b981);
+      border-color: #34d399;
+      color: #ecfdf5;
+      box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.35), 0 8px 24px rgba(4, 120, 87, 0.35);
+    }
+
+    .vs-mode-btn.clear-mode.active,
+    .vs-mode-btn.clear-mode.btn-primary {
+      background: linear-gradient(135deg, #3f3f46, #71717a);
+      border-color: #a1a1aa;
+      color: #fafafa;
+    }
+
+    .vs-stage {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: #05070c;
+      touch-action: manipulation;
+    }
+
+    .vs-stage.adjusting {
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .vs-stage img.vs-base {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .vs-slot {
+      position: absolute;
+      box-sizing: border-box;
+      cursor: pointer;
+      z-index: 2;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .vs-slot:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 1px;
+    }
+
+    .vs-slot-img {
+      position: absolute;
+      inset: 6%;
+      width: auto;
+      height: auto;
+      max-width: 88%;
+      max-height: 88%;
+      margin: auto;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .vs-slot-img[hidden] {
+      display: none !important;
+    }
+
+    .vs-stage.adjusting .vs-slot {
+      outline: 1px dashed rgba(212, 175, 55, 0.85);
+      background: rgba(8, 14, 28, 0.22);
+      cursor: move;
+    }
+
+    .vs-stage.adjusting .vs-slot::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -1.05rem;
+      left: 0;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.85);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .vs-stage.adjusting .vs-slot.dragging {
+      outline-color: var(--blue-bright);
+      background: rgba(59, 130, 246, 0.18);
+      z-index: 5;
+    }
+
+    .vs-slot-handle {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 2px 0 0 0;
+      cursor: nwse-resize;
+      touch-action: none;
+      z-index: 3;
+    }
+
+    .vs-stage.adjusting .vs-slot-handle {
+      display: block;
+    }
+
+    .vs-days-section > h2 {
+      margin: 0 0 0.85rem;
+      font-size: 1.05rem;
+    }
+
+    .vs-day-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .vs-day-card {
+      display: grid;
+      grid-template-columns: minmax(90px, 120px) minmax(90px, 1fr) auto;
+      gap: 0.65rem 0.85rem;
+      align-items: center;
+      padding: 0.85rem 1rem;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .vs-day-name {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      color: var(--gold);
+    }
+
+    .vs-day-state {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .vs-day-state.push { color: #fb923c; }
+    .vs-day-state.eco { color: #34d399; }
+
+    .vs-day-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: flex-end;
+    }
+
+    .vs-day-actions .btn {
+      padding: 0.45rem 0.7rem;
+      font-size: 0.78rem;
+      min-height: 36px;
+    }
+
+    @media (max-width: 900px) {
+      .vs-toolbar .btn {
+        flex: 1 1 100%;
+      }
+
+      .vs-day-card {
+        grid-template-columns: 1fr;
+      }
+
+      .vs-day-actions {
+        justify-content: stretch;
+      }
+
+      .vs-day-actions .btn {
+        flex: 1 1 auto;
+      }
+    }
+
     /* ---------- Mobile image export ---------- */
     .mobile-export-modal .modal {
       max-width: 560px;
@@ -2007,6 +2219,9 @@
         <button type="button" class="nav-btn" data-page="tempete">
           <span class="nav-icon">▦</span> Tempête du désert
         </button>
+        <button type="button" class="nav-btn" data-page="vs">
+          <span class="nav-icon">⚔</span> VS
+        </button>
         <button type="button" class="nav-btn" data-page="history">
           <span class="nav-icon">◷</span> Historique
         </button>
@@ -2043,7 +2258,7 @@
             <h2>Bienvenue dans 5LE Manager</h2>
             <p>
               Gérez vos joueurs, préparez le train et vos équipes.
-              Préparez le train, Team Ville et la Tempête du désert depuis le menu.
+              Préparez le train, Team Ville, Tempête du désert et le planning VS depuis le menu.
             </p>
           </div>
         </section>
@@ -2251,6 +2466,75 @@
           <div id="tempetePlansRoot"></div>
         </section>
 
+        <!-- VS -->
+        <section class="page" id="page-vs" data-page="vs">
+          <div class="page-header">
+            <div>
+              <h1>VS</h1>
+              <p>Planning hebdomadaire VS</p>
+            </div>
+          </div>
+
+          <div class="train-toolbar vs-toolbar">
+            <button type="button" class="btn btn-secondary vs-mode-btn push-mode" id="btnVsModePush" data-mode="push">PUSH</button>
+            <button type="button" class="btn btn-secondary vs-mode-btn eco-mode" id="btnVsModeEco" data-mode="eco">ÉCO</button>
+            <button type="button" class="btn btn-secondary vs-mode-btn clear-mode" id="btnVsModeClear" data-mode="clear">Effacer le jour</button>
+            <button type="button" class="btn btn-secondary" id="btnVsAllPush">Tout PUSH</button>
+            <button type="button" class="btn btn-secondary" id="btnVsAllEco">Tout ÉCO</button>
+            <button type="button" class="btn btn-primary" id="btnExportVs">Exporter l'image</button>
+            <button type="button" class="btn btn-secondary" id="btnAdjustVs">Ajuster les positions</button>
+            <button type="button" class="btn btn-ghost" id="btnResetVsPos">Réinitialiser les positions</button>
+            <button type="button" class="btn btn-danger" id="btnResetVsWeek">Réinitialiser la semaine</button>
+          </div>
+
+          <div class="train-preview-section">
+            <div class="panel train-preview-panel">
+              <h2>Aperçu</h2>
+              <div class="train-stage train-preview vs-stage" id="vsStage">
+                <img id="vsImage" class="vs-base" src="images/planingvs.png" alt="Planning VS hebdomadaire 5LE" />
+                <div class="vs-slot" data-day="lundi" data-label="LUNDI" id="vs-slot-lundi" role="button" tabindex="0">
+                  <img class="vs-slot-img" alt="" hidden />
+                  <span class="train-slot-handle vs-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="vs-slot" data-day="mardi" data-label="MARDI" id="vs-slot-mardi" role="button" tabindex="0">
+                  <img class="vs-slot-img" alt="" hidden />
+                  <span class="train-slot-handle vs-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="vs-slot" data-day="mercredi" data-label="MERCREDI" id="vs-slot-mercredi" role="button" tabindex="0">
+                  <img class="vs-slot-img" alt="" hidden />
+                  <span class="train-slot-handle vs-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="vs-slot" data-day="jeudi" data-label="JEUDI" id="vs-slot-jeudi" role="button" tabindex="0">
+                  <img class="vs-slot-img" alt="" hidden />
+                  <span class="train-slot-handle vs-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="vs-slot" data-day="vendredi" data-label="VENDREDI" id="vs-slot-vendredi" role="button" tabindex="0">
+                  <img class="vs-slot-img" alt="" hidden />
+                  <span class="train-slot-handle vs-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="vs-slot" data-day="samedi" data-label="SAMEDI" id="vs-slot-samedi" role="button" tabindex="0">
+                  <img class="vs-slot-img" alt="" hidden />
+                  <span class="train-slot-handle vs-slot-handle" data-resize="1"></span>
+                </div>
+                <div class="vs-slot" data-day="dimanche" data-label="DIMANCHE" id="vs-slot-dimanche" role="button" tabindex="0">
+                  <img class="vs-slot-img" alt="" hidden />
+                  <span class="train-slot-handle vs-slot-handle" data-resize="1"></span>
+                </div>
+              </div>
+              <div class="train-error" id="vsImageError">Impossible de charger le planning VS.</div>
+              <div class="train-error" id="vsAssetError">Impossible de charger le visuel PUSH / ÉCO.</div>
+              <p class="train-hint" id="vsAdjustHint" hidden>
+                Mode ajustement : déplacez ou redimensionnez les cases. Sauvegarde automatique.
+              </p>
+            </div>
+          </div>
+
+          <div class="vs-days-section">
+            <h2>Contrôle des jours</h2>
+            <div class="vs-day-list" id="vsDayList"></div>
+          </div>
+        </section>
+
         <!-- Historique -->
         <section class="page" id="page-history" data-page="history">
           <div class="page-header">
@@ -2428,6 +2712,22 @@
     const DEFAULT_TRAIN_SLOT_POSITIONS = trainSlotPositions;
     const TRAIN_POSITIONS_VERSION = 3;
 
+    /* Positions cases VS (en % — zones sous LUNDI→DIMANCHE) */
+    const vsDayPositions = {
+      lundi:    { left: 2.9,  top: 36.8, width: 12.4, height: 25.5 },
+      mardi:    { left: 16.7, top: 36.8, width: 12.4, height: 25.5 },
+      mercredi: { left: 30.5, top: 36.8, width: 12.4, height: 25.5 },
+      jeudi:    { left: 44.3, top: 36.8, width: 12.4, height: 25.5 },
+      vendredi: { left: 58.1, top: 36.8, width: 12.4, height: 25.5 },
+      samedi:   { left: 71.9, top: 36.8, width: 12.4, height: 25.5 },
+      dimanche: { left: 85.7, top: 36.8, width: 11.8, height: 25.5 }
+    };
+    const VS_POSITIONS_VERSION = 2;
+    const VS_IMAGE = "images/planingvs.png";
+    const VS_PUSH_IMAGE = "images/push.png";
+    const VS_ECO_IMAGE = "images/eco.png";
+    const VS_MODES = ["push", "eco", "clear"];
+
     /* Positions colonnes Team Ville (en % — cases noires sous TEAM 1/2/3) */
     const teamVillePositions = {
       team1: { left: 17.89, top: 30.5, width: 16.25, height: 54 },
@@ -2544,6 +2844,7 @@
         train: createDefaultTrain(),
         teamVille: createDefaultTeamVille(),
         tempete: createDefaultTempete(),
+        vs: createDefaultVs(),
         teams: [],
         templates: [],
         history: []
@@ -2560,6 +2861,64 @@
         positionsVersion: TRAIN_POSITIONS_VERSION
       };
     }
+
+    function createEmptyVsDays() {
+      const days = {};
+      CONFIG.trainDays.forEach(function (d) { days[d.key] = ""; });
+      return days;
+    }
+
+    function createDefaultVs() {
+      return {
+        modeSelection: "push",
+        days: createEmptyVsDays(),
+        slotPositions: clonePositions(vsDayPositions),
+        positionsVersion: VS_POSITIONS_VERSION
+      };
+    }
+
+    function normalizeVsDayValue(val) {
+      if (val === "push" || val === "eco") return val;
+      return "";
+    }
+
+    function normalizeVs(data) {
+      const base = createDefaultVs();
+      if (!data || typeof data !== "object") return base;
+      const mode = data.modeSelection === "eco" || data.modeSelection === "clear"
+        ? data.modeSelection
+        : "push";
+      const days = createEmptyVsDays();
+      CONFIG.trainDays.forEach(function (d) {
+        const src = data.days && typeof data.days === "object" ? data.days[d.key] : "";
+        days[d.key] = normalizeVsDayValue(src);
+      });
+
+      const version = Number(data.positionsVersion) || 0;
+      let slotPositions;
+      if (version >= VS_POSITIONS_VERSION && data.slotPositions) {
+        slotPositions = {};
+        CONFIG.trainDays.forEach(function (d) {
+          const src = data.slotPositions[d.key] || vsDayPositions[d.key];
+          slotPositions[d.key] = {
+            left: Number(src.left) || 0,
+            top: Number(src.top) || 0,
+            width: Number(src.width) || 0,
+            height: Number(src.height) || 0
+          };
+        });
+      } else {
+        slotPositions = clonePositions(vsDayPositions);
+      }
+
+      return {
+        modeSelection: mode,
+        days: days,
+        slotPositions: slotPositions,
+        positionsVersion: VS_POSITIONS_VERSION
+      };
+    }
+
 
     function clonePositions(src) {
       const out = {};
@@ -3001,6 +3360,7 @@
           train: normalizeTrain(data.train),
           teamVille: normalizeTeamVille(data.teamVille),
           tempete: normalizeTempete(data.tempete),
+          vs: normalizeVs(data.vs),
           teams: Array.isArray(data.teams) ? data.teams : base.teams,
           templates: Array.isArray(data.templates) ? data.templates : base.templates,
           history: Array.isArray(data.history) ? data.history : base.history
@@ -5839,6 +6199,472 @@
       }
     };
 
+
+    /* ============================= */
+    /* VS                            */
+    /* ============================= */
+    const Vs = {
+      adjusting: false,
+      drag: null,
+      daysBuilt: false,
+      assetsReady: false,
+      assetError: false,
+      pushImg: null,
+      ecoImg: null,
+
+      ensureState() {
+        state.vs = normalizeVs(state.vs);
+      },
+
+      setVsMode(mode) {
+        this.ensureState();
+        if (VS_MODES.indexOf(mode) === -1) mode = "push";
+        state.vs.modeSelection = mode;
+        Storage.persist();
+        this.syncModeButtons();
+      },
+
+      syncModeButtons() {
+        this.ensureState();
+        const mode = state.vs.modeSelection || "push";
+        [
+          { id: "btnVsModePush", key: "push" },
+          { id: "btnVsModeEco", key: "eco" },
+          { id: "btnVsModeClear", key: "clear" }
+        ].forEach(function (item) {
+          const btn = document.getElementById(item.id);
+          if (!btn) return;
+          const active = mode === item.key;
+          btn.classList.toggle("active", active);
+          btn.classList.toggle("btn-primary", active);
+          btn.classList.toggle("btn-secondary", !active);
+        });
+      },
+
+      applyVsModeToDay(dayKey) {
+        this.ensureState();
+        if (!vsDayPositions[dayKey]) return;
+        const mode = state.vs.modeSelection || "push";
+        if (mode === "clear") {
+          state.vs.days[dayKey] = "";
+        } else if (mode === "eco") {
+          state.vs.days[dayKey] = "eco";
+        } else {
+          state.vs.days[dayKey] = "push";
+        }
+        Storage.persist();
+        this.renderVsPreview();
+        this.renderDayCards();
+      },
+
+      clearVsDay(dayKey) {
+        this.ensureState();
+        if (!vsDayPositions[dayKey]) return;
+        state.vs.days[dayKey] = "";
+        Storage.persist();
+        this.renderVsPreview();
+        this.renderDayCards();
+      },
+
+      setDayMode(dayKey, mode) {
+        this.ensureState();
+        if (!vsDayPositions[dayKey]) return;
+        state.vs.days[dayKey] = normalizeVsDayValue(mode);
+        Storage.persist();
+        this.renderVsPreview();
+        this.renderDayCards();
+      },
+
+      applyAll(mode) {
+        this.ensureState();
+        const value = mode === "eco" ? "eco" : "push";
+        CONFIG.trainDays.forEach(function (d) {
+          state.vs.days[d.key] = value;
+        });
+        Storage.persist();
+        this.renderVsPage();
+        Notifications.show("Semaine en " + (value === "eco" ? "ÉCO" : "PUSH"), "success");
+      },
+
+      resetVsWeek() {
+        this.ensureState();
+        CONFIG.trainDays.forEach(function (d) {
+          state.vs.days[d.key] = "";
+        });
+        Storage.persist();
+        this.renderVsPage();
+      },
+
+      buildDayCards() {
+        if (this.daysBuilt) return;
+        const list = document.getElementById("vsDayList");
+        if (!list) return;
+        list.innerHTML = CONFIG.trainDays.map(function (d) {
+          return (
+            '<div class="vs-day-card" data-day="' + d.key + '">' +
+              '<div class="vs-day-name">' + d.label + "</div>" +
+              '<div class="vs-day-state" id="vs-state-' + d.key + '">État actuel : vide</div>' +
+              '<div class="vs-day-actions">' +
+                '<button type="button" class="btn btn-secondary vs-apply-push" data-day="' + d.key + '">Appliquer PUSH</button>' +
+                '<button type="button" class="btn btn-secondary vs-apply-eco" data-day="' + d.key + '">Appliquer ÉCO</button>' +
+                '<button type="button" class="btn btn-ghost vs-clear-day" data-day="' + d.key + '">Vider</button>' +
+              "</div>" +
+            "</div>"
+          );
+        }).join("");
+        this.daysBuilt = true;
+      },
+
+      renderDayCards() {
+        this.ensureState();
+        this.buildDayCards();
+        CONFIG.trainDays.forEach(function (d) {
+          const el = document.getElementById("vs-state-" + d.key);
+          if (!el) return;
+          const val = state.vs.days[d.key] || "";
+          el.classList.remove("push", "eco");
+          if (val === "push") {
+            el.textContent = "État actuel : PUSH";
+            el.classList.add("push");
+          } else if (val === "eco") {
+            el.textContent = "État actuel : ÉCO";
+            el.classList.add("eco");
+          } else {
+            el.textContent = "État actuel : vide";
+          }
+        });
+      },
+
+      applySlotStyles() {
+        this.ensureState();
+        CONFIG.trainDays.forEach(function (d) {
+          const el = document.getElementById("vs-slot-" + d.key);
+          if (!el) return;
+          const pos = state.vs.slotPositions[d.key] || vsDayPositions[d.key];
+          el.style.left = pos.left + "%";
+          el.style.top = pos.top + "%";
+          el.style.width = pos.width + "%";
+          el.style.height = pos.height + "%";
+        });
+      },
+
+      renderVsPreview() {
+        this.ensureState();
+        this.applySlotStyles();
+        CONFIG.trainDays.forEach(function (d) {
+          const slot = document.getElementById("vs-slot-" + d.key);
+          if (!slot) return;
+          const img = slot.querySelector(".vs-slot-img");
+          if (!img) return;
+          const val = state.vs.days[d.key] || "";
+          if (val === "push") {
+            img.src = VS_PUSH_IMAGE;
+            img.alt = "PUSH";
+            img.hidden = false;
+          } else if (val === "eco") {
+            img.src = VS_ECO_IMAGE;
+            img.alt = "ÉCO";
+            img.hidden = false;
+          } else {
+            img.removeAttribute("src");
+            img.alt = "";
+            img.hidden = true;
+          }
+        });
+      },
+
+      renderVsPage() {
+        this.ensureState();
+        this.syncModeButtons();
+        this.renderDayCards();
+        this.renderVsPreview();
+      },
+
+      refresh() {
+        this.renderVsPage();
+      },
+
+      resetPositions() {
+        this.ensureState();
+        state.vs.slotPositions = clonePositions(vsDayPositions);
+        state.vs.positionsVersion = VS_POSITIONS_VERSION;
+        Storage.persist();
+        this.renderVsPreview();
+        Notifications.show("Positions VS réinitialisées", "success");
+      },
+
+      setAdjustMode(on) {
+        this.adjusting = !!on;
+        const stage = document.getElementById("vsStage");
+        const btn = document.getElementById("btnAdjustVs");
+        const hint = document.getElementById("vsAdjustHint");
+        if (stage) stage.classList.toggle("adjusting", this.adjusting);
+        if (btn) {
+          btn.classList.toggle("btn-primary", this.adjusting);
+          btn.classList.toggle("btn-secondary", !this.adjusting);
+          btn.textContent = this.adjusting ? "Terminer l'ajustement" : "Ajuster les positions";
+        }
+        if (hint) hint.hidden = !this.adjusting;
+        if (!this.adjusting) this.renderVsPreview();
+      },
+
+      onPointerDown(e) {
+        if (!this.adjusting) return;
+        const handle = e.target.closest(".vs-slot-handle");
+        const slot = e.target.closest(".vs-slot");
+        if (!slot) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const stage = document.getElementById("vsStage");
+        const rect = stage.getBoundingClientRect();
+        const day = slot.dataset.day;
+        const pos = state.vs.slotPositions[day];
+        this.drag = {
+          mode: handle ? "resize" : "move",
+          day: day,
+          el: slot,
+          startX: e.clientX,
+          startY: e.clientY,
+          origLeft: pos.left,
+          origTop: pos.top,
+          origWidth: pos.width,
+          origHeight: pos.height,
+          stageW: rect.width,
+          stageH: rect.height
+        };
+        slot.classList.add("dragging");
+        slot.setPointerCapture(e.pointerId);
+      },
+
+      onPointerMove(e) {
+        if (!this.drag) return;
+        e.preventDefault();
+        const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
+        const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
+        const pos = state.vs.slotPositions[this.drag.day];
+        if (this.drag.mode === "resize") {
+          let width = Math.max(6, Math.min(30, this.drag.origWidth + dx));
+          let height = Math.max(8, Math.min(50, this.drag.origHeight + dy));
+          if (this.drag.origLeft + width > 100) width = 100 - this.drag.origLeft;
+          if (this.drag.origTop + height > 100) height = 100 - this.drag.origTop;
+          pos.width = Math.round(width * 100) / 100;
+          pos.height = Math.round(height * 100) / 100;
+          this.drag.el.style.width = pos.width + "%";
+          this.drag.el.style.height = pos.height + "%";
+        } else {
+          let left = Math.max(0, Math.min(100 - pos.width, this.drag.origLeft + dx));
+          let top = Math.max(0, Math.min(100 - pos.height, this.drag.origTop + dy));
+          pos.left = Math.round(left * 100) / 100;
+          pos.top = Math.round(top * 100) / 100;
+          this.drag.el.style.left = pos.left + "%";
+          this.drag.el.style.top = pos.top + "%";
+        }
+        Storage.persistSoon(180);
+      },
+
+      onPointerUp(e) {
+        if (!this.drag) return;
+        this.drag.el.classList.remove("dragging");
+        try { this.drag.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        this.drag = null;
+        state.vs.positionsVersion = VS_POSITIONS_VERSION;
+        Storage.persist();
+        this.renderVsPreview();
+      },
+
+      loadImage(src) {
+        return new Promise(function (resolve, reject) {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = function () { resolve(img); };
+          img.onerror = function () { reject(new Error(src)); };
+          img.src = src + (src.indexOf("?") === -1 ? "?t=" + Date.now() : "");
+        });
+      },
+
+      preloadAssets() {
+        const self = this;
+        const errEl = document.getElementById("vsAssetError");
+        Promise.all([
+          this.loadImage(VS_PUSH_IMAGE),
+          this.loadImage(VS_ECO_IMAGE)
+        ]).then(function (imgs) {
+          self.pushImg = imgs[0];
+          self.ecoImg = imgs[1];
+          self.assetsReady = true;
+          self.assetError = false;
+          if (errEl) errEl.classList.remove("visible");
+        }).catch(function () {
+          self.assetError = true;
+          self.assetsReady = false;
+          if (errEl) errEl.classList.add("visible");
+        });
+      },
+
+      drawContainedImage(ctx, img, x, y, w, h, padRatio) {
+        if (!img) return;
+        const pad = Math.max(2, Math.min(w, h) * (padRatio != null ? padRatio : 0.08));
+        const boxW = Math.max(4, w - pad * 2);
+        const boxH = Math.max(4, h - pad * 2);
+        const scale = Math.min(boxW / img.naturalWidth, boxH / img.naturalHeight);
+        const dw = img.naturalWidth * scale;
+        const dh = img.naturalHeight * scale;
+        const dx = x + (w - dw) / 2;
+        const dy = y + (h - dh) / 2;
+        ctx.drawImage(img, dx, dy, dw, dh);
+      },
+
+      renderVsCanvas(baseImg, pushImg, ecoImg) {
+        const canvas = document.createElement("canvas");
+        canvas.width = baseImg.naturalWidth;
+        canvas.height = baseImg.naturalHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(baseImg, 0, 0);
+
+        CONFIG.trainDays.forEach(function (d) {
+          const val = state.vs.days[d.key] || "";
+          if (!val) return;
+          const icon = val === "eco" ? ecoImg : pushImg;
+          if (!icon) return;
+          const pos = state.vs.slotPositions[d.key] || vsDayPositions[d.key];
+          const x = (pos.left / 100) * canvas.width;
+          const y = (pos.top / 100) * canvas.height;
+          const w = (pos.width / 100) * canvas.width;
+          const h = (pos.height / 100) * canvas.height;
+          Vs.drawContainedImage(ctx, icon, x, y, w, h, 0.08);
+        });
+
+        return canvas;
+      },
+
+      exportVsImage() {
+        this.ensureState();
+        const self = this;
+        Promise.all([
+          this.loadImage(VS_IMAGE),
+          this.pushImg && this.pushImg.complete ? Promise.resolve(this.pushImg) : this.loadImage(VS_PUSH_IMAGE),
+          this.ecoImg && this.ecoImg.complete ? Promise.resolve(this.ecoImg) : this.loadImage(VS_ECO_IMAGE)
+        ]).then(function (imgs) {
+          try {
+            const canvas = self.renderVsCanvas(imgs[0], imgs[1], imgs[2]);
+            const date = new Date();
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, "0");
+            const dd = String(date.getDate()).padStart(2, "0");
+            handleImageExport(canvas, "vs-hebdomadaire-5le-" + yyyy + "-" + mm + "-" + dd + ".png");
+          } catch (err) {
+            console.error(err);
+            Notifications.show("Export impossible (image protégée)", "error");
+          }
+        }).catch(function () {
+          Notifications.show("Impossible de charger le planning VS.", "error");
+        });
+      },
+
+      bind() {
+        this.renderVsPage();
+        this.preloadAssets();
+
+        const img = document.getElementById("vsImage");
+        const err = document.getElementById("vsImageError");
+        if (img) {
+          img.addEventListener("error", function () { err.classList.add("visible"); });
+          img.addEventListener("load", function () {
+            err.classList.remove("visible");
+            Vs.renderVsPreview();
+          });
+          if (img.complete && img.naturalWidth === 0) err.classList.add("visible");
+          if (img.complete && img.naturalWidth > 0) this.renderVsPreview();
+        }
+
+        document.getElementById("btnVsModePush").addEventListener("click", function () {
+          Vs.setVsMode("push");
+        });
+        document.getElementById("btnVsModeEco").addEventListener("click", function () {
+          Vs.setVsMode("eco");
+        });
+        document.getElementById("btnVsModeClear").addEventListener("click", function () {
+          Vs.setVsMode("clear");
+        });
+        document.getElementById("btnVsAllPush").addEventListener("click", function () {
+          Vs.applyAll("push");
+        });
+        document.getElementById("btnVsAllEco").addEventListener("click", function () {
+          Vs.applyAll("eco");
+        });
+        document.getElementById("btnExportVs").addEventListener("click", function () {
+          Vs.exportVsImage();
+        });
+        document.getElementById("btnAdjustVs").addEventListener("click", function () {
+          Vs.setAdjustMode(!Vs.adjusting);
+        });
+        document.getElementById("btnResetVsPos").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser les positions",
+            message: "Remettre les 7 cases VS aux positions par défaut ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () { Vs.resetPositions(); }
+          });
+        });
+        document.getElementById("btnResetVsWeek").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser la semaine",
+            message: "Vider PUSH / ÉCO pour tous les jours ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () {
+              Vs.resetVsWeek();
+              Notifications.show("Semaine VS réinitialisée", "success");
+            }
+          });
+        });
+
+        const stage = document.getElementById("vsStage");
+        stage.addEventListener("click", function (e) {
+          if (Vs.adjusting) return;
+          const slot = e.target.closest(".vs-slot");
+          if (!slot || !stage.contains(slot)) return;
+          Vs.applyVsModeToDay(slot.dataset.day);
+        });
+        stage.addEventListener("keydown", function (e) {
+          if (Vs.adjusting) return;
+          if (e.key !== "Enter" && e.key !== " ") return;
+          const slot = e.target.closest(".vs-slot");
+          if (!slot) return;
+          e.preventDefault();
+          Vs.applyVsModeToDay(slot.dataset.day);
+        });
+
+        stage.addEventListener("pointerdown", function (e) { Vs.onPointerDown(e); });
+        stage.addEventListener("pointermove", function (e) { Vs.onPointerMove(e); });
+        stage.addEventListener("pointerup", function (e) { Vs.onPointerUp(e); });
+        stage.addEventListener("pointercancel", function (e) { Vs.onPointerUp(e); });
+
+        const list = document.getElementById("vsDayList");
+        list.addEventListener("click", function (e) {
+          const pushBtn = e.target.closest(".vs-apply-push");
+          if (pushBtn) {
+            Vs.setDayMode(pushBtn.dataset.day, "push");
+            return;
+          }
+          const ecoBtn = e.target.closest(".vs-apply-eco");
+          if (ecoBtn) {
+            Vs.setDayMode(ecoBtn.dataset.day, "eco");
+            return;
+          }
+          const clearBtn = e.target.closest(".vs-clear-day");
+          if (clearBtn) {
+            Vs.clearVsDay(clearBtn.dataset.day);
+          }
+        });
+
+        let resizeTimer = null;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () { Vs.renderVsPreview(); }, 80);
+        });
+      }
+    };
+
     /* ============================= */
     /* NAVIGATION                    */
     /* ============================= */
@@ -5865,6 +6691,10 @@
           setTimeout(function () {
             TEMPETE_PLANS.forEach(function (meta) { Tempete.refreshOverlay(meta.key); });
           }, 50);
+        }
+        if (page === "vs") {
+          Vs.refresh();
+          setTimeout(function () { Vs.renderVsPreview(); }, 50);
         }
       },
 
@@ -5945,6 +6775,7 @@
       Train.bind();
       TeamVille.bind();
       Tempete.bind();
+      Vs.bind();
 
       document.getElementById("mobileExportClose").addEventListener("click", closeMobileImageExport);
       document.getElementById("mobileExportDone").addEventListener("click", closeMobileImageExport);
@@ -6161,6 +6992,7 @@
           else if (Train.adjusting) Train.setAdjustMode(false);
           else if (TeamVille.adjusting) TeamVille.setAdjustMode(false);
           else if (Tempete.adjustingPlan) Tempete.setAdjustMode(Tempete.adjustingPlan, false);
+          else if (Vs.adjusting) Vs.setAdjustMode(false);
           else Nav.closeSidebar();
         }
       });
@@ -6179,6 +7011,7 @@
       state.train = normalizeTrain(state.train);
       state.teamVille = normalizeTeamVille(state.teamVille);
       state.tempete = normalizeTempete(state.tempete);
+      state.vs = normalizeVs(state.vs);
       if (!state.migrations || typeof state.migrations !== "object") state.migrations = {};
       const migration = migratePlayerData();
       Storage.persist();
