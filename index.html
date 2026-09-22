@@ -1508,56 +1508,59 @@
     .tv-slot {
       position: absolute;
       box-sizing: border-box;
-      overflow: hidden;
-      padding: 4px 6px;
+      overflow: visible;
+      padding: 0;
       pointer-events: none;
       user-select: none;
     }
 
+    /* Padding, taille de police et hauteur de ligne posés en JS, à l'échelle du rendu Canvas. */
     .tv-slot-list {
+      box-sizing: border-box;
       width: 100%;
       height: 100%;
-      overflow: hidden;
+      overflow: visible;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      font-family: "Segoe UI", system-ui, sans-serif;
     }
 
-    .tv-line {
+    .tv-preview-player-line {
       display: flex;
-      align-items: baseline;
-      gap: 0.35em;
-      white-space: nowrap;
-      word-break: normal;
-      overflow-wrap: normal;
-      hyphens: none;
-      -webkit-hyphens: none;
-      text-overflow: clip;
-      overflow: hidden;
-      line-height: 1.15;
-      font-weight: 700;
+      align-items: center;
       width: 100%;
+      min-width: 0;
+      flex: 0 0 auto;
+      white-space: nowrap;
+      overflow: visible;
+      line-height: 1.05;
     }
 
-    .tv-line .tv-num { flex-shrink: 0; font-weight: 800; }
-    .tv-line .tv-nick {
-      overflow: hidden;
-      text-overflow: clip;
+    .tv-preview-number {
+      flex: 0 0 auto;
+      margin-right: 0.35em;
+      font-weight: 800;
+    }
+
+    .tv-preview-name {
+      flex: 1 1 auto;
       min-width: 0;
-      flex: 1;
+      font-weight: 700;
       white-space: nowrap;
       word-break: normal;
       overflow-wrap: normal;
       hyphens: none;
       -webkit-hyphens: none;
+      text-overflow: clip;
     }
 
-    .tv-slot[data-team="team1"] .tv-line { color: #f3e6c8; }
-    .tv-slot[data-team="team1"] .tv-num { color: #d4af37; }
-    .tv-slot[data-team="team2"] .tv-line { color: #d9e9ff; }
-    .tv-slot[data-team="team2"] .tv-num { color: #7eb6ff; }
-    .tv-slot[data-team="team3"] .tv-line { color: #ffd9d9; }
-    .tv-slot[data-team="team3"] .tv-num { color: #ff8a7a; }
+    .tv-slot[data-team="team1"] .tv-preview-name { color: #f3e6c8; }
+    .tv-slot[data-team="team1"] .tv-preview-number { color: #d4af37; }
+    .tv-slot[data-team="team2"] .tv-preview-name { color: #d9e9ff; }
+    .tv-slot[data-team="team2"] .tv-preview-number { color: #7eb6ff; }
+    .tv-slot[data-team="team3"] .tv-preview-name { color: #ffd9d9; }
+    .tv-slot[data-team="team3"] .tv-preview-number { color: #ff8a7a; }
 
     .tv-stage.adjusting {
       touch-action: none;
@@ -4809,6 +4812,43 @@
       return size;
     }
 
+    /* minFontSize est indicatif : si le pseudo ne rentre pas, on descend en dessous plutôt que de le couper. */
+    function fitTeamVillePreviewLine(nameElement, text, maxFontSize, minFontSize) {
+      if (!nameElement) return 0;
+      const maxSize = maxFontSize != null ? maxFontSize : 16;
+      nameElement.textContent = text || "";
+      nameElement.style.fontSize = maxSize + "px";
+      if (!text) return maxSize;
+
+      const line = nameElement.parentElement;
+      const num = line ? line.querySelector(".tv-preview-number") : null;
+      let avail = nameElement.clientWidth;
+      if (line) {
+        avail = line.clientWidth;
+        if (num) {
+          avail -= num.getBoundingClientRect().width +
+            (parseFloat(window.getComputedStyle(num).marginRight) || 0);
+        }
+      }
+      if (avail <= 0) return maxSize;
+
+      let size = maxSize;
+      let textW = measureElementTextWidth(nameElement, text, size);
+      if (textW > avail) {
+        size = Math.max(FIT_TEXT_ABSOLUTE_MIN, (size * avail / textW) * 0.98);
+        nameElement.style.fontSize = size + "px";
+        textW = measureElementTextWidth(nameElement, text, size);
+      }
+      let guard = 80;
+      while (guard-- > 0 && size > FIT_TEXT_ABSOLUTE_MIN &&
+             (textW > avail || nameElement.scrollWidth > nameElement.clientWidth)) {
+        size = Math.max(FIT_TEXT_ABSOLUTE_MIN, size - 0.25);
+        nameElement.style.fontSize = size + "px";
+        textW = measureElementTextWidth(nameElement, text, size);
+      }
+      return size;
+    }
+
     function fitUiNickname(element, text) {
       if (!element) return;
       element.style.fontSize = "";
@@ -5394,6 +5434,7 @@
       highlightIndex: -1,
       built: false,
       dragMember: null,
+      _previewFrame: null,
 
       ensureState() {
         state.teamVille = normalizeTeamVille(state.teamVille);
@@ -5535,36 +5576,63 @@
       refreshOverlay() {
         this.ensureState();
         this.applySlotStyles();
+        if (this._previewFrame) return;
+        const self = this;
+        this._previewFrame = requestAnimationFrame(function () {
+          self._previewFrame = null;
+          self.refreshTeamVillePreviewText();
+        });
+      },
+
+      /* Même géométrie que exportPng (police, marge 6 px, interligne 1.15), à l'échelle de l'aperçu. */
+      refreshTeamVillePreviewText() {
+        this.ensureState();
+        const stage = document.getElementById("tvStage");
+        const img = document.getElementById("tvImage");
+        if (!stage || !stage.clientWidth) return;
+        const natW = (img && img.naturalWidth) || 1280;
+        const natH = (img && img.naturalHeight) || 720;
+        const scale = stage.clientWidth / natW;
+
         TEAM_VILLE_KEYS.forEach(function (key) {
           const listEl = document.getElementById("tv-list-" + key);
-          const slot = document.getElementById("tv-slot-" + key);
           const ids = state.teamVille[key] || [];
-          const fontSize = TeamVille.calcFontSize(ids.length, slot.clientHeight || 200);
-          listEl.style.fontSize = fontSize + "px";
+          const pos = state.teamVille.slotPositions[key];
+          const hNat = (pos.height / 100) * natH;
+          const fontNat = TeamVille.calcFontSize(ids.length, hNat);
+          const lineHNat = fontNat * 1.15;
+          const padNat = 6;
+          const fontPx = fontNat * scale;
+          const lineHPx = lineHNat * scale;
 
-          listEl.innerHTML = ids.map(function (id, index) {
+          listEl.style.padding = (padNat * scale) + "px";
+          listEl.style.fontSize = fontPx + "px";
+
+          const html = [];
+          ids.forEach(function (id, index) {
             const player = TeamVille.getPlayer(id);
-            if (!player) return "";
-            return (
-              '<div class="tv-line">' +
-                '<span class="tv-num">' + (index + 1) + ".</span>" +
-                '<span class="tv-nick">' + escapeHtml(player.nickname) + "</span>" +
+            if (!player) return;
+            if (padNat + (index + 1) * lineHNat > hNat) return;
+            html.push(
+              '<div class="tv-preview-player-line" style="height:' + lineHPx + "px;font-size:" + fontPx + 'px">' +
+                '<span class="tv-preview-number">' + (index + 1) + ".</span>" +
+                '<span class="tv-preview-name" data-name="' + escapeHtml(player.nickname) + '"></span>' +
               "</div>"
             );
-          }).join("");
+          });
+          listEl.innerHTML = html.join("");
 
-          requestAnimationFrame(function () {
-            Array.prototype.forEach.call(listEl.querySelectorAll(".tv-line"), function (line) {
-              const nick = line.querySelector(".tv-nick");
-              if (!nick) return;
-              const text = nick.textContent;
-              nick.style.fontSize = "";
-              fitSingleLineText(nick, text, {
-                maxSize: fontSize,
-                minSize: 6,
-                box: nick
-              });
-            });
+          const numbers = listEl.querySelectorAll(".tv-preview-number");
+          let numW = 0;
+          Array.prototype.forEach.call(numbers, function (el) {
+            numW = Math.max(numW, el.getBoundingClientRect().width);
+          });
+          Array.prototype.forEach.call(numbers, function (el) {
+            el.style.minWidth = numW + "px";
+          });
+
+          Array.prototype.forEach.call(listEl.querySelectorAll(".tv-preview-name"), function (el) {
+            fitTeamVillePreviewLine(el, el.dataset.name, fontPx, 6);
           });
         });
       },
@@ -6089,13 +6157,15 @@
         stage.addEventListener("pointercancel", function (e) { TeamVille.onPointerUp(e); });
 
         let resizeTimer = null;
-        window.addEventListener("resize", function () {
+        function onViewportChange() {
           clearTimeout(resizeTimer);
           resizeTimer = setTimeout(function () {
             TeamVille.refreshOverlay();
             TeamVille.fitMemberNames();
           }, 80);
-        });
+        }
+        window.addEventListener("resize", onViewportChange);
+        window.addEventListener("orientationchange", onViewportChange);
       }
     };
 
