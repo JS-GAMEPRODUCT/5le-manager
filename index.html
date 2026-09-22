@@ -1638,17 +1638,37 @@
     }
 
     .td-preview-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
       margin-bottom: 1.25rem;
+      overflow-x: hidden;
+    }
+
+    .td-preview-section .panel.train-preview-panel {
+      width: 100%;
+      max-width: 100%;
+      overflow: hidden;
     }
 
     .td-stage {
       position: relative;
       width: 100%;
+      max-width: min(980px, 100%);
+      margin: 0 auto;
       overflow: hidden;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
       background: #05070c;
       touch-action: none;
+    }
+
+    .td-preview-section .td-stage,
+    .train-preview-section .td-stage {
+      width: 100%;
+      max-width: min(980px, 100%);
+      margin: 0 auto;
     }
 
     .td-stage img {
@@ -1661,85 +1681,107 @@
 
     .td-zone {
       position: absolute;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: stretch;
       box-sizing: border-box;
-      padding: 2px 3px;
+      padding: 0;
       overflow: hidden;
       pointer-events: none;
       z-index: 2;
     }
 
+    /* Tailles, marges et hauteurs de ligne posées en JS (layoutDesertZone) */
     .td-zone-list {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      gap: 0;
+      position: absolute;
+      inset: 0;
+      box-sizing: border-box;
       overflow: hidden;
     }
 
     .td-line {
       display: flex;
       align-items: center;
-      gap: 0.15em;
       min-width: 0;
-      line-height: 1.05;
-      font-weight: 700;
+      width: 100%;
+      line-height: 1;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      font-weight: 800;
       color: #f5f7fb;
-      text-shadow:
-        0 0 2px rgba(0, 0, 0, 0.95),
-        0 1px 2px rgba(0, 0, 0, 0.9),
-        0 0 8px rgba(0, 0, 0, 0.55);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: clip;
     }
 
     .td-line .td-num {
-      flex-shrink: 0;
-      font-weight: 800;
+      flex: 0 0 auto;
+      font-weight: 900;
     }
 
     .td-line .td-nick {
       min-width: 0;
-      flex: 1;
       white-space: nowrap;
       word-break: normal;
       overflow-wrap: normal;
       hyphens: none;
       -webkit-hyphens: none;
       overflow: hidden;
+      text-overflow: clip;
     }
 
-    .td-zone[data-team="team1"] .td-line,
+    /* Cases TEAM du haut = fond blanc → texte foncé, aligné à gauche */
+    .td-zone[data-team] .td-line {
+      justify-content: flex-start;
+      color: #1a2333;
+    }
+
+    /* Joueurs sous les bâtiments : centrés sous le bandeau, sur une plaque sombre */
+    .td-zone[data-building] .td-line {
+      justify-content: center;
+    }
+
+    .td-plate {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 1 auto;
+      max-width: 100%;
+      box-sizing: border-box;
+      background: rgba(6, 10, 18, 0.8);
+    }
+
+    .td-zone[data-team="team1"] .td-line { color: #16325c; }
+    .td-zone[data-team="team1"] .td-num { color: #1d4ed8; }
+
+    .td-zone[data-team="team2"] .td-line { color: #7c2d12; }
+    .td-zone[data-team="team2"] .td-num { color: #c2410c; }
+
+    .td-zone[data-team="team3"] .td-line { color: #14532d; }
+    .td-zone[data-team="team3"] .td-num { color: #15803d; }
+
+    .td-zone[data-team="team4"] .td-line { color: #4c1d95; }
+    .td-zone[data-team="team4"] .td-num { color: #7c3aed; }
+
+    .td-zone[data-team="team5"] .td-line { color: #9d174d; }
+    .td-zone[data-team="team5"] .td-num { color: #db2777; }
+
+    .td-zone[data-team="team6"] .td-line { color: #7f1d1d; }
+    .td-zone[data-team="team6"] .td-num { color: #dc2626; }
+
+    /* Zones bâtiments = texte clair contrasté */
     .td-zone[data-building].team1 .td-line { color: #dbeafe; }
-    .td-zone[data-team="team1"] .td-num,
     .td-zone[data-building].team1 .td-num { color: #60a5fa; }
 
-    .td-zone[data-team="team2"] .td-line,
     .td-zone[data-building].team2 .td-line { color: #ffedd5; }
-    .td-zone[data-team="team2"] .td-num,
     .td-zone[data-building].team2 .td-num { color: #fb923c; }
 
-    .td-zone[data-team="team3"] .td-line,
     .td-zone[data-building].team3 .td-line { color: #dcfce7; }
-    .td-zone[data-team="team3"] .td-num,
     .td-zone[data-building].team3 .td-num { color: #4ade80; }
 
-    .td-zone[data-team="team4"] .td-line,
     .td-zone[data-building].team4 .td-line { color: #f3e8ff; }
-    .td-zone[data-team="team4"] .td-num,
     .td-zone[data-building].team4 .td-num { color: #c084fc; }
 
-    .td-zone[data-team="team5"] .td-line,
     .td-zone[data-building].team5 .td-line { color: #fce7f3; }
-    .td-zone[data-team="team5"] .td-num,
     .td-zone[data-building].team5 .td-num { color: #f472b6; }
 
-    .td-zone[data-team="team6"] .td-line,
     .td-zone[data-building].team6 .td-line { color: #fee2e2; }
-    .td-zone[data-team="team6"] .td-num,
     .td-zone[data-building].team6 .td-num { color: #f87171; }
 
     .td-stage.adjusting {
@@ -2007,18 +2049,10 @@
       outline-offset: 1px;
     }
 
+    /* left/top/width/height posés en JS (getVsVisualRect), identiques à l'export */
     .vs-slot-img {
       position: absolute;
-      inset: 6%;
-      width: auto;
-      height: auto;
-      max-width: 88%;
-      max-height: 88%;
-      margin: auto;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
+      margin: 0;
       object-fit: contain;
       object-position: center;
       display: block;
@@ -2571,8 +2605,8 @@
 
           <div class="danger-zone settings-section">
             <h2>Zone dangereuse</h2>
-            <p>Cette action efface définitivement toutes les données stockées sur cet appareil.</p>
-            <button type="button" class="btn btn-danger" id="btnWipeAll">Supprimer toutes les données</button>
+            <p>Toutes vos modifications locales seront supprimées et l'application reviendra à sa configuration officielle.</p>
+            <button type="button" class="btn btn-danger" id="btnWipeAll">Réinitialiser l'application</button>
           </div>
         </section>
 
@@ -2680,9 +2714,13 @@
     /* ============================= */
     /* CONFIGURATION                 */
     /* ============================= */
+    const DATA_VERSION = 2;
+    const STORAGE_KEY = "5LE_MANAGER_DATA";
+    const LEGACY_STORAGE_KEYS = ["5LE_DATA", "5le_manager_data", "5LEManagerData"];
+
     const CONFIG = {
-      storageKey: "5LE_MANAGER_DATA",
-      version: 1,
+      storageKey: STORAGE_KEY,
+      version: DATA_VERSION,
       toastDuration: 3200,
       roleOrder: { R5: 0, R4: 1, Membre: 2 },
       trainImageSrc: "images/train.png",
@@ -2712,17 +2750,26 @@
     const DEFAULT_TRAIN_SLOT_POSITIONS = trainSlotPositions;
     const TRAIN_POSITIONS_VERSION = 3;
 
-    /* Positions cases VS (en % — zones sous LUNDI→DIMANCHE) */
+    /* Positions cases VS (en %) — mesurées sur l'intérieur bleu de chaque panneau,
+       même largeur/hauteur pour les 7 jours, centrées sur le centre réel du panneau. */
     const vsDayPositions = {
-      lundi:    { left: 2.9,  top: 36.8, width: 12.4, height: 25.5 },
-      mardi:    { left: 16.7, top: 36.8, width: 12.4, height: 25.5 },
-      mercredi: { left: 30.5, top: 36.8, width: 12.4, height: 25.5 },
-      jeudi:    { left: 44.3, top: 36.8, width: 12.4, height: 25.5 },
-      vendredi: { left: 58.1, top: 36.8, width: 12.4, height: 25.5 },
-      samedi:   { left: 71.9, top: 36.8, width: 12.4, height: 25.5 },
-      dimanche: { left: 85.7, top: 36.8, width: 11.8, height: 25.5 }
+      lundi:    { left: 2.31,  top: 35.9, width: 12.0, height: 28.4 },
+      mardi:    { left: 16.45, top: 35.9, width: 12.0, height: 28.4 },
+      mercredi: { left: 30.22, top: 35.9, width: 12.0, height: 28.4 },
+      jeudi:    { left: 43.86, top: 35.9, width: 12.0, height: 28.4 },
+      vendredi: { left: 57.75, top: 35.9, width: 12.0, height: 28.4 },
+      samedi:   { left: 71.55, top: 35.9, width: 12.0, height: 28.4 },
+      dimanche: { left: 85.76, top: 35.9, width: 12.0, height: 28.4 }
     };
-    const VS_POSITIONS_VERSION = 2;
+    const VS_POSITIONS_VERSION = 3;
+    /* Part de la case occupée par l'emblème (côté du carré / plus petite dimension de la case) */
+    const VS_VISUAL_FILL = 0.84;
+    /* Compensation du dessin dans chaque PNG (fractions de la taille de l'emblème).
+       Le dessin de push.png est ~1,6 % plus haut que le centre de son image. */
+    const vsAssetOffsets = {
+      push: { x: 0, y: 0.016, scale: 1 },
+      eco:  { x: 0, y: 0.002, scale: 1 }
+    };
     const VS_IMAGE = "images/planingvs.png";
     const VS_PUSH_IMAGE = "images/push.png";
     const VS_ECO_IMAGE = "images/eco.png";
@@ -2783,27 +2830,33 @@
       mercenaryFactory: "team5",
       oilRefinery2: "team6", scienceHub: "team6"
     };
-    /* Positions % — cases TEAM haut + zones sous bâtiments (ajustables) */
+    /* Positions % mesurées sur tempetea/tempeteb (même mise en page) :
+       - teamXBox : intérieur des cadres blancs du haut
+       - bâtiments : zone joueurs collée sous le bandeau noir du nom, centrée sur lui */
     const desertDefaultPositions = {
-      team1Box: { left: 2.5, top: 11.0, width: 13.5, height: 7.8 },
-      team2Box: { left: 19.1, top: 11.0, width: 13.5, height: 7.8 },
-      team3Box: { left: 35.5, top: 11.0, width: 13.3, height: 7.8 },
-      team4Box: { left: 51.8, top: 11.0, width: 13.2, height: 7.8 },
-      team5Box: { left: 67.9, top: 11.0, width: 13.5, height: 7.8 },
-      team6Box: { left: 84.5, top: 11.0, width: 12.8, height: 7.8 },
-      infoCenter: { left: 17.5, top: 40.2, width: 14.5, height: 4.4 },
-      oilRefinery1: { left: 15.5, top: 49.0, width: 14.5, height: 4.4 },
-      fieldHospital1: { left: 6.5, top: 54.0, width: 14.5, height: 4.4 },
-      fieldHospital3: { left: 15.5, top: 62.8, width: 14.5, height: 4.4 },
-      arsenal: { left: 37.5, top: 37.5, width: 16.5, height: 8.8 },
-      fieldHospital4: { left: 69.5, top: 36.8, width: 14.5, height: 4.4 },
-      fieldHospital2: { left: 69.5, top: 47.5, width: 14.5, height: 4.4 },
-      mercenaryFactory: { left: 37.5, top: 63.5, width: 16.5, height: 8.8 },
-      oilRefinery2: { left: 65.5, top: 55.5, width: 14.5, height: 4.4 },
-      scienceHub: { left: 69.0, top: 66.5, width: 14.5, height: 4.4 }
+      team1Box: { left: 2.25, top: 11.9, width: 14.15, height: 7.0 },
+      team2Box: { left: 18.85, top: 11.9, width: 14.15, height: 7.0 },
+      team3Box: { left: 35.35, top: 11.9, width: 13.85, height: 7.0 },
+      team4Box: { left: 51.65, top: 11.9, width: 13.7, height: 7.0 },
+      team5Box: { left: 67.8, top: 11.9, width: 14.3, height: 7.0 },
+      team6Box: { left: 84.45, top: 11.9, width: 13.4, height: 7.0 },
+      infoCenter: { left: 15.55, top: 37.6, width: 19.0, height: 4.4 },
+      oilRefinery1: { left: 2.7, top: 46.15, width: 19.0, height: 3.3 },
+      fieldHospital1: { left: 4.0, top: 62.85, width: 19.0, height: 3.8 },
+      fieldHospital3: { left: 7.7, top: 75.3, width: 19.0, height: 3.8 },
+      arsenal: { left: 40.85, top: 38.0, width: 19.5, height: 6.2 },
+      fieldHospital4: { left: 65.5, top: 36.4, width: 19.0, height: 4.4 },
+      fieldHospital2: { left: 79.0, top: 46.05, width: 19.0, height: 3.3 },
+      mercenaryFactory: { left: 40.0, top: 76.1, width: 20.0, height: 6.2 },
+      oilRefinery2: { left: 76.9, top: 63.0, width: 19.0, height: 3.8 },
+      scienceHub: { left: 74.05, top: 76.2, width: 19.0, height: 3.8 }
     };
     const DESERT_POSITION_KEYS = Object.keys(desertDefaultPositions);
-    const TEMPETE_POSITIONS_VERSION = 1;
+    const TEMPETE_POSITIONS_VERSION = 3;
+    const DESERT_FONT_FAMILY = "Segoe UI, system-ui, -apple-system, sans-serif";
+    /* Tailles max (px à la résolution native 1024 px de large) selon le nombre de joueurs */
+    const DESERT_TEAM_BOX_MAX_FONT = { 1: 30, 2: 28, 3: 24, 4: 21 };
+    const DESERT_BUILDING_MAX_FONT = { 1: 24, 2: 23, 3: 20, 4: 19 };
     const TEMPETE_MAX_PER_TEAM = 4;
     const TEMPETE_PLANS = [
       {
@@ -2830,25 +2883,14 @@
     /* ============================= */
     /* STATE                         */
     /* ============================= */
-    let state = createEmptyData();
+    let state = null;
     let selectedIds = new Set();
     let editingId = null;
     let confirmCallback = null;
 
     function createEmptyData() {
-      return {
-        version: CONFIG.version,
-        players: [],
-        settings: {},
-        migrations: {},
-        train: createDefaultTrain(),
-        teamVille: createDefaultTeamVille(),
-        tempete: createDefaultTempete(),
-        vs: createDefaultVs(),
-        teams: [],
-        templates: [],
-        history: []
-      };
+      // Alias historique : renvoie toujours une copie de la configuration officielle.
+      return getDefaultData();
     }
 
     function createDefaultTrain() {
@@ -3200,8 +3242,85 @@
       { nickname: "Task12", role: "Membre" }
     ];
 
-    /* Anciens pseudos de démo qui ne font PAS partie du roster réel */
-    const LEGACY_DEMO_ONLY_NICKNAMES = ["marmotte", "danycef"];
+    function slugifyPlayerId(nickname) {
+      let slug = String(nickname || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "")
+        .replace(/^_+|_+$/g, "");
+      if (!slug) slug = "player";
+      return "player_" + slug;
+    }
+
+    function buildOfficialPlayers() {
+      const used = Object.create(null);
+      return ALLIANCE_ROSTER.map(function (entry) {
+        const nickname = String(entry.nickname || "").trim();
+        let id = slugifyPlayerId(nickname);
+        let n = 2;
+        while (used[id]) {
+          id = slugifyPlayerId(nickname) + "_" + n;
+          n += 1;
+        }
+        used[id] = true;
+        return {
+          id: id,
+          nickname: nickname,
+          role: entry.role === "R5" || entry.role === "R4" ? entry.role : "Membre",
+          status: "active",
+          team: "",
+          power: "",
+          note: "",
+          createdAt: "2026-01-01T00:00:00.000Z"
+        };
+      });
+    }
+
+    function deepClone(value) {
+      if (typeof structuredClone === "function") {
+        try {
+          return structuredClone(value);
+        } catch (err) {
+          /* fallback JSON */
+        }
+      }
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    /** Configuration officielle figée (ne jamais muter). */
+    const DEFAULT_APP_DATA = Object.freeze({
+      version: DATA_VERSION,
+      players: Object.freeze(buildOfficialPlayers()),
+      settings: Object.freeze({}),
+      migrations: Object.freeze({ officialSeedV2: true }),
+      train: createDefaultTrain(),
+      teamVille: createDefaultTeamVille(),
+      tempete: createDefaultTempete(),
+      vs: createDefaultVs(),
+      teams: Object.freeze([]),
+      templates: Object.freeze([]),
+      history: Object.freeze([])
+    });
+
+    function getDefaultData() {
+      return deepClone(DEFAULT_APP_DATA);
+    }
+
+    function validateData(data) {
+      return !!(data && typeof data === "object" && Array.isArray(data.players));
+    }
+
+    function resetToDefaultData() {
+      state = getDefaultData();
+      selectedIds.clear();
+      Storage.persist();
+      if (typeof PlayersUI !== "undefined") PlayersUI.render();
+      if (typeof Train !== "undefined") Train.refresh();
+      if (typeof TeamVille !== "undefined") TeamVille.refresh();
+      if (typeof Tempete !== "undefined") Tempete.refresh();
+      if (typeof Vs !== "undefined") Vs.refresh();
+    }
 
     function remapPlayerReferences(idMap) {
       if (state.train && state.train.assignments) {
@@ -3251,67 +3370,43 @@
     }
 
     /**
-     * Migration unique : Sersi1, dédoublonnage, retrait des fausses entrées démo.
+     * Migration légère des sauvegardes existantes :
+     * - Sersil → Sersi1
+     * - IDs déterministes pour les joueurs du roster officiel
+     * Ne touche pas DEFAULT_APP_DATA.
      */
     function migratePlayerData() {
       if (!state.migrations || typeof state.migrations !== "object") state.migrations = {};
-      if (state.migrations.playerCleanupV1) {
-        return { ran: false, count: state.players.length };
-      }
+      let changed = false;
 
-      const rosterSet = {};
-      ALLIANCE_ROSTER.forEach(function (entry) {
-        rosterSet[entry.nickname.trim().toLowerCase()] = entry;
-      });
-
-      // 1) Corriger Sersil → Sersi1
       state.players.forEach(function (p) {
         if (String(p.nickname || "").trim().toLowerCase() === "sersil") {
           p.nickname = "Sersi1";
+          changed = true;
         }
       });
 
-      // 2) Grouper par pseudo normalisé
-      const groups = {};
-      state.players.forEach(function (p) {
-        const key = String(p.nickname || "").trim().toLowerCase();
-        if (!key) return;
-        if (!groups[key]) groups[key] = [];
-        groups[key].push(p);
-      });
-
-      const keepers = [];
-      const idMap = {};
-
-      Object.keys(groups).forEach(function (key) {
-        // Anciens joueurs de démo uniquement (pas dans le roster réel)
-        if (LEGACY_DEMO_ONLY_NICKNAMES.indexOf(key) !== -1 && !rosterSet[key]) {
-          groups[key].forEach(function (p) { idMap[p.id] = null; });
-          return;
-        }
-
-        const group = groups[key].slice();
-        group.sort(function (a, b) {
-          const aDemo = !!a.isDemo;
-          const bDemo = !!b.isDemo;
-          if (aDemo !== bDemo) return aDemo ? 1 : -1;
-          return new Date(a.createdAt || 0) - new Date(b.createdAt || 0);
+      if (!state.migrations.officialIdsV2) {
+        const rosterByNick = Object.create(null);
+        DEFAULT_APP_DATA.players.forEach(function (p) {
+          rosterByNick[p.nickname.toLowerCase()] = p;
         });
-
-        const keep = group[0];
-        keep.nickname = rosterSet[key] ? rosterSet[key].nickname : String(keep.nickname).trim();
-        keep.isDemo = false;
-        keepers.push(keep);
-        group.forEach(function (p) {
-          idMap[p.id] = keep.id;
+        const idMap = {};
+        state.players.forEach(function (p) {
+          const key = String(p.nickname || "").trim().toLowerCase();
+          const official = rosterByNick[key];
+          if (official && p.id !== official.id) {
+            idMap[p.id] = official.id;
+            p.id = official.id;
+            changed = true;
+          }
         });
-      });
+        if (Object.keys(idMap).length) remapPlayerReferences(idMap);
+        state.migrations.officialIdsV2 = true;
+        changed = true;
+      }
 
-      remapPlayerReferences(idMap);
-      state.players = keepers;
-      state.migrations.playerCleanupV1 = true;
-
-      return { ran: true, count: state.players.length };
+      return { ran: changed, count: state.players.length };
     }
 
     function uid(prefix) {
@@ -3325,16 +3420,47 @@
       _debounceTimer: null,
       _statusTimer: null,
 
+      _restoredFromInvalid: false,
+
+      purgeLegacyKeysOnce() {
+        try {
+          LEGACY_STORAGE_KEYS.forEach(function (key) {
+            if (key === CONFIG.storageKey) return;
+            localStorage.removeItem(key);
+          });
+        } catch (err) {
+          /* ignore */
+        }
+      },
+
       load() {
+        this._restoredFromInvalid = false;
+        this.purgeLegacyKeysOnce();
         try {
           const raw = localStorage.getItem(CONFIG.storageKey);
-          if (!raw) return null;
+          if (!raw) {
+            const fresh = getDefaultData();
+            this.save(fresh);
+            return fresh;
+          }
           const data = JSON.parse(raw);
-          if (!data || typeof data !== "object") return null;
-          return this.normalize(data);
+          if (!validateData(data)) {
+            throw new Error("Invalid data shape");
+          }
+          const normalized = this.normalize(data);
+          // Ancienne sauvegarde vide (avant seed officiel) → configuration officielle
+          if (!normalized.players.length && !(normalized.migrations && normalized.migrations.officialSeedV2)) {
+            const fresh = getDefaultData();
+            this.save(fresh);
+            return fresh;
+          }
+          return normalized;
         } catch (e) {
           console.warn("5LE Manager: lecture localStorage échouée", e);
-          return null;
+          this._restoredFromInvalid = true;
+          const fresh = getDefaultData();
+          this.save(fresh);
+          return fresh;
         }
       },
 
@@ -3351,19 +3477,19 @@
       },
 
       normalize(data) {
-        const base = createEmptyData();
+        const base = getDefaultData();
         return {
-          version: data.version || CONFIG.version,
+          version: Number(data.version) || DATA_VERSION,
           players: Array.isArray(data.players) ? data.players.map(normalizePlayer).filter(Boolean) : [],
-          settings: data.settings && typeof data.settings === "object" ? data.settings : base.settings,
+          settings: data.settings && typeof data.settings === "object" ? data.settings : {},
           migrations: data.migrations && typeof data.migrations === "object" ? data.migrations : {},
           train: normalizeTrain(data.train),
           teamVille: normalizeTeamVille(data.teamVille),
           tempete: normalizeTempete(data.tempete),
           vs: normalizeVs(data.vs),
-          teams: Array.isArray(data.teams) ? data.teams : base.teams,
-          templates: Array.isArray(data.templates) ? data.templates : base.templates,
-          history: Array.isArray(data.history) ? data.history : base.history
+          teams: Array.isArray(data.teams) ? data.teams : [],
+          templates: Array.isArray(data.templates) ? data.templates : [],
+          history: Array.isArray(data.history) ? data.history : []
         };
       },
 
@@ -5562,15 +5688,85 @@
         }
       },
 
-      calcFontSize(count, boxHeight) {
-        if (count <= 0) return 14;
-        const available = Math.max(24, boxHeight - 4);
-        const line = available / count;
-        let size = Math.floor(line * 0.78);
-        if (count <= 2) size = Math.min(size, 16);
-        else if (count <= 4) size = Math.min(size, 13);
-        else size = Math.min(size, 11);
-        return Math.max(6, Math.min(16, size));
+      getMeasureCtx() {
+        if (!this._measureCtx) {
+          this._measureCtx = document.createElement("canvas").getContext("2d");
+        }
+        return this._measureCtx;
+      },
+
+      /**
+       * Mise en page d'une zone, en pixels de l'image native.
+       * Partagée par l'aperçu HTML (multipliée par l'échelle) et l'export Canvas.
+       */
+      layoutDesertZone(zoneKey, names, w, h) {
+        const n = names.length;
+        if (!n) return null;
+        const ctx = this.getMeasureCtx();
+        const isTeamBox = /Box$/.test(zoneKey);
+        const padX = isTeamBox ? w * 0.045 : w * 0.02;
+        const padY = isTeamBox ? h * 0.06 : 2;
+        const lineFactor = isTeamBox ? 1.2 : 1.14;
+        const maxTable = isTeamBox ? DESERT_TEAM_BOX_MAX_FONT : DESERT_BUILDING_MAX_FONT;
+        const cap = maxTable[Math.min(4, n)] || maxTable[4];
+        let base = Math.floor(Math.min(cap, (h - padY * 2) / n / lineFactor));
+        base = Math.max(isTeamBox ? 12 : 11, base);
+        const lineH = base * lineFactor;
+        const startY = isTeamBox ? Math.max(0, (h - n * lineH) / 2) : padY;
+        const platePadX = isTeamBox ? 0 : base * 0.35;
+        const maxW = Math.max(10, w - padX * 2 - platePadX * 2);
+        const minFit = 8;
+
+        function measureLine(num, name, size) {
+          let numW = 0;
+          if (num) {
+            ctx.font = "900 " + size + "px " + DESERT_FONT_FAMILY;
+            numW = ctx.measureText(num + " ").width;
+          }
+          ctx.font = "800 " + size + "px " + DESERT_FONT_FAMILY;
+          return { numW: numW, textW: ctx.measureText(name).width };
+        }
+
+        const nums = names.map(function (_, index) { return isTeamBox ? (index + 1) + "." : ""; });
+        const fitted = names.map(function (name, index) {
+          let size = base;
+          while (size > minFit) {
+            const m = measureLine(nums[index], name, size);
+            if (m.numW + m.textW <= maxW) break;
+            size -= 0.5;
+          }
+          return size;
+        });
+        // Tailles homogènes dans une même zone : un pseudo court ne dépasse pas trop les autres
+        const uniform = Math.max(base * 0.75, Math.min.apply(null, fitted));
+
+        const lines = names.map(function (name, index) {
+          const size = Math.min(fitted[index], uniform);
+          const m = measureLine(nums[index], name, size);
+          return { name: name, num: nums[index], numW: m.numW, size: size, textW: m.textW };
+        });
+
+        return {
+          isTeamBox: isTeamBox,
+          base: base,
+          lineH: lineH,
+          startY: startY,
+          padX: padX,
+          platePadX: platePadX,
+          plateH: base * 1.06,
+          lines: lines
+        };
+      },
+
+      getZoneNames(planKey, zoneKey) {
+        const plan = this.getPlan(planKey);
+        const ids = /Box$/.test(zoneKey)
+          ? (plan[zoneKey.replace(/Box$/, "")] || []).slice(0, TEMPETE_MAX_PER_TEAM)
+          : this.getBuildingPlayerIds(planKey, zoneKey);
+        return ids
+          .map(function (id) { return Tempete.getPlayer(id); })
+          .filter(Boolean)
+          .map(function (p) { return p.nickname; });
       },
 
       getBuildingPlayerIds(planKey, buildingKey) {
@@ -5598,58 +5794,60 @@
         });
       },
 
-      fillZoneList(planKey, zoneKey, ids, numbered) {
+      fillZoneList(planKey, zoneKey, natW, natH, scale) {
         const listEl = document.getElementById("td-list-" + planKey + "-" + zoneKey);
-        const zoneEl = document.getElementById("td-zone-" + planKey + "-" + zoneKey);
-        if (!listEl || !zoneEl) return;
-        const fontSize = this.calcFontSize(ids.length, zoneEl.clientHeight || 40);
-        listEl.style.fontSize = fontSize + "px";
+        if (!listEl) return;
+        const pos = this.getPositions(planKey)[zoneKey] || desertDefaultPositions[zoneKey];
+        const layout = this.layoutDesertZone(
+          zoneKey,
+          this.getZoneNames(planKey, zoneKey),
+          (pos.width / 100) * natW,
+          (pos.height / 100) * natH
+        );
+        if (!layout) {
+          listEl.innerHTML = "";
+          return;
+        }
+        const px = function (v) { return (v * scale).toFixed(2) + "px"; };
+        listEl.style.paddingTop = px(layout.startY);
+        listEl.style.paddingLeft = px(layout.padX);
+        listEl.style.paddingRight = px(layout.padX);
 
-        listEl.innerHTML = ids.map(function (id, index) {
-          const player = Tempete.getPlayer(id);
-          if (!player) return "";
-          const numHtml = numbered
-            ? '<span class="td-num">' + (index + 1) + ".</span>"
-            : "";
+        listEl.innerHTML = layout.lines.map(function (line) {
+          const lineStyle = 'style="height:' + px(layout.lineH) + '"';
+          if (layout.isTeamBox) {
+            return (
+              '<div class="td-line" ' + lineStyle + ">" +
+                '<span class="td-num" style="font-size:' + px(line.size) + ";width:" + px(line.numW) + '">' + line.num + "</span>" +
+                '<span class="td-nick" style="font-size:' + px(line.size) + '">' + escapeHtml(line.name) + "</span>" +
+              "</div>"
+            );
+          }
           return (
-            '<div class="td-line">' +
-              numHtml +
-              '<span class="td-nick">' + escapeHtml(player.nickname) + "</span>" +
+            '<div class="td-line" ' + lineStyle + ">" +
+              '<span class="td-nick td-plate" style="font-size:' + px(line.size) +
+                ";height:" + px(layout.plateH) +
+                ";padding:0 " + px(layout.platePadX) +
+                ";border-radius:" + px(layout.base * 0.22) + '">' +
+                escapeHtml(line.name) +
+              "</span>" +
             "</div>"
           );
         }).join("");
-
-        requestAnimationFrame(function () {
-          Array.prototype.forEach.call(listEl.querySelectorAll(".td-line"), function (line) {
-            const nick = line.querySelector(".td-nick");
-            if (!nick) return;
-            const text = nick.textContent;
-            nick.style.fontSize = "";
-            fitSingleLineText(nick, text, {
-              maxSize: fontSize,
-              minSize: 5,
-              box: nick
-            });
-          });
-        });
       },
 
       refreshOverlay(planKey) {
         this.ensureState();
         this.applyZoneStyles(planKey);
-        const plan = this.getPlan(planKey);
+        const stage = document.getElementById("td-stage-" + planKey);
+        const img = document.getElementById("td-img-" + planKey);
+        if (!stage || !stage.clientWidth) return;
+        const natW = (img && img.naturalWidth) || 1024;
+        const natH = (img && img.naturalHeight) || 1536;
+        const scale = stage.clientWidth / natW;
 
-        DESERT_TEAM_KEYS.forEach(function (teamKey) {
-          Tempete.fillZoneList(planKey, teamKey + "Box", plan[teamKey] || [], true);
-        });
-
-        DESERT_BUILDING_KEYS.forEach(function (buildingKey) {
-          Tempete.fillZoneList(
-            planKey,
-            buildingKey,
-            Tempete.getBuildingPlayerIds(planKey, buildingKey),
-            false
-          );
+        DESERT_POSITION_KEYS.forEach(function (zoneKey) {
+          Tempete.fillZoneList(planKey, zoneKey, natW, natH, scale);
         });
       },
 
@@ -5951,62 +6149,67 @@
         ctx.drawImage(img, 0, 0);
 
         const positions = this.getPositions(planKey);
-        const plan = this.getPlan(planKey);
 
-        function drawZone(zoneKey, ids, numbered, teamKey) {
-          if (!ids.length) return;
-          const pos = positions[zoneKey];
-          if (!pos) return;
-          const colors = DESERT_TEAM_COLORS[teamKey] || DESERT_TEAM_COLORS.team1;
-          const x = (pos.left / 100) * canvas.width;
-          const y = (pos.top / 100) * canvas.height;
-          const w = (pos.width / 100) * canvas.width;
-          const h = (pos.height / 100) * canvas.height;
-          const pad = Math.max(2, w * 0.04);
-          const fontSize = Tempete.calcFontSize(ids.length, h);
-          const lineH = Math.min(fontSize * 1.12, (h - pad) / Math.max(1, ids.length));
-          ctx.textBaseline = "top";
+        const teamBoxColors = {
+          team1: { text: "#16325c", num: "#1d4ed8" },
+          team2: { text: "#7c2d12", num: "#c2410c" },
+          team3: { text: "#14532d", num: "#15803d" },
+          team4: { text: "#4c1d95", num: "#7c3aed" },
+          team5: { text: "#9d174d", num: "#db2777" },
+          team6: { text: "#7f1d1d", num: "#dc2626" }
+        };
 
-          ids.forEach(function (id, index) {
-            const player = Tempete.getPlayer(id);
-            if (!player) return;
-            const ly = y + pad + index * lineH;
-            if (ly + lineH * 0.5 > y + h) return;
-            let nickX = x + pad;
-            let nickW = Math.max(8, w - pad * 2);
-            if (numbered) {
-              const num = (index + 1) + ".";
-              ctx.font = "800 " + fontSize + "px Segoe UI, system-ui, sans-serif";
-              ctx.fillStyle = colors.num;
-              ctx.textAlign = "left";
-              ctx.fillText(num, x + pad, ly);
-              const numW = ctx.measureText(num + " ").width;
-              nickX = x + pad + numW;
-              nickW = Math.max(8, w - pad * 2 - numW);
-            }
-            drawSingleLineFittedText(ctx, player.nickname, nickX, ly, nickW, lineH, {
-              color: colors.text,
-              align: "left",
-              baseline: "top",
-              weight: "700",
-              maxSize: fontSize,
-              minSize: 5,
-              padX: 0,
-              padY: 0
-            });
-          });
+        function roundRect(x, y, w, h, r) {
+          ctx.beginPath();
+          ctx.moveTo(x + r, y);
+          ctx.arcTo(x + w, y, x + w, y + h, r);
+          ctx.arcTo(x + w, y + h, x, y + h, r);
+          ctx.arcTo(x, y + h, x, y, r);
+          ctx.arcTo(x, y, x + w, y, r);
+          ctx.closePath();
         }
 
-        DESERT_TEAM_KEYS.forEach(function (teamKey) {
-          drawZone(teamKey + "Box", plan[teamKey] || [], true, teamKey);
-        });
-        DESERT_BUILDING_KEYS.forEach(function (buildingKey) {
-          drawZone(
-            buildingKey,
-            Tempete.getBuildingPlayerIds(planKey, buildingKey),
-            false,
-            DESERT_BUILDING_TEAM[buildingKey]
-          );
+        DESERT_POSITION_KEYS.forEach(function (zoneKey) {
+          const pos = positions[zoneKey] || desertDefaultPositions[zoneKey];
+          const zx = (pos.left / 100) * canvas.width;
+          const zy = (pos.top / 100) * canvas.height;
+          const zw = (pos.width / 100) * canvas.width;
+          const zh = (pos.height / 100) * canvas.height;
+          const layout = Tempete.layoutDesertZone(zoneKey, Tempete.getZoneNames(planKey, zoneKey), zw, zh);
+          if (!layout) return;
+          const teamKey = layout.isTeamBox ? zoneKey.replace(/Box$/, "") : DESERT_BUILDING_TEAM[zoneKey];
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(zx, zy, zw, zh);
+          ctx.clip();
+          ctx.textBaseline = "middle";
+
+          layout.lines.forEach(function (line, index) {
+            const midY = zy + layout.startY + index * layout.lineH + layout.lineH / 2;
+            if (layout.isTeamBox) {
+              const colors = teamBoxColors[teamKey] || teamBoxColors.team1;
+              ctx.textAlign = "left";
+              ctx.font = "900 " + line.size + "px " + DESERT_FONT_FAMILY;
+              ctx.fillStyle = colors.num;
+              ctx.fillText(line.num, zx + layout.padX, midY);
+              ctx.font = "800 " + line.size + "px " + DESERT_FONT_FAMILY;
+              ctx.fillStyle = colors.text;
+              ctx.fillText(line.name, zx + layout.padX + line.numW, midY);
+              return;
+            }
+            const colors = DESERT_TEAM_COLORS[teamKey] || DESERT_TEAM_COLORS.team1;
+            const plateW = Math.min(zw - layout.padX * 2, line.textW + layout.platePadX * 2);
+            const plateX = zx + (zw - plateW) / 2;
+            roundRect(plateX, midY - layout.plateH / 2, plateW, layout.plateH, layout.base * 0.22);
+            ctx.fillStyle = "rgba(6, 10, 18, 0.8)";
+            ctx.fill();
+            ctx.textAlign = "center";
+            ctx.font = "800 " + line.size + "px " + DESERT_FONT_FAMILY;
+            ctx.fillStyle = colors.text;
+            ctx.fillText(line.name, zx + zw / 2, midY);
+          });
+          ctx.restore();
         });
 
         return canvas;
@@ -6348,28 +6551,47 @@
         });
       },
 
+      /** Carré de l'emblème dans une case de w×h (mêmes unités en sortie). */
+      getVsVisualRect(mode, w, h) {
+        const off = vsAssetOffsets[mode] || { x: 0, y: 0, scale: 1 };
+        const size = Math.min(w, h) * VS_VISUAL_FILL * (off.scale || 1);
+        return {
+          x: (w - size) / 2 + off.x * size,
+          y: (h - size) / 2 + off.y * size,
+          size: size
+        };
+      },
+
       renderVsPreview() {
         this.ensureState();
         this.applySlotStyles();
+        const base = document.getElementById("vsImage");
+        const natW = (base && base.naturalWidth) || 1080;
+        const natH = (base && base.naturalHeight) || 720;
         CONFIG.trainDays.forEach(function (d) {
           const slot = document.getElementById("vs-slot-" + d.key);
           if (!slot) return;
           const img = slot.querySelector(".vs-slot-img");
           if (!img) return;
           const val = state.vs.days[d.key] || "";
-          if (val === "push") {
-            img.src = VS_PUSH_IMAGE;
-            img.alt = "PUSH";
-            img.hidden = false;
-          } else if (val === "eco") {
-            img.src = VS_ECO_IMAGE;
-            img.alt = "ÉCO";
-            img.hidden = false;
-          } else {
+          if (val !== "push" && val !== "eco") {
             img.removeAttribute("src");
             img.alt = "";
             img.hidden = true;
+            return;
           }
+          const pos = state.vs.slotPositions[d.key] || vsDayPositions[d.key];
+          const w = (pos.width / 100) * natW;
+          const h = (pos.height / 100) * natH;
+          const r = Vs.getVsVisualRect(val, w, h);
+          img.style.left = (r.x / w) * 100 + "%";
+          img.style.top = (r.y / h) * 100 + "%";
+          img.style.width = (r.size / w) * 100 + "%";
+          img.style.height = (r.size / h) * 100 + "%";
+          const src = val === "push" ? VS_PUSH_IMAGE : VS_ECO_IMAGE;
+          if (img.getAttribute("src") !== src) img.src = src;
+          img.alt = val === "push" ? "PUSH" : "ÉCO";
+          img.hidden = false;
         });
       },
 
@@ -6501,17 +6723,16 @@
         });
       },
 
-      drawContainedImage(ctx, img, x, y, w, h, padRatio) {
-        if (!img) return;
-        const pad = Math.max(2, Math.min(w, h) * (padRatio != null ? padRatio : 0.08));
-        const boxW = Math.max(4, w - pad * 2);
-        const boxH = Math.max(4, h - pad * 2);
-        const scale = Math.min(boxW / img.naturalWidth, boxH / img.naturalHeight);
-        const dw = img.naturalWidth * scale;
-        const dh = img.naturalHeight * scale;
-        const dx = x + (w - dw) / 2;
-        const dy = y + (h - dh) / 2;
-        ctx.drawImage(img, dx, dy, dw, dh);
+      drawVsVisualInDay(ctx, dayKey, mode, icon) {
+        if (!icon) return;
+        const canvas = ctx.canvas;
+        const pos = state.vs.slotPositions[dayKey] || vsDayPositions[dayKey];
+        const x = (pos.left / 100) * canvas.width;
+        const y = (pos.top / 100) * canvas.height;
+        const w = (pos.width / 100) * canvas.width;
+        const h = (pos.height / 100) * canvas.height;
+        const r = this.getVsVisualRect(mode, w, h);
+        ctx.drawImage(icon, x + r.x, y + r.y, r.size, r.size);
       },
 
       renderVsCanvas(baseImg, pushImg, ecoImg) {
@@ -6523,15 +6744,8 @@
 
         CONFIG.trainDays.forEach(function (d) {
           const val = state.vs.days[d.key] || "";
-          if (!val) return;
-          const icon = val === "eco" ? ecoImg : pushImg;
-          if (!icon) return;
-          const pos = state.vs.slotPositions[d.key] || vsDayPositions[d.key];
-          const x = (pos.left / 100) * canvas.width;
-          const y = (pos.top / 100) * canvas.height;
-          const w = (pos.width / 100) * canvas.width;
-          const h = (pos.height / 100) * canvas.height;
-          Vs.drawContainedImage(ctx, icon, x, y, w, h, 0.08);
+          if (val !== "push" && val !== "eco") return;
+          Vs.drawVsVisualInDay(ctx, d.key, val, val === "eco" ? ecoImg : pushImg);
         });
 
         return canvas;
@@ -6749,8 +6963,6 @@
               onConfirm: function () {
                 state = Storage.normalize(parsed);
                 selectedIds.clear();
-                // Nouvelle sauvegarde : relancer le nettoyage joueurs si besoin
-                if (state.migrations) state.migrations.playerCleanupV1 = false;
                 migratePlayerData();
                 Storage.persist();
                 PlayersUI.render();
@@ -6959,21 +7171,18 @@
 
       document.getElementById("btnWipeAll").addEventListener("click", function () {
         Modal.confirm({
-          title: "Zone dangereuse",
-          message: "Première confirmation : voulez-vous vraiment supprimer TOUTES les données ?",
+          title: "Réinitialiser l'application",
+          message: "Toutes vos modifications locales seront supprimées et l'application reviendra à sa configuration officielle (100 joueurs).",
           okLabel: "Continuer",
           onConfirm: function () {
             setTimeout(function () {
               Modal.confirm({
-                title: "Dernière confirmation",
-                message: "Cette action est irréversible. Confirmer la suppression totale ?",
-                okLabel: "Supprimer tout",
+                title: "Confirmation",
+                message: "Confirmer la restauration de la configuration officielle ?",
+                okLabel: "Réinitialiser",
                 onConfirm: function () {
-                  state = createEmptyData();
-                  selectedIds.clear();
-                  Storage.persist();
-                  PlayersUI.render();
-                  Notifications.show("Toutes les données ont été supprimées", "success");
+                  resetToDefaultData();
+                  Notifications.show("Configuration officielle restaurée", "success");
                 }
               });
             }, 150);
@@ -7002,24 +7211,19 @@
     /* INIT                          */
     /* ============================= */
     function init() {
-      const loaded = Storage.load();
-      if (loaded) {
-        state = loaded;
-      } else {
-        state = createEmptyData();
-      }
+      state = Storage.load();
       state.train = normalizeTrain(state.train);
       state.teamVille = normalizeTeamVille(state.teamVille);
       state.tempete = normalizeTempete(state.tempete);
       state.vs = normalizeVs(state.vs);
       if (!state.migrations || typeof state.migrations !== "object") state.migrations = {};
-      const migration = migratePlayerData();
+      migratePlayerData();
       Storage.persist();
       Storage.bindLifecycle();
       bindEvents();
       PlayersUI.render();
-      if (migration.ran) {
-        Notifications.show("Liste joueurs nettoyée : " + migration.count + " joueur(s)", "success");
+      if (Storage._restoredFromInvalid) {
+        Notifications.show("Données locales invalides : configuration officielle restaurée.", "info");
       }
     }
 
