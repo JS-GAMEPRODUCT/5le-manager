@@ -967,10 +967,16 @@
       overflow: hidden;
       border: 1px solid var(--border);
       background: #000;
-      touch-action: none;
+      touch-action: pan-y;
     }
 
-    .train-stage img {
+    .train-stage.adjusting {
+      touch-action: none;
+      overflow: visible;
+    }
+
+    .train-stage img,
+    .train-preview img {
       width: 100%;
       height: auto;
       display: block;
@@ -979,39 +985,94 @@
       pointer-events: none;
     }
 
+    .train-slot-label,
     .train-slot {
       position: absolute;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-weight: 800;
-      color: #1a1408;
-      line-height: 1.1;
-      overflow: hidden;
-      padding: 2px 4px;
-      word-break: break-word;
-      user-select: none;
-      pointer-events: none;
       box-sizing: border-box;
+      padding: 4px 5px;
+      overflow: hidden;
+      line-height: 1.05;
+      font-weight: 800;
+      color: #1b1208;
+      user-select: none;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      pointer-events: none;
+      -webkit-hyphens: auto;
+      hyphens: auto;
     }
 
+    .train-slot-text {
+      display: block;
+      width: 100%;
+      max-height: 100%;
+      overflow: hidden;
+      text-align: center;
+      line-height: 1.05;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .train-stage.adjusting .train-slot-label,
     .train-stage.adjusting .train-slot {
       pointer-events: auto;
       cursor: grab;
-      outline: 2px dashed rgba(212, 175, 55, 0.85);
-      background: rgba(212, 175, 55, 0.18);
+      outline: 2px dashed rgba(212, 175, 55, 0.9);
+      background: rgba(212, 175, 55, 0.16);
       z-index: 2;
+      overflow: visible;
     }
 
+    .train-stage.adjusting .train-slot-label::before,
+    .train-stage.adjusting .train-slot::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -1.1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      pointer-events: none;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    }
+
+    .train-stage.adjusting .train-slot-label:active,
     .train-stage.adjusting .train-slot:active {
       cursor: grabbing;
     }
 
+    .train-stage.adjusting .train-slot-label.dragging,
     .train-stage.adjusting .train-slot.dragging {
       outline-color: var(--blue-bright);
       background: rgba(58, 123, 213, 0.25);
       z-index: 5;
+    }
+
+    .train-slot-handle {
+      display: none;
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      background: var(--gold);
+      border: 2px solid #1a1408;
+      cursor: nwse-resize;
+      touch-action: none;
+      z-index: 6;
+      pointer-events: auto;
+    }
+
+    .train-stage.adjusting .train-slot-handle {
+      display: block;
     }
 
     .train-error {
@@ -1238,19 +1299,19 @@
 
           <div class="panel train-preview-panel">
             <h2>Aperçu</h2>
-            <div class="train-stage" id="trainStage">
+            <div class="train-stage train-preview" id="trainStage">
               <img id="trainImage" src="images/train.png" alt="Modèle Train 5LE" />
-              <div class="train-slot" data-day="lundi" id="slot-lundi"></div>
-              <div class="train-slot" data-day="mardi" id="slot-mardi"></div>
-              <div class="train-slot" data-day="mercredi" id="slot-mercredi"></div>
-              <div class="train-slot" data-day="jeudi" id="slot-jeudi"></div>
-              <div class="train-slot" data-day="vendredi" id="slot-vendredi"></div>
-              <div class="train-slot" data-day="samedi" id="slot-samedi"></div>
-              <div class="train-slot" data-day="dimanche" id="slot-dimanche"></div>
+              <div class="train-slot-label" data-day="lundi" data-label="LUNDI" id="slot-lundi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+              <div class="train-slot-label" data-day="mardi" data-label="MARDI" id="slot-mardi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+              <div class="train-slot-label" data-day="mercredi" data-label="MERCREDI" id="slot-mercredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+              <div class="train-slot-label" data-day="jeudi" data-label="JEUDI" id="slot-jeudi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+              <div class="train-slot-label" data-day="vendredi" data-label="VENDREDI" id="slot-vendredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+              <div class="train-slot-label" data-day="samedi" data-label="SAMEDI" id="slot-samedi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+              <div class="train-slot-label" data-day="dimanche" data-label="DIMANCHE" id="slot-dimanche"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
             </div>
             <div class="train-error" id="trainImageError">Impossible de charger le modèle Train.</div>
             <p class="train-hint" id="trainAdjustHint" hidden>
-              Mode ajustement actif : déplacez chaque zone au doigt ou à la souris. Les positions sont sauvegardées automatiquement.
+              Mode ajustement : déplacez les zones ou redimensionnez via la poignée dorée. Sauvegarde automatique.
             </p>
           </div>
         </section>
@@ -1435,16 +1496,19 @@
     };
 
     /* Positions par défaut des zones de pseudos (en % de l'image).
+       Calibrées sur les cases crème sous LUNDI→DIMANCHE (pas sur le train).
        Modifiables via "Ajuster les positions" ou directement ici. */
-    const DEFAULT_TRAIN_SLOT_POSITIONS = {
-      lundi:    { left: 2,    top: 62, width: 13, height: 14 },
-      mardi:    { left: 15.5, top: 62, width: 13, height: 14 },
-      mercredi: { left: 29,   top: 62, width: 13, height: 14 },
-      jeudi:    { left: 42.5, top: 62, width: 13, height: 14 },
-      vendredi: { left: 56,   top: 62, width: 13, height: 14 },
-      samedi:   { left: 69.5, top: 62, width: 13, height: 14 },
-      dimanche: { left: 83,   top: 62, width: 13, height: 14 }
+    const trainSlotPositions = {
+      lundi:    { left: 4.2,  top: 32.8, width: 11.8, height: 21.2 },
+      mardi:    { left: 17.6, top: 32.8, width: 11.6, height: 21.2 },
+      mercredi: { left: 30.9, top: 32.8, width: 11.6, height: 21.2 },
+      jeudi:    { left: 44.2, top: 32.8, width: 11.6, height: 21.2 },
+      vendredi: { left: 57.5, top: 32.8, width: 11.6, height: 21.2 },
+      samedi:   { left: 70.8, top: 32.8, width: 11.8, height: 21.2 },
+      dimanche: { left: 84.4, top: 32.8, width: 11.5, height: 21.2 }
     };
+    const DEFAULT_TRAIN_SLOT_POSITIONS = trainSlotPositions;
+    const TRAIN_POSITIONS_VERSION = 3;
 
     /* ============================= */
     /* STATE                         */
@@ -1471,8 +1535,9 @@
       CONFIG.trainDays.forEach(function (d) { assignments[d.key] = ""; });
       return {
         assignments: assignments,
-        slotPositions: clonePositions(DEFAULT_TRAIN_SLOT_POSITIONS),
-        allowDuplicates: false
+        slotPositions: clonePositions(trainSlotPositions),
+        allowDuplicates: false,
+        positionsVersion: TRAIN_POSITIONS_VERSION
       };
     }
 
@@ -1489,6 +1554,17 @@
       return out;
     }
 
+    function isLegacyTrainPositions(positions) {
+      if (!positions || typeof positions !== "object") return true;
+      let lowCount = 0;
+      CONFIG.trainDays.forEach(function (d) {
+        const p = positions[d.key];
+        // Anciennes positions par défaut étaient vers top: 62 (sur le train)
+        if (p && Number(p.top) >= 58) lowCount++;
+      });
+      return lowCount >= 4;
+    }
+
     function normalizeTrain(train) {
       const base = createDefaultTrain();
       if (!train || typeof train !== "object") return base;
@@ -1497,20 +1573,33 @@
         const val = train.assignments && train.assignments[d.key];
         assignments[d.key] = val ? String(val) : "";
       });
-      const slotPositions = {};
-      CONFIG.trainDays.forEach(function (d) {
-        const src = (train.slotPositions && train.slotPositions[d.key]) || DEFAULT_TRAIN_SLOT_POSITIONS[d.key];
-        slotPositions[d.key] = {
-          left: Number(src.left) || 0,
-          top: Number(src.top) || 0,
-          width: Number(src.width) || 0,
-          height: Number(src.height) || 0
-        };
-      });
+
+      const version = Number(train.positionsVersion) || 0;
+      const mustResetPositions =
+        version < TRAIN_POSITIONS_VERSION ||
+        isLegacyTrainPositions(train.slotPositions);
+
+      let slotPositions;
+      if (mustResetPositions) {
+        slotPositions = clonePositions(trainSlotPositions);
+      } else {
+        slotPositions = {};
+        CONFIG.trainDays.forEach(function (d) {
+          const src = (train.slotPositions && train.slotPositions[d.key]) || trainSlotPositions[d.key];
+          slotPositions[d.key] = {
+            left: Number(src.left) || 0,
+            top: Number(src.top) || 0,
+            width: Number(src.width) || 0,
+            height: Number(src.height) || 0
+          };
+        });
+      }
+
       return {
         assignments: assignments,
         slotPositions: slotPositions,
-        allowDuplicates: !!train.allowDuplicates
+        allowDuplicates: !!train.allowDuplicates,
+        positionsVersion: TRAIN_POSITIONS_VERSION
       };
     }
 
@@ -2133,7 +2222,7 @@
         this.ensureState();
         CONFIG.trainDays.forEach(function (d) {
           const el = document.getElementById("slot-" + d.key);
-          const pos = state.train.slotPositions[d.key] || DEFAULT_TRAIN_SLOT_POSITIONS[d.key];
+          const pos = state.train.slotPositions[d.key] || trainSlotPositions[d.key];
           el.style.left = pos.left + "%";
           el.style.top = pos.top + "%";
           el.style.width = pos.width + "%";
@@ -2146,35 +2235,14 @@
         this.applySlotStyles();
         CONFIG.trainDays.forEach(function (d) {
           const el = document.getElementById("slot-" + d.key);
+          const textEl = el.querySelector(".train-slot-text") || el;
           const player = Train.getPlayer(state.train.assignments[d.key]);
-          el.textContent = player ? player.nickname : "";
-          Train.fitText(el);
+          fitTextToBox(textEl, player ? player.nickname : "", 26, 8);
         });
-      },
-
-      fitText(el) {
-        if (!el) return;
-        if (!el.textContent) {
-          el.style.fontSize = "";
-          return;
-        }
-        const max = 28;
-        const min = 7;
-        let size = max;
-        el.style.fontSize = size + "px";
-        // Boucle de réduction pour rester dans la case
-        let guard = 40;
-        while (guard-- > 0 && size > min &&
-          (el.scrollWidth > el.clientWidth + 1 || el.scrollHeight > el.clientHeight + 1)) {
-          size -= 0.5;
-          el.style.fontSize = size + "px";
-        }
       },
 
       fitAllTexts() {
-        CONFIG.trainDays.forEach(function (d) {
-          Train.fitText(document.getElementById("slot-" + d.key));
-        });
+        refreshTrainTextSizing();
       },
 
       refresh() {
@@ -2200,7 +2268,8 @@
 
       resetPositions() {
         this.ensureState();
-        state.train.slotPositions = clonePositions(DEFAULT_TRAIN_SLOT_POSITIONS);
+        state.train.slotPositions = clonePositions(trainSlotPositions);
+        state.train.positionsVersion = TRAIN_POSITIONS_VERSION;
         Storage.persist();
         this.refreshSlots();
         Notifications.show("Positions réinitialisées", "success");
@@ -2216,11 +2285,13 @@
         btn.classList.toggle("btn-secondary", !this.adjusting);
         btn.textContent = this.adjusting ? "Terminer l'ajustement" : "Ajuster les positions";
         hint.hidden = !this.adjusting;
+        if (!this.adjusting) refreshTrainTextSizing();
       },
 
       onPointerDown(e) {
         if (!this.adjusting) return;
-        const slot = e.target.closest(".train-slot");
+        const handle = e.target.closest(".train-slot-handle");
+        const slot = e.target.closest(".train-slot-label, .train-slot");
         if (!slot) return;
         e.preventDefault();
         const stage = document.getElementById("trainStage");
@@ -2228,12 +2299,15 @@
         const day = slot.dataset.day;
         const pos = state.train.slotPositions[day];
         this.drag = {
+          mode: handle ? "resize" : "move",
           day: day,
           el: slot,
           startX: e.clientX,
           startY: e.clientY,
           origLeft: pos.left,
           origTop: pos.top,
+          origWidth: pos.width,
+          origHeight: pos.height,
           stageW: rect.width,
           stageH: rect.height
         };
@@ -2247,14 +2321,28 @@
         const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
         const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
         const pos = state.train.slotPositions[this.drag.day];
-        let left = this.drag.origLeft + dx;
-        let top = this.drag.origTop + dy;
-        left = Math.max(0, Math.min(100 - pos.width, left));
-        top = Math.max(0, Math.min(100 - pos.height, top));
-        pos.left = Math.round(left * 100) / 100;
-        pos.top = Math.round(top * 100) / 100;
-        this.drag.el.style.left = pos.left + "%";
-        this.drag.el.style.top = pos.top + "%";
+
+        if (this.drag.mode === "resize") {
+          let width = this.drag.origWidth + dx;
+          let height = this.drag.origHeight + dy;
+          width = Math.max(6, Math.min(40, width));
+          height = Math.max(6, Math.min(40, height));
+          if (this.drag.origLeft + width > 100) width = 100 - this.drag.origLeft;
+          if (this.drag.origTop + height > 100) height = 100 - this.drag.origTop;
+          pos.width = Math.round(width * 100) / 100;
+          pos.height = Math.round(height * 100) / 100;
+          this.drag.el.style.width = pos.width + "%";
+          this.drag.el.style.height = pos.height + "%";
+        } else {
+          let left = this.drag.origLeft + dx;
+          let top = this.drag.origTop + dy;
+          left = Math.max(0, Math.min(100 - pos.width, left));
+          top = Math.max(0, Math.min(100 - pos.height, top));
+          pos.left = Math.round(left * 100) / 100;
+          pos.top = Math.round(top * 100) / 100;
+          this.drag.el.style.left = pos.left + "%";
+          this.drag.el.style.top = pos.top + "%";
+        }
       },
 
       onPointerUp(e) {
@@ -2262,14 +2350,14 @@
         this.drag.el.classList.remove("dragging");
         try { this.drag.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
         this.drag = null;
+        state.train.positionsVersion = TRAIN_POSITIONS_VERSION;
         Storage.persist();
-        this.fitAllTexts();
+        refreshTrainTextSizing();
       },
 
       exportPng() {
         this.ensureState();
         const img = new Image();
-        // Même origine sur GitHub Pages — nécessaire pour canvas non-tainted
         img.crossOrigin = "anonymous";
         img.onload = function () {
           try {
@@ -2287,7 +2375,7 @@
               const y = (pos.top / 100) * canvas.height;
               const w = (pos.width / 100) * canvas.width;
               const h = (pos.height / 100) * canvas.height;
-              Train.drawFittedText(ctx, player.nickname, x, y, w, h);
+              drawFittedText(ctx, player.nickname, x, y, w, h);
             });
 
             const date = new Date();
@@ -2322,26 +2410,6 @@
         img.src = CONFIG.trainImageSrc + "?t=" + Date.now();
       },
 
-      drawFittedText(ctx, text, x, y, w, h) {
-        ctx.save();
-        ctx.fillStyle = "#1a1408";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.font = "800 48px Segoe UI, system-ui, sans-serif";
-
-        let size = Math.min(h * 0.55, w * 0.28, 64);
-        const min = 10;
-        while (size > min) {
-          ctx.font = "800 " + size + "px Segoe UI, system-ui, sans-serif";
-          const metrics = ctx.measureText(text);
-          if (metrics.width <= w * 0.92) break;
-          size -= 1;
-        }
-        ctx.font = "800 " + size + "px Segoe UI, system-ui, sans-serif";
-        ctx.fillText(text, x + w / 2, y + h / 2, w * 0.96);
-        ctx.restore();
-      },
-
       bind() {
         this.buildDayRows();
         this.refresh();
@@ -2353,11 +2421,10 @@
         });
         img.addEventListener("load", function () {
           err.classList.remove("visible");
-          Train.fitAllTexts();
+          refreshTrainTextSizing();
         });
-        // Re-déclencher si déjà en cache
         if (img.complete && img.naturalWidth === 0) err.classList.add("visible");
-        if (img.complete && img.naturalWidth > 0) Train.fitAllTexts();
+        if (img.complete && img.naturalWidth > 0) refreshTrainTextSizing();
 
         document.getElementById("trainDayList").addEventListener("change", function (e) {
           const select = e.target.closest(".train-day-select");
@@ -2415,11 +2482,183 @@
         stage.addEventListener("pointerup", function (e) { Train.onPointerUp(e); });
         stage.addEventListener("pointercancel", function (e) { Train.onPointerUp(e); });
 
+        let resizeTimer = null;
         window.addEventListener("resize", function () {
-          Train.fitAllTexts();
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(refreshTrainTextSizing, 80);
         });
       }
     };
+
+    /* ---------- Train text helpers ---------- */
+    function fitTextToBox(element, text, maxFontSize, minFontSize) {
+      if (!element) return;
+      const max = maxFontSize == null ? 26 : maxFontSize;
+      const min = minFontSize == null ? 8 : minFontSize;
+      element.textContent = text || "";
+      if (!text) {
+        element.style.fontSize = "";
+        return;
+      }
+
+      // Taille max proportionnelle à la case affichée (pas à l'écran)
+      const box = element.parentElement && element.parentElement.classList.contains("train-slot-label")
+        ? element.parentElement
+        : element;
+      const boxH = box.clientHeight || 40;
+      const boxW = box.clientWidth || 60;
+      let size = Math.min(max, Math.floor(boxH * 0.42), Math.floor(boxW * 0.34));
+      size = Math.max(min, size);
+
+      element.style.fontSize = size + "px";
+      element.style.lineHeight = "1.05";
+
+      let guard = 40;
+      while (
+        guard-- > 0 &&
+        size > min &&
+        (element.scrollWidth > element.clientWidth + 1 ||
+          element.scrollHeight > element.clientHeight + 1 ||
+          (box.clientHeight > 0 && element.scrollHeight > box.clientHeight - 4))
+      ) {
+        size -= 1;
+        element.style.fontSize = size + "px";
+      }
+
+      // Sécurité 2 lignes max : si encore trop haut, réduire encore
+      const maxTwoLines = size * 1.05 * 2 + 2;
+      guard = 20;
+      while (guard-- > 0 && size > min && element.scrollHeight > maxTwoLines + 1) {
+        size -= 1;
+        element.style.fontSize = size + "px";
+      }
+      while (
+        guard-- > 0 &&
+        size > min &&
+        (element.scrollWidth > element.clientWidth + 1 ||
+          element.scrollHeight > box.clientHeight - 2)
+      ) {
+        size -= 1;
+        element.style.fontSize = size + "px";
+      }
+    }
+
+    function refreshTrainTextSizing() {
+      CONFIG.trainDays.forEach(function (d) {
+        const el = document.getElementById("slot-" + d.key);
+        if (!el) return;
+        const textEl = el.querySelector(".train-slot-text") || el;
+        const player = Train.getPlayer(state.train.assignments[d.key]);
+        fitTextToBox(textEl, player ? player.nickname : "", 26, 8);
+      });
+    }
+
+    function splitTextForCanvas(ctx, text, maxWidth) {
+      const words = String(text).trim().split(/\s+/);
+      if (words.length >= 2) {
+        // Cherche la meilleure coupure sur espaces
+        let best = null;
+        for (let i = 1; i < words.length; i++) {
+          const line1 = words.slice(0, i).join(" ");
+          const line2 = words.slice(i).join(" ");
+          const w1 = ctx.measureText(line1).width;
+          const w2 = ctx.measureText(line2).width;
+          const score = Math.max(w1, w2);
+          if (score <= maxWidth && (!best || score < best.score)) {
+            best = { lines: [line1, line2], score: score };
+          }
+        }
+        if (best) return best.lines;
+        // Sinon coupe au milieu des mots
+        let mid = Math.ceil(words.length / 2);
+        return [words.slice(0, mid).join(" "), words.slice(mid).join(" ")];
+      }
+
+      // Pseudo sans espace : 1 ligne prioritaire ; split milieu seulement si trop long au min size
+      return [text];
+    }
+
+    function drawFittedText(ctx, text, x, y, width, height) {
+      if (!text) return;
+      ctx.save();
+      ctx.fillStyle = "#1b1208";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+
+      const padX = Math.max(4, width * 0.04);
+      const padY = Math.max(4, height * 0.06);
+      const maxW = width - padX * 2;
+      const maxH = height - padY * 2;
+      const cx = x + width / 2;
+      const cy = y + height / 2;
+      const minSize = 10;
+      let size = Math.min(Math.floor(maxH * 0.42), Math.floor(maxW * 0.34), 48);
+      size = Math.max(minSize, size);
+
+      function font(s) {
+        ctx.font = "800 " + s + "px Segoe UI, system-ui, sans-serif";
+      }
+
+      let lines = [text];
+      let fitted = false;
+
+      // 1) Essayer une seule ligne en réduisant
+      while (size >= minSize) {
+        font(size);
+        if (ctx.measureText(text).width <= maxW && size * 1.05 <= maxH) {
+          lines = [text];
+          fitted = true;
+          break;
+        }
+        size -= 1;
+      }
+
+      // 2) Si nécessaire : deux lignes (espaces ou coupure)
+      if (!fitted) {
+        size = Math.min(Math.floor(maxH * 0.36), Math.floor(maxW * 0.3), 40);
+        size = Math.max(minSize, size);
+        while (size >= minSize) {
+          font(size);
+          const candidate = splitTextForCanvas(ctx, text, maxW);
+          if (candidate.length === 1 && ctx.measureText(text).width > maxW) {
+            // Force split milieu pour très longs sans espace
+            const mid = Math.ceil(text.length / 2);
+            candidate[0] = text.slice(0, mid);
+            candidate[1] = text.slice(mid);
+          }
+          const useLines = candidate.length > 2 ? candidate.slice(0, 2) : candidate;
+          const lineH = size * 1.05;
+          const blockH = lineH * useLines.length;
+          let maxLineW = 0;
+          useLines.forEach(function (ln) {
+            maxLineW = Math.max(maxLineW, ctx.measureText(ln).width);
+          });
+          if (maxLineW <= maxW && blockH <= maxH) {
+            lines = useLines;
+            fitted = true;
+            break;
+          }
+          size -= 1;
+        }
+        if (!fitted) {
+          font(minSize);
+          size = minSize;
+          const mid = Math.ceil(text.length / 2);
+          lines = text.indexOf(" ") === -1
+            ? [text.slice(0, mid), text.slice(mid)]
+            : splitTextForCanvas(ctx, text, maxW).slice(0, 2);
+        }
+      }
+
+      font(size);
+      const lineH = size * 1.05;
+      const blockH = lineH * lines.length;
+      let startY = cy - blockH / 2 + lineH / 2;
+      lines.forEach(function (ln, i) {
+        ctx.fillText(ln, cx, startY + i * lineH, maxW);
+      });
+      ctx.restore();
+    }
 
     /* ============================= */
     /* NAVIGATION                    */
@@ -2436,7 +2675,7 @@
         window.scrollTo(0, 0);
         if (page === "train") {
           Train.refresh();
-          setTimeout(function () { Train.fitAllTexts(); }, 50);
+          setTimeout(refreshTrainTextSizing, 50);
         }
       },
 
@@ -2729,9 +2968,10 @@
       } else {
         state = createEmptyData();
         state.players = createDemoPlayers();
-        Storage.persist();
       }
+      // Normalise + migre les anciennes positions trop basses (v1 → v2)
       state.train = normalizeTrain(state.train);
+      Storage.persist();
       bindEvents();
       PlayersUI.render();
     }
