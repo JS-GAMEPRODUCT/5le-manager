@@ -2554,6 +2554,235 @@
       flex: 1;
       min-width: 120px;
     }
+
+    /* ---------- Annonce bouclier ---------- */
+    .shield-help {
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0 0 1rem;
+      max-width: 920px;
+    }
+
+    .shield-step {
+      margin-bottom: 1.15rem;
+    }
+
+    .shield-step h3 {
+      margin: 0 0 0.65rem;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--gold-soft);
+    }
+
+    .shield-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .shield-asset-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem;
+      min-height: 48px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s, background 0.15s, color 0.15s;
+    }
+
+    .shield-asset-btn:hover {
+      border-color: rgba(212, 175, 55, 0.45);
+      color: var(--text);
+    }
+
+    .shield-asset-btn.selected {
+      border-color: rgba(212, 175, 55, 0.85);
+      background: var(--gold-dim);
+      color: var(--gold);
+      box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35), 0 0 18px rgba(212, 175, 55, 0.18);
+    }
+
+    .shield-asset-thumb {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: contain;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.25);
+      display: block;
+    }
+
+    .shield-asset-none {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .shield-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin-top: 0.25rem;
+    }
+
+    .shield-fields .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .shield-fields textarea.form-control {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .shield-stage-wrap {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .shield-stage {
+      position: relative;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+
+    .shield-stage.portrait {
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      aspect-ratio: 9 / 16;
+    }
+
+    .shield-stage canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .shield-empty {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      text-align: center;
+      color: var(--text-muted);
+      line-height: 1.45;
+      z-index: 2;
+      background: rgba(10, 11, 14, 0.72);
+    }
+
+    .shield-empty[hidden] { display: none; }
+
+    .shield-adjust-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .shield-stage.adjusting .shield-adjust-layer {
+      pointer-events: auto;
+    }
+
+    .shield-slot {
+      position: absolute;
+      box-sizing: border-box;
+      border: 1px dashed transparent;
+      pointer-events: none;
+    }
+
+    .shield-stage.adjusting .shield-slot {
+      pointer-events: auto;
+      cursor: grab;
+      border-color: rgba(212, 175, 55, 0.85);
+      background: rgba(212, 175, 55, 0.12);
+    }
+
+    .shield-stage.adjusting .shield-slot.dragging {
+      border-color: var(--blue-bright);
+      background: rgba(59, 130, 246, 0.18);
+      z-index: 5;
+    }
+
+    .shield-slot::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -1.05rem;
+      left: 0;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.85);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .shield-stage.adjusting .shield-slot::before { opacity: 1; }
+
+    .shield-slot-handle {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 14px;
+      height: 14px;
+      background: var(--gold);
+      border-radius: 2px 0 0 0;
+      cursor: nwse-resize;
+      touch-action: none;
+      z-index: 3;
+    }
+
+    .shield-stage.adjusting .shield-slot-handle { display: block; }
+
+    .shield-badge-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .shield-badge-row h4 {
+      margin: 0 0 0.45rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .shield-fields {
+        grid-template-columns: 1fr;
+      }
+
+      .shield-gallery {
+        grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+      }
+
+      .shield-stage.portrait {
+        max-width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2589,6 +2818,9 @@
         </button>
         <button type="button" class="nav-btn" data-page="vs">
           <span class="nav-icon">⚔</span> VS
+        </button>
+        <button type="button" class="nav-btn" data-page="bouclier">
+          <span class="nav-icon">🛡</span> Annonce bouclier
         </button>
         <button type="button" class="nav-btn" data-page="history">
           <span class="nav-icon">◷</span> Historique
@@ -2913,6 +3145,99 @@
           </div>
         </section>
 
+        <!-- Annonce bouclier -->
+        <section class="page" id="page-bouclier" data-page="bouclier">
+          <div class="page-header">
+            <div>
+              <h1>Annonce bouclier</h1>
+              <p>Créez une annonce de bouclier avec fond, visuels et badges.</p>
+            </div>
+          </div>
+
+          <p class="shield-help">
+            Choisissez d’abord un fond pour adapter automatiquement le format de l’annonce, puis ajoutez visuels, badges, emblèmes et texte.
+          </p>
+
+          <div class="train-toolbar">
+            <button type="button" class="btn btn-primary" id="btnExportBouclier">Exporter l'image</button>
+            <button type="button" class="btn btn-secondary" id="btnAdjustBouclier">Ajuster les positions</button>
+            <button type="button" class="btn btn-ghost" id="btnResetBouclierPos">Réinitialiser les positions</button>
+            <button type="button" class="btn btn-danger" id="btnResetBouclier">Réinitialiser l'annonce</button>
+          </div>
+          <p class="train-hint" id="bouclierAdjustHint" hidden>
+            Mode ajustement : glissez les zones, redimensionnez avec le coin. Les positions sont en pourcentage.
+          </p>
+
+          <div class="train-preview-section">
+            <div class="panel train-preview-panel">
+              <h2>Aperçu</h2>
+              <div class="shield-stage-wrap">
+                <div class="shield-stage" id="bouclierStage">
+                  <canvas id="bouclierPreviewCanvas"></canvas>
+                  <div class="shield-empty" id="bouclierEmpty">Choisissez un fond pour démarrer l’annonce.</div>
+                  <div class="shield-adjust-layer" id="bouclierAdjustLayer"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel shield-step">
+            <h3>Étape 1 — Fond</h3>
+            <div class="shield-gallery" id="bouclierGalleryFond"></div>
+          </div>
+
+          <div class="panel shield-step">
+            <h3>Étape 2 — Visuel</h3>
+            <div class="shield-gallery" id="bouclierGalleryVisuel"></div>
+          </div>
+
+          <div class="panel shield-step">
+            <h3>Étape 3 — Emblème</h3>
+            <div class="shield-gallery" id="bouclierGalleryEmbleme"></div>
+          </div>
+
+          <div class="panel shield-step">
+            <h3>Étape 4 — Cadre principal</h3>
+            <div class="shield-gallery" id="bouclierGalleryCadre"></div>
+          </div>
+
+          <div class="panel shield-step">
+            <h3>Étape 5 — Cadre de texte</h3>
+            <div class="shield-gallery" id="bouclierGalleryCadreTexte"></div>
+          </div>
+
+          <div class="panel shield-step">
+            <h3>Étape 6 — Badges</h3>
+            <div class="shield-badge-rows" id="bouclierBadgeRows"></div>
+          </div>
+
+          <div class="panel shield-step">
+            <h3>Textes de l’annonce</h3>
+            <div class="shield-fields">
+              <div class="form-group">
+                <label for="bouclierTitle">Titre principal</label>
+                <input type="text" class="form-control" id="bouclierTitle" maxlength="80" placeholder="BOUCLIER OBLIGATOIRE" autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label for="bouclierSubtitle">Sous-titre</label>
+                <input type="text" class="form-control" id="bouclierSubtitle" maxlength="80" placeholder="Avant de dormir" autocomplete="off" />
+              </div>
+              <div class="form-group full">
+                <label for="bouclierMessage">Texte principal / message</label>
+                <textarea class="form-control" id="bouclierMessage" maxlength="280" placeholder="Merci de mettre votre bouclier avant de quitter le jeu."></textarea>
+              </div>
+              <div class="form-group">
+                <label for="bouclierTime">Heure</label>
+                <input type="text" class="form-control" id="bouclierTime" maxlength="40" placeholder="Avant 00:00" autocomplete="off" />
+              </div>
+              <div class="form-group">
+                <label for="bouclierNote">Petit rappel / note</label>
+                <input type="text" class="form-control" id="bouclierNote" maxlength="120" placeholder="Ne prenez pas de risque pendant le VS." autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Historique -->
         <section class="page" id="page-history" data-page="history">
           <div class="page-header">
@@ -2929,6 +3254,7 @@
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="teamville">Team Ville</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="tempete">Tempête</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="vs">VS</button>
+              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="bouclier">Bouclier</button>
             </div>
             <button type="button" class="btn btn-danger" id="btnClearHistory">Vider l'historique</button>
           </div>
@@ -3269,6 +3595,111 @@
     ];
 
 
+    const SHIELD_ASSET_BASE = "images/bouclier/";
+    const SHIELD_POSITIONS_VERSION = 1;
+    const SHIELD_BADGE_SLOTS = 3;
+
+    function shieldAsset(fileName, name) {
+      return {
+        id: fileName.replace(/\.png$/i, ""),
+        name: name,
+        src: SHIELD_ASSET_BASE + fileName
+      };
+    }
+
+    const SHIELD_BACKGROUNDS = [
+      shieldAsset("bouclierfond1.png", "Fond 1"),
+      shieldAsset("bouclierfond2.png", "Fond 2"),
+      shieldAsset("bouclierfond3.png", "Fond 3"),
+      shieldAsset("bouclierfond4.png", "Fond 4"),
+      shieldAsset("bouclierfond5.png", "Fond 5"),
+      shieldAsset("bouclierfond6.png", "Fond 6"),
+      shieldAsset("bouclierfond7.png", "Fond 7"),
+      shieldAsset("bouclierfond8.png", "Fond 8"),
+      shieldAsset("bouclierfond9.png", "Fond 9")
+    ];
+
+    const SHIELD_VISUALS = [
+      shieldAsset("boucliervisuel1.png", "Visuel 1"),
+      shieldAsset("boucliervisuel2.png", "Visuel 2"),
+      shieldAsset("boucliervisuel3.png", "Visuel 3"),
+      shieldAsset("boucliervisuel4.png", "Visuel 4")
+    ];
+
+    const SHIELD_BADGES = [
+      shieldAsset("bouclierbadge1.png", "Badge 1"),
+      shieldAsset("bouclierbadge2.png", "Badge 2"),
+      shieldAsset("bouclierbadge3.png", "Badge 3"),
+      shieldAsset("bouclierbadge4.png", "Badge 4"),
+      shieldAsset("bouclierbadge5.png", "Badge 5"),
+      shieldAsset("bouclierbadge6.png", "Badge 6")
+    ];
+
+    const SHIELD_FRAMES = [
+      shieldAsset("boucliercadre1.png", "Cadre 1"),
+      shieldAsset("boucliercadre2.png", "Cadre 2")
+    ];
+
+    const SHIELD_TEXT_FRAMES = [
+      shieldAsset("boucliercadretexte1.png", "Cadre texte 1"),
+      shieldAsset("boucliercadretexte2.png", "Cadre texte 2"),
+      shieldAsset("boucliercadretexte3.png", "Cadre texte 3")
+    ];
+
+    const SHIELD_EMBLEMS = [
+      shieldAsset("bouclierembleme1.png", "Emblème 1"),
+      shieldAsset("bouclierembleme2.png", "Emblème 2"),
+      shieldAsset("bouclierembleme3.png", "Emblème 3"),
+      shieldAsset("bouclierembleme4.png", "Emblème 4")
+    ];
+
+    const SHIELD_SLOT_META = [
+      { key: "frame", label: "Cadre" },
+      { key: "visual", label: "Visuel" },
+      { key: "emblem", label: "Emblème" },
+      { key: "badge1", label: "Badge 1" },
+      { key: "badge2", label: "Badge 2" },
+      { key: "badge3", label: "Badge 3" },
+      { key: "textFrame", label: "Cadre texte" },
+      { key: "title", label: "Titre" },
+      { key: "subtitle", label: "Sous-titre" },
+      { key: "message", label: "Message" },
+      { key: "time", label: "Heure" },
+      { key: "note", label: "Note" }
+    ];
+
+    const SHIELD_LAYOUT_PRESETS = {
+      landscape: {
+        frame: { left: 1.5, top: 1.5, width: 97, height: 97 },
+        visual: { left: 30, top: 10, width: 40, height: 48 },
+        emblem: { left: 42, top: 2, width: 16, height: 18 },
+        badge1: { left: 4, top: 10, width: 14, height: 22 },
+        badge2: { left: 82, top: 10, width: 14, height: 22 },
+        badge3: { left: 4, top: 38, width: 14, height: 22 },
+        textFrame: { left: 10, top: 60, width: 80, height: 34 },
+        title: { left: 14, top: 63, width: 72, height: 7 },
+        subtitle: { left: 14, top: 70.5, width: 72, height: 5 },
+        message: { left: 14, top: 76, width: 72, height: 9 },
+        time: { left: 14, top: 85.5, width: 72, height: 4 },
+        note: { left: 14, top: 90, width: 72, height: 4 }
+      },
+      portrait: {
+        frame: { left: 1.5, top: 1.5, width: 97, height: 97 },
+        visual: { left: 14, top: 8, width: 72, height: 32 },
+        emblem: { left: 35, top: 2, width: 30, height: 10 },
+        badge1: { left: 6, top: 42, width: 26, height: 10 },
+        badge2: { left: 37, top: 42, width: 26, height: 10 },
+        badge3: { left: 68, top: 42, width: 26, height: 10 },
+        textFrame: { left: 6, top: 54, width: 88, height: 40 },
+        title: { left: 10, top: 57, width: 80, height: 6 },
+        subtitle: { left: 10, top: 64, width: 80, height: 4.5 },
+        message: { left: 10, top: 69.5, width: 80, height: 12 },
+        time: { left: 10, top: 82.5, width: 80, height: 4 },
+        note: { left: 10, top: 87.5, width: 80, height: 4.5 }
+      }
+    };
+
+
     /* ============================= */
     /* STATE                         */
     /* ============================= */
@@ -3347,6 +3778,98 @@
         days: days,
         slotPositions: slotPositions,
         positionsVersion: VS_POSITIONS_VERSION
+      };
+    }
+
+
+    function getImageAspectRatio(width, height) {
+      if (!height) return 1;
+      return width / height;
+    }
+
+    function getShieldBackgroundOrientation(width, height) {
+      return width >= height ? "landscape" : "portrait";
+    }
+
+    function createDefaultShieldPositions(orientation) {
+      const key = orientation === "portrait" ? "portrait" : "landscape";
+      return clonePositions(SHIELD_LAYOUT_PRESETS[key]);
+    }
+
+    function createDefaultShield() {
+      return {
+        background: "",
+        visual: "",
+        emblem: "",
+        frame: "",
+        textFrame: "",
+        badges: ["", "", ""],
+        texts: {
+          title: "",
+          subtitle: "",
+          message: "",
+          time: "",
+          note: ""
+        },
+        orientation: "landscape",
+        positions: createDefaultShieldPositions("landscape"),
+        positionsVersion: SHIELD_POSITIONS_VERSION
+      };
+    }
+
+    function normalizeShieldBox(src, fallback) {
+      const b = fallback || { left: 0, top: 0, width: 20, height: 20 };
+      const s = src && typeof src === "object" ? src : b;
+      return {
+        left: Number(s.left) || 0,
+        top: Number(s.top) || 0,
+        width: Math.max(2, Number(s.width) || b.width || 20),
+        height: Math.max(2, Number(s.height) || b.height || 20)
+      };
+    }
+
+    function normalizeShield(data) {
+      const base = createDefaultShield();
+      if (!data || typeof data !== "object") return base;
+
+      const orientation = data.orientation === "portrait" ? "portrait" : "landscape";
+      const defaults = createDefaultShieldPositions(orientation);
+      const version = Number(data.positionsVersion) || 0;
+      let positions;
+      if (version >= SHIELD_POSITIONS_VERSION && data.positions && typeof data.positions === "object") {
+        positions = {};
+        SHIELD_SLOT_META.forEach(function (slot) {
+          positions[slot.key] = normalizeShieldBox(data.positions[slot.key], defaults[slot.key]);
+        });
+      } else {
+        positions = defaults;
+      }
+
+      const badges = ["", "", ""];
+      if (Array.isArray(data.badges)) {
+        for (let i = 0; i < SHIELD_BADGE_SLOTS; i++) {
+          badges[i] = typeof data.badges[i] === "string" ? data.badges[i] : "";
+        }
+      }
+
+      const texts = data.texts && typeof data.texts === "object" ? data.texts : {};
+      return {
+        background: typeof data.background === "string" ? data.background : "",
+        visual: typeof data.visual === "string" ? data.visual : "",
+        emblem: typeof data.emblem === "string" ? data.emblem : "",
+        frame: typeof data.frame === "string" ? data.frame : "",
+        textFrame: typeof data.textFrame === "string" ? data.textFrame : "",
+        badges: badges,
+        texts: {
+          title: typeof texts.title === "string" ? texts.title : "",
+          subtitle: typeof texts.subtitle === "string" ? texts.subtitle : "",
+          message: typeof texts.message === "string" ? texts.message : "",
+          time: typeof texts.time === "string" ? texts.time : "",
+          note: typeof texts.note === "string" ? texts.note : ""
+        },
+        orientation: orientation,
+        positions: positions,
+        positionsVersion: SHIELD_POSITIONS_VERSION
       };
     }
 
@@ -3687,6 +4210,7 @@
       teamVille: createDefaultTeamVille(),
       tempete: createDefaultTempete(),
       vs: createDefaultVs(),
+      bouclier: createDefaultShield(),
       teams: Object.freeze([]),
       templates: Object.freeze([]),
       history: Object.freeze([])
@@ -3709,6 +4233,7 @@
       if (typeof TeamVille !== "undefined") TeamVille.refresh();
       if (typeof Tempete !== "undefined") Tempete.refresh();
       if (typeof Vs !== "undefined") Vs.refresh();
+      if (typeof ShieldAnnouncement !== "undefined") ShieldAnnouncement.refresh();
     }
 
     function remapPlayerReferences(idMap) {
@@ -3876,6 +4401,7 @@
           teamVille: normalizeTeamVille(data.teamVille),
           tempete: normalizeTempete(data.tempete),
           vs: normalizeVs(data.vs),
+          bouclier: normalizeShield(data.bouclier),
           teams: Array.isArray(data.teams) ? data.teams : [],
           templates: Array.isArray(data.templates) ? data.templates : [],
           history: Array.isArray(data.history) ? data.history : []
@@ -7938,6 +8464,636 @@
     };
 
     /* ============================= */
+    /* ANNONCE BOUCLIER              */
+    /* ============================= */
+    const ShieldAnnouncement = {
+      adjusting: false,
+      drag: null,
+      bound: false,
+      imgCache: {},
+      previewTimer: null,
+      bgNatural: null,
+
+      ensureState() {
+        state.bouclier = normalizeShield(state.bouclier);
+      },
+
+      findAsset(list, id) {
+        if (!id) return null;
+        return list.find(function (a) { return a.id === id; }) || null;
+      },
+
+      loadImage(src) {
+        const self = this;
+        if (this.imgCache[src]) {
+          const cached = this.imgCache[src];
+          if (cached.complete && cached.naturalWidth) return Promise.resolve(cached);
+        }
+        return new Promise(function (resolve, reject) {
+          const img = new Image();
+          img.onload = function () {
+            self.imgCache[src] = img;
+            resolve(img);
+          };
+          img.onerror = function () { reject(new Error("load failed: " + src)); };
+          img.src = src;
+        });
+      },
+
+      applyShieldLayoutPreset(orientation) {
+        this.ensureState();
+        const key = orientation === "portrait" ? "portrait" : "landscape";
+        state.bouclier.orientation = key;
+        state.bouclier.positions = createDefaultShieldPositions(key);
+        state.bouclier.positionsVersion = SHIELD_POSITIONS_VERSION;
+      },
+
+      syncTextInputs() {
+        this.ensureState();
+        const t = state.bouclier.texts;
+        const map = {
+          bouclierTitle: "title",
+          bouclierSubtitle: "subtitle",
+          bouclierMessage: "message",
+          bouclierTime: "time",
+          bouclierNote: "note"
+        };
+        Object.keys(map).forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.value = t[map[id]] || "";
+        });
+      },
+
+      readTextInputs() {
+        this.ensureState();
+        state.bouclier.texts.title = (document.getElementById("bouclierTitle").value || "").trim();
+        state.bouclier.texts.subtitle = (document.getElementById("bouclierSubtitle").value || "").trim();
+        state.bouclier.texts.message = (document.getElementById("bouclierMessage").value || "").trim();
+        state.bouclier.texts.time = (document.getElementById("bouclierTime").value || "").trim();
+        state.bouclier.texts.note = (document.getElementById("bouclierNote").value || "").trim();
+      },
+
+      renderAssetGallery(containerId, list, selectedId, field, allowNone) {
+        const root = document.getElementById(containerId);
+        if (!root) return;
+        const self = this;
+        let html = "";
+        if (allowNone) {
+          html +=
+            '<button type="button" class="shield-asset-btn' + (!selectedId ? " selected" : "") + '" data-field="' + field + '" data-id="">' +
+              '<span class="shield-asset-none">Aucun</span>' +
+              "<span>Aucun</span>" +
+            "</button>";
+        }
+        html += list.map(function (asset) {
+          const sel = selectedId === asset.id ? " selected" : "";
+          return (
+            '<button type="button" class="shield-asset-btn' + sel + '" data-field="' + field + '" data-id="' + escapeHtml(asset.id) + '">' +
+              '<img class="shield-asset-thumb" src="' + escapeHtml(asset.src) + '" alt="' + escapeHtml(asset.name) + '" loading="lazy" />' +
+              "<span>" + escapeHtml(asset.name) + "</span>" +
+            "</button>"
+          );
+        }).join("");
+        root.innerHTML = html;
+      },
+
+      renderBadgeRows() {
+        const root = document.getElementById("bouclierBadgeRows");
+        if (!root) return;
+        this.ensureState();
+        const badges = state.bouclier.badges;
+        root.innerHTML = [0, 1, 2].map(function (slot) {
+          const selected = badges[slot] || "";
+          let gallery =
+            '<button type="button" class="shield-asset-btn' + (!selected ? " selected" : "") + '" data-field="badge" data-slot="' + slot + '" data-id="">' +
+              '<span class="shield-asset-none">Aucun</span><span>Aucun</span></button>';
+          gallery += SHIELD_BADGES.map(function (asset) {
+            const sel = selected === asset.id ? " selected" : "";
+            return (
+              '<button type="button" class="shield-asset-btn' + sel + '" data-field="badge" data-slot="' + slot + '" data-id="' + escapeHtml(asset.id) + '">' +
+                '<img class="shield-asset-thumb" src="' + escapeHtml(asset.src) + '" alt="' + escapeHtml(asset.name) + '" loading="lazy" />' +
+                "<span>" + escapeHtml(asset.name) + "</span>" +
+              "</button>"
+            );
+          }).join("");
+          return (
+            '<div class="shield-badge-row">' +
+              "<h4>Badge " + (slot + 1) + "</h4>" +
+              '<div class="shield-gallery">' + gallery + "</div>" +
+            "</div>"
+          );
+        }).join("");
+      },
+
+      renderShieldAnnouncementPage() {
+        this.ensureState();
+        this.renderAssetGallery("bouclierGalleryFond", SHIELD_BACKGROUNDS, state.bouclier.background, "background", false);
+        this.renderAssetGallery("bouclierGalleryVisuel", SHIELD_VISUALS, state.bouclier.visual, "visual", true);
+        this.renderAssetGallery("bouclierGalleryEmbleme", SHIELD_EMBLEMS, state.bouclier.emblem, "emblem", true);
+        this.renderAssetGallery("bouclierGalleryCadre", SHIELD_FRAMES, state.bouclier.frame, "frame", true);
+        this.renderAssetGallery("bouclierGalleryCadreTexte", SHIELD_TEXT_FRAMES, state.bouclier.textFrame, "textFrame", true);
+        this.renderBadgeRows();
+        this.syncTextInputs();
+        this.buildAdjustSlots();
+        this.updateStageAspect();
+        this.schedulePreview();
+      },
+
+      refresh() {
+        this.renderShieldAnnouncementPage();
+      },
+
+      updateStageAspect() {
+        const stage = document.getElementById("bouclierStage");
+        if (!stage) return;
+        const orientation = state.bouclier.orientation || "landscape";
+        stage.classList.toggle("portrait", orientation === "portrait");
+        if (this.bgNatural && this.bgNatural.w && this.bgNatural.h) {
+          stage.style.aspectRatio = this.bgNatural.w + " / " + this.bgNatural.h;
+        } else {
+          stage.style.aspectRatio = orientation === "portrait" ? "9 / 16" : "16 / 9";
+        }
+      },
+
+      buildAdjustSlots() {
+        const layer = document.getElementById("bouclierAdjustLayer");
+        if (!layer) return;
+        layer.innerHTML = SHIELD_SLOT_META.map(function (slot) {
+          return (
+            '<div class="shield-slot" data-slot="' + slot.key + '" data-label="' + escapeHtml(slot.label) + '" id="bouclier-slot-' + slot.key + '">' +
+              '<span class="shield-slot-handle" data-resize="1"></span>' +
+            "</div>"
+          );
+        }).join("");
+        this.applySlotStyles();
+      },
+
+      applySlotStyles() {
+        this.ensureState();
+        const positions = state.bouclier.positions;
+        SHIELD_SLOT_META.forEach(function (slot) {
+          const el = document.getElementById("bouclier-slot-" + slot.key);
+          const pos = positions[slot.key];
+          if (!el || !pos) return;
+          el.style.left = pos.left + "%";
+          el.style.top = pos.top + "%";
+          el.style.width = pos.width + "%";
+          el.style.height = pos.height + "%";
+        });
+      },
+
+      schedulePreview() {
+        const self = this;
+        if (this.previewTimer) clearTimeout(this.previewTimer);
+        this.previewTimer = setTimeout(function () {
+          self.previewTimer = null;
+          self.renderShieldPreview();
+        }, 40);
+      },
+
+      pctBox(pos, canvasW, canvasH) {
+        return {
+          x: (pos.left / 100) * canvasW,
+          y: (pos.top / 100) * canvasH,
+          w: (pos.width / 100) * canvasW,
+          h: (pos.height / 100) * canvasH
+        };
+      },
+
+      drawImageInBox(ctx, img, x, y, w, h, mode) {
+        if (!img || !img.naturalWidth) return;
+        if (mode === "stretch") {
+          ctx.drawImage(img, x, y, w, h);
+          return;
+        }
+        const ir = img.naturalWidth / img.naturalHeight;
+        const br = w / Math.max(1, h);
+        let dw, dh, dx, dy;
+        if (ir > br) {
+          dw = w;
+          dh = w / ir;
+          dx = x;
+          dy = y + (h - dh) / 2;
+        } else {
+          dh = h;
+          dw = h * ir;
+          dx = x + (w - dw) / 2;
+          dy = y;
+        }
+        ctx.drawImage(img, dx, dy, dw, dh);
+      },
+
+      drawWrappedText(ctx, text, x, y, width, height, options) {
+        if (!text) return;
+        options = options || {};
+        const color = options.color || "#fff8e7";
+        const weight = options.weight || "800";
+        const align = options.align || "center";
+        const fontFamily = options.fontFamily || "Segoe UI, system-ui, sans-serif";
+        const minSize = options.minSize != null ? options.minSize : 8;
+        let size = options.maxSize != null ? options.maxSize : Math.min(height * 0.55, 48);
+        size = Math.max(minSize, Math.floor(size));
+
+        function wrap(fontSize) {
+          ctx.font = weight + " " + fontSize + "px " + fontFamily;
+          const words = String(text).split(/\s+/);
+          const lines = [];
+          let line = "";
+          words.forEach(function (word) {
+            const test = line ? line + " " + word : word;
+            if (ctx.measureText(test).width <= width) {
+              line = test;
+            } else {
+              if (line) lines.push(line);
+              line = word;
+            }
+          });
+          if (line) lines.push(line);
+          return lines;
+        }
+
+        let lines = wrap(size);
+        let lineH = size * 1.15;
+        while (size > minSize && (lines.length * lineH > height || lines.some(function (l) {
+          return ctx.measureText(l).width > width;
+        }))) {
+          size -= 1;
+          lines = wrap(size);
+          lineH = size * 1.15;
+        }
+
+        ctx.save();
+        ctx.fillStyle = color;
+        ctx.textAlign = align;
+        ctx.textBaseline = "middle";
+        ctx.font = weight + " " + size + "px " + fontFamily;
+        const totalH = lines.length * lineH;
+        let startY = y + (height - totalH) / 2 + lineH / 2;
+        const tx = align === "left" ? x : align === "right" ? x + width : x + width / 2;
+        lines.forEach(function (line, i) {
+          ctx.fillText(line, tx, startY + i * lineH);
+        });
+        ctx.restore();
+      },
+
+      async collectAssets() {
+        this.ensureState();
+        const b = state.bouclier;
+        const bgMeta = this.findAsset(SHIELD_BACKGROUNDS, b.background);
+        if (!bgMeta) return null;
+
+        function srcOf(list, id) {
+          const meta = ShieldAnnouncement.findAsset(list, id);
+          return meta ? meta.src : null;
+        }
+        const jobs = {
+          background: this.loadImage(bgMeta.src),
+          visual: srcOf(SHIELD_VISUALS, b.visual) ? this.loadImage(srcOf(SHIELD_VISUALS, b.visual)) : Promise.resolve(null),
+          emblem: srcOf(SHIELD_EMBLEMS, b.emblem) ? this.loadImage(srcOf(SHIELD_EMBLEMS, b.emblem)) : Promise.resolve(null),
+          frame: srcOf(SHIELD_FRAMES, b.frame) ? this.loadImage(srcOf(SHIELD_FRAMES, b.frame)) : Promise.resolve(null),
+          textFrame: srcOf(SHIELD_TEXT_FRAMES, b.textFrame) ? this.loadImage(srcOf(SHIELD_TEXT_FRAMES, b.textFrame)) : Promise.resolve(null),
+          badge1: srcOf(SHIELD_BADGES, b.badges[0]) ? this.loadImage(srcOf(SHIELD_BADGES, b.badges[0])) : Promise.resolve(null),
+          badge2: srcOf(SHIELD_BADGES, b.badges[1]) ? this.loadImage(srcOf(SHIELD_BADGES, b.badges[1])) : Promise.resolve(null),
+          badge3: srcOf(SHIELD_BADGES, b.badges[2]) ? this.loadImage(srcOf(SHIELD_BADGES, b.badges[2])) : Promise.resolve(null)
+        };
+
+        const keys = Object.keys(jobs);
+        const values = await Promise.all(keys.map(function (k) {
+          return jobs[k].catch(function () { return null; });
+        }));
+        const out = {};
+        keys.forEach(function (k, i) { out[k] = values[i]; });
+        if (!out.background) return null;
+        return out;
+      },
+
+      drawShieldAnnouncementCanvas(canvas, assets) {
+        this.ensureState();
+        const bg = assets.background;
+        canvas.width = bg.naturalWidth;
+        canvas.height = bg.naturalHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        const pos = state.bouclier.positions;
+        const order = [
+          { key: "frame", img: assets.frame, mode: "stretch" },
+          { key: "visual", img: assets.visual, mode: "contain" },
+          { key: "emblem", img: assets.emblem, mode: "contain" },
+          { key: "badge1", img: assets.badge1, mode: "contain" },
+          { key: "badge2", img: assets.badge2, mode: "contain" },
+          { key: "badge3", img: assets.badge3, mode: "contain" },
+          { key: "textFrame", img: assets.textFrame, mode: "stretch" }
+        ];
+
+        const self = this;
+        order.forEach(function (item) {
+          if (!item.img || !pos[item.key]) return;
+          const box = self.pctBox(pos[item.key], canvas.width, canvas.height);
+          self.drawImageInBox(ctx, item.img, box.x, box.y, box.w, box.h, item.mode);
+        });
+
+        const texts = state.bouclier.texts;
+        const textSpecs = [
+          { key: "title", value: texts.title, weight: "900", color: "#fff6d5", maxFrac: 0.7 },
+          { key: "subtitle", value: texts.subtitle, weight: "700", color: "#f0e2b0", maxFrac: 0.55 },
+          { key: "message", value: texts.message, weight: "700", color: "#fff8e7", maxFrac: 0.42, wrap: true },
+          { key: "time", value: texts.time, weight: "800", color: "#ffe08a", maxFrac: 0.55 },
+          { key: "note", value: texts.note, weight: "600", color: "#e8d9a8", maxFrac: 0.45 }
+        ];
+
+        textSpecs.forEach(function (spec) {
+          if (!spec.value || !pos[spec.key]) return;
+          const box = self.pctBox(pos[spec.key], canvas.width, canvas.height);
+          const maxSize = Math.min(box.h * spec.maxFrac, canvas.width * 0.06, 64);
+          if (spec.wrap) {
+            self.drawWrappedText(ctx, spec.value, box.x, box.y, box.w, box.h, {
+              color: spec.color,
+              weight: spec.weight,
+              maxSize: maxSize,
+              minSize: 8,
+              align: "center"
+            });
+          } else {
+            drawSingleLineFittedText(ctx, spec.value, box.x, box.y, box.w, box.h, {
+              color: spec.color,
+              align: "center",
+              baseline: "middle",
+              weight: spec.weight,
+              maxSize: maxSize,
+              minSize: 8
+            });
+          }
+        });
+
+        return canvas;
+      },
+
+      async renderShieldPreview() {
+        this.ensureState();
+        const empty = document.getElementById("bouclierEmpty");
+        const canvas = document.getElementById("bouclierPreviewCanvas");
+        const stage = document.getElementById("bouclierStage");
+        if (!canvas || !stage) return;
+
+        if (!state.bouclier.background) {
+          if (empty) empty.hidden = false;
+          const ctx = canvas.getContext("2d");
+          canvas.width = 1600;
+          canvas.height = 900;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          this.bgNatural = null;
+          this.updateStageAspect();
+          return;
+        }
+
+        try {
+          const assets = await this.collectAssets();
+          if (!assets) {
+            if (empty) empty.hidden = false;
+            return;
+          }
+          this.bgNatural = { w: assets.background.naturalWidth, h: assets.background.naturalHeight };
+          const orientation = getShieldBackgroundOrientation(this.bgNatural.w, this.bgNatural.h);
+          if (orientation !== state.bouclier.orientation) {
+            this.applyShieldLayoutPreset(orientation);
+            this.applySlotStyles();
+            Storage.persist();
+          }
+          this.updateStageAspect();
+          this.drawShieldAnnouncementCanvas(canvas, assets);
+          if (empty) empty.hidden = true;
+        } catch (err) {
+          console.warn(err);
+          if (empty) {
+            empty.hidden = false;
+            empty.textContent = "Impossible de charger les images de l’annonce.";
+          }
+        }
+      },
+
+      async exportShieldAnnouncementImage() {
+        this.ensureState();
+        this.readTextInputs();
+        if (!state.bouclier.background) {
+          Notifications.show("Choisissez d’abord un fond.", "info");
+          return;
+        }
+        try {
+          const assets = await this.collectAssets();
+          if (!assets) {
+            Notifications.show("Impossible de charger le fond.", "error");
+            return;
+          }
+          const canvas = document.createElement("canvas");
+          this.drawShieldAnnouncementCanvas(canvas, assets);
+          const date = new Date();
+          const yyyy = date.getFullYear();
+          const mm = String(date.getMonth() + 1).padStart(2, "0");
+          const dd = String(date.getDate()).padStart(2, "0");
+          const filename = "annonce-bouclier-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
+          finalizeImageExport(canvas, {
+            module: "bouclier",
+            title: "Annonce bouclier",
+            filename: filename
+          });
+        } catch (err) {
+          console.error(err);
+          Notifications.show("Export impossible", "error");
+        }
+      },
+
+      setField(field, id) {
+        this.ensureState();
+        if (field === "background") {
+          const prevOrientation = state.bouclier.orientation;
+          state.bouclier.background = id || "";
+          const meta = this.findAsset(SHIELD_BACKGROUNDS, id);
+          if (meta) {
+            const self = this;
+            this.loadImage(meta.src).then(function (img) {
+              const orientation = getShieldBackgroundOrientation(img.naturalWidth, img.naturalHeight);
+              self.bgNatural = { w: img.naturalWidth, h: img.naturalHeight };
+              if (orientation !== prevOrientation || !state.bouclier.positions) {
+                self.applyShieldLayoutPreset(orientation);
+              } else {
+                state.bouclier.orientation = orientation;
+              }
+              Storage.persist();
+              self.renderShieldAnnouncementPage();
+            }).catch(function () {
+              Notifications.show("Impossible de charger ce fond.", "error");
+            });
+            return;
+          }
+        } else if (field === "visual" || field === "emblem" || field === "frame" || field === "textFrame") {
+          state.bouclier[field] = id || "";
+        }
+        Storage.persist();
+        this.renderShieldAnnouncementPage();
+      },
+
+      setBadge(slot, id) {
+        this.ensureState();
+        const i = Number(slot);
+        if (i < 0 || i >= SHIELD_BADGE_SLOTS) return;
+        state.bouclier.badges[i] = id || "";
+        Storage.persist();
+        this.renderBadgeRows();
+        this.schedulePreview();
+      },
+
+      resetShieldAnnouncementPositions() {
+        this.ensureState();
+        this.applyShieldLayoutPreset(state.bouclier.orientation || "landscape");
+        Storage.persist();
+        this.applySlotStyles();
+        this.schedulePreview();
+        Notifications.show("Positions réinitialisées", "success");
+      },
+
+      resetAll() {
+        state.bouclier = createDefaultShield();
+        this.bgNatural = null;
+        Storage.persist();
+        this.setAdjustMode(false);
+        this.refresh();
+        Notifications.show("Annonce réinitialisée", "success");
+      },
+
+      setAdjustMode(on) {
+        this.adjusting = !!on;
+        const stage = document.getElementById("bouclierStage");
+        const btn = document.getElementById("btnAdjustBouclier");
+        const hint = document.getElementById("bouclierAdjustHint");
+        if (stage) stage.classList.toggle("adjusting", this.adjusting);
+        if (btn) {
+          btn.classList.toggle("btn-primary", this.adjusting);
+          btn.classList.toggle("btn-secondary", !this.adjusting);
+          btn.textContent = this.adjusting ? "Terminer l'ajustement" : "Ajuster les positions";
+        }
+        if (hint) hint.hidden = !this.adjusting;
+        if (!this.adjusting) this.schedulePreview();
+      },
+
+      onPointerDown(e) {
+        if (!this.adjusting) return;
+        const handle = e.target.closest(".shield-slot-handle");
+        const slot = e.target.closest(".shield-slot");
+        if (!slot) return;
+        e.preventDefault();
+        const stage = document.getElementById("bouclierStage");
+        const rect = stage.getBoundingClientRect();
+        const key = slot.dataset.slot;
+        const pos = state.bouclier.positions[key];
+        this.drag = {
+          key: key,
+          el: slot,
+          resize: !!handle,
+          startX: e.clientX,
+          startY: e.clientY,
+          orig: { left: pos.left, top: pos.top, width: pos.width, height: pos.height },
+          stageW: rect.width,
+          stageH: rect.height
+        };
+        slot.classList.add("dragging");
+        try { slot.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      },
+
+      onPointerMove(e) {
+        if (!this.drag) return;
+        const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
+        const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
+        const pos = state.bouclier.positions[this.drag.key];
+        if (this.drag.resize) {
+          pos.width = Math.max(4, Math.min(100 - this.drag.orig.left, this.drag.orig.width + dx));
+          pos.height = Math.max(3, Math.min(100 - this.drag.orig.top, this.drag.orig.height + dy));
+        } else {
+          pos.left = Math.max(0, Math.min(100 - pos.width, this.drag.orig.left + dx));
+          pos.top = Math.max(0, Math.min(100 - pos.height, this.drag.orig.top + dy));
+        }
+        this.applySlotStyles();
+        this.schedulePreview();
+        Storage.persistSoon(180);
+      },
+
+      onPointerUp(e) {
+        if (!this.drag) return;
+        this.drag.el.classList.remove("dragging");
+        try { this.drag.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        this.drag = null;
+        state.bouclier.positionsVersion = SHIELD_POSITIONS_VERSION;
+        Storage.persist();
+        this.schedulePreview();
+      },
+
+      bind() {
+        if (this.bound) return;
+        this.bound = true;
+        const self = this;
+        this.refresh();
+
+        const page = document.getElementById("page-bouclier");
+        page.addEventListener("click", function (e) {
+          const assetBtn = e.target.closest(".shield-asset-btn");
+          if (assetBtn) {
+            const field = assetBtn.dataset.field;
+            const id = assetBtn.dataset.id || "";
+            if (field === "badge") self.setBadge(assetBtn.dataset.slot, id);
+            else self.setField(field, id);
+            return;
+          }
+        });
+
+        ["bouclierTitle", "bouclierSubtitle", "bouclierMessage", "bouclierTime", "bouclierNote"].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener("input", function () {
+            self.readTextInputs();
+            Storage.persistSoon(250);
+            self.schedulePreview();
+          });
+        });
+
+        document.getElementById("btnExportBouclier").addEventListener("click", function () {
+          self.exportShieldAnnouncementImage();
+        });
+        document.getElementById("btnAdjustBouclier").addEventListener("click", function () {
+          self.setAdjustMode(!self.adjusting);
+        });
+        document.getElementById("btnResetBouclierPos").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser les positions",
+            message: "Remettre les zones au placement par défaut pour ce format ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () { self.resetShieldAnnouncementPositions(); }
+          });
+        });
+        document.getElementById("btnResetBouclier").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser l'annonce",
+            message: "Effacer fond, visuels, badges, textes et positions ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () { self.resetAll(); }
+          });
+        });
+
+        const stage = document.getElementById("bouclierStage");
+        stage.addEventListener("pointerdown", function (e) { self.onPointerDown(e); });
+        stage.addEventListener("pointermove", function (e) { self.onPointerMove(e); });
+        stage.addEventListener("pointerup", function (e) { self.onPointerUp(e); });
+        stage.addEventListener("pointercancel", function (e) { self.onPointerUp(e); });
+
+        let resizeTimer = null;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () { self.schedulePreview(); }, 80);
+        });
+      }
+    };
+
+    /* ============================= */
     /* NAVIGATION                    */
     /* ============================= */
     const Nav = {
@@ -7967,6 +9123,9 @@
         if (page === "vs") {
           Vs.refresh();
           setTimeout(function () { Vs.renderVsPreview(); }, 50);
+        }
+        if (page === "bouclier") {
+          ShieldAnnouncement.refresh();
         }
         if (page === "history") {
           HistoryUI.refresh();
@@ -8056,6 +9215,7 @@
       TeamVille.bind();
       Tempete.bind();
       Vs.bind();
+      ShieldAnnouncement.bind();
       HistoryUI.bind();
 
       document.getElementById("mobileExportClose").addEventListener("click", closeMobileImageExport);
@@ -8277,6 +9437,7 @@
           else if (TeamVille.adjusting) TeamVille.setAdjustMode(false);
           else if (Tempete.adjustingPlan) Tempete.setAdjustMode(Tempete.adjustingPlan, false);
           else if (Vs.adjusting) Vs.setAdjustMode(false);
+          else if (ShieldAnnouncement.adjusting) ShieldAnnouncement.setAdjustMode(false);
           else Nav.closeSidebar();
         }
       });
@@ -8291,6 +9452,7 @@
       state.teamVille = normalizeTeamVille(state.teamVille);
       state.tempete = normalizeTempete(state.tempete);
       state.vs = normalizeVs(state.vs);
+      state.bouclier = normalizeShield(state.bouclier);
       if (!state.migrations || typeof state.migrations !== "object") state.migrations = {};
       migratePlayerData();
       Storage.persist();
