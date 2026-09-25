@@ -155,6 +155,61 @@
       flex-shrink: 0;
     }
 
+    .nav-spacer {
+      flex: 1 1 auto;
+      min-height: 0.75rem;
+    }
+
+    .nav-btn.updates-unread {
+      color: #ff6b5f;
+      border: 1px solid rgba(231, 76, 60, 0.55);
+      background: rgba(192, 57, 43, 0.14);
+      box-shadow: 0 0 18px rgba(231, 76, 60, 0.18);
+      animation: updates-pulse 2.4s ease-in-out infinite;
+    }
+
+    .nav-btn.updates-unread.active {
+      color: #ff8a7a;
+      border-color: rgba(231, 76, 60, 0.7);
+      background: rgba(192, 57, 43, 0.22);
+    }
+
+    .nav-btn.updates-unread .nav-icon {
+      opacity: 1;
+    }
+
+    .update-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #e74c3c;
+      box-shadow: 0 0 10px rgba(231, 76, 60, 0.7);
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    .update-badge-nouveau {
+      margin-left: 0.35rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: #fff;
+      background: #e74c3c;
+      box-shadow: 0 0 10px rgba(231, 76, 60, 0.45);
+      flex-shrink: 0;
+    }
+
+    .nav-btn.updates-unread .update-badge-nouveau {
+      margin-left: 0.25rem;
+    }
+
+    @keyframes updates-pulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(231, 76, 60, 0.14); }
+      50% { box-shadow: 0 0 22px rgba(231, 76, 60, 0.32); }
+    }
+
     .sidebar-footer {
       padding: 1rem 1.25rem;
       border-top: 1px solid var(--border);
@@ -2338,6 +2393,105 @@
       color: var(--text);
     }
 
+    /* ---------- Ajouts récents ---------- */
+    .home-update-panel {
+      margin-top: 1rem;
+    }
+
+    .home-update-panel.unread {
+      border-color: rgba(231, 76, 60, 0.45);
+      box-shadow: 0 0 24px rgba(231, 76, 60, 0.12);
+      background: linear-gradient(180deg, rgba(192, 57, 43, 0.12), var(--bg-panel));
+    }
+
+    .home-update-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.55rem;
+    }
+
+    .home-update-panel.unread .home-update-kicker {
+      color: #ff6b5f;
+    }
+
+    .home-update-title {
+      margin: 0 0 0.25rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .home-update-date {
+      margin: 0 0 0.65rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .home-update-summary {
+      margin: 0 0 1rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .updates-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .update-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.15rem;
+    }
+
+    .update-card.latest.unread {
+      border-color: rgba(231, 76, 60, 0.45);
+      box-shadow: 0 0 20px rgba(231, 76, 60, 0.12);
+    }
+
+    .update-card-date {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .update-card-title {
+      margin: 0 0 0.55rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .update-card-summary {
+      margin: 0 0 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .update-card-items {
+      margin: 0;
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .update-card-items li {
+      padding-left: 0.15rem;
+    }
+
     @media (max-width: 900px) {
       .history-grid {
         grid-template-columns: 1fr;
@@ -2439,6 +2593,11 @@
         <button type="button" class="nav-btn" data-page="history">
           <span class="nav-icon">◷</span> Historique
         </button>
+        <div class="nav-spacer" aria-hidden="true"></div>
+        <button type="button" class="nav-btn" data-page="updates" id="navUpdatesBtn">
+          <span class="nav-icon">✦</span>
+          <span class="nav-updates-label">Ajouts récents</span>
+        </button>
         <button type="button" class="nav-btn" data-page="settings">
           <span class="nav-icon">⚙</span> Paramètres
         </button>
@@ -2466,6 +2625,9 @@
             </div>
           </div>
           <div class="stats-grid" id="dashboardStats">
+            <!-- filled by JS -->
+          </div>
+          <div class="panel home-update-panel" id="homeLatestUpdate" hidden>
             <!-- filled by JS -->
           </div>
           <div class="panel">
@@ -2778,6 +2940,17 @@
           <div class="history-grid" id="historyList"></div>
         </section>
 
+        <!-- Ajouts récents -->
+        <section class="page" id="page-updates" data-page="updates">
+          <div class="page-header">
+            <div>
+              <h1>Ajouts récents</h1>
+              <p>Découvrez les dernières nouveautés de 5LE Manager.</p>
+            </div>
+          </div>
+          <div class="updates-list" id="updatesList"></div>
+        </section>
+
         <!-- Paramètres -->
         <section class="page" id="page-settings" data-page="settings">
           <div class="page-header">
@@ -2911,6 +3084,28 @@
     const DATA_VERSION = 2;
     const STORAGE_KEY = "5LE_MANAGER_DATA";
     const LEGACY_STORAGE_KEYS = ["5LE_DATA", "5le_manager_data", "5LEManagerData"];
+    const LAST_READ_UPDATE_KEY = "5LE_LAST_READ_UPDATE";
+
+    /* Source officielle des mises à jour du site (jamais écrasée par localStorage).
+       Plus récent en premier. Pour publier : ajouter un objet en tête du tableau. */
+    const SITE_UPDATES = [
+      {
+        id: "update_2026_09_25_01",
+        version: 1,
+        date: "2026-09-25T16:30:00+02:00",
+        title: "5LE Manager prend forme",
+        summary: "Première base complète pour les R4 : joueurs, modules de planning, exports et historique.",
+        items: [
+          "Gestion des 100 joueurs de l'alliance",
+          "Planning Train",
+          "Team Ville",
+          "Tempête du désert — Plans A et B",
+          "Planning VS ÉCO / PUSH",
+          "Export PNG PC et mobile",
+          "Historique automatique des créations"
+        ]
+      }
+    ];
 
     const CONFIG = {
       storageKey: STORAGE_KEY,
@@ -3821,8 +4016,137 @@
             "</div>"
           );
         }).join("");
+        renderHomeLatestUpdate();
       }
     };
+
+    /* ============================= */
+    /* AJOUTS RÉCENTS (site)         */
+    /* ============================= */
+    function getLatestSiteUpdate() {
+      return SITE_UPDATES.length ? SITE_UPDATES[0] : null;
+    }
+
+    function hasUnreadSiteUpdate() {
+      const latest = getLatestSiteUpdate();
+      if (!latest) return false;
+      try {
+        return localStorage.getItem(LAST_READ_UPDATE_KEY) !== latest.id;
+      } catch (err) {
+        return true;
+      }
+    }
+
+    function markLatestSiteUpdateAsRead() {
+      const latest = getLatestSiteUpdate();
+      if (!latest) return;
+      try {
+        localStorage.setItem(LAST_READ_UPDATE_KEY, latest.id);
+      } catch (err) {
+        /* stockage indisponible : le badge pourra réapparaître */
+      }
+      refreshUpdateIndicators();
+      renderHomeLatestUpdate();
+      renderUpdatesPage();
+    }
+
+    function formatSiteUpdateDate(iso) {
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return "";
+      return d.toLocaleDateString("fr-FR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric"
+      });
+    }
+
+    function refreshUpdateIndicators() {
+      const btn = document.getElementById("navUpdatesBtn");
+      if (!btn) return;
+      const unread = hasUnreadSiteUpdate();
+      btn.classList.toggle("updates-unread", unread);
+
+      let extras = btn.querySelector(".nav-updates-extras");
+      if (!extras) {
+        extras = document.createElement("span");
+        extras.className = "nav-updates-extras";
+        extras.style.display = "inline-flex";
+        extras.style.alignItems = "center";
+        extras.style.gap = "0.35rem";
+        extras.style.marginLeft = "auto";
+        btn.appendChild(extras);
+      }
+
+      if (unread) {
+        extras.innerHTML =
+          '<span class="update-dot" aria-hidden="true"></span>' +
+          '<span class="update-badge-nouveau">NOUVEAU</span>';
+        btn.setAttribute("aria-label", "Ajouts récents — nouveauté non lue");
+      } else {
+        extras.innerHTML = "";
+        btn.setAttribute("aria-label", "Ajouts récents");
+      }
+    }
+
+    function renderUpdatesPage() {
+      const list = document.getElementById("updatesList");
+      if (!list) return;
+      const latest = getLatestSiteUpdate();
+      const unread = hasUnreadSiteUpdate();
+
+      if (!SITE_UPDATES.length) {
+        list.innerHTML =
+          '<div class="panel"><p>Aucune mise à jour pour le moment.</p></div>';
+        return;
+      }
+
+      list.innerHTML = SITE_UPDATES.map(function (update, index) {
+        const isLatest = index === 0;
+        const items = (update.items || []).map(function (item) {
+          return "<li>" + escapeHtml(item) + "</li>";
+        }).join("");
+        return (
+          '<article class="update-card' +
+            (isLatest ? " latest" : "") +
+            (isLatest && unread ? " unread" : "") + '">' +
+            '<div class="update-card-date">' + escapeHtml(formatSiteUpdateDate(update.date)) + "</div>" +
+            '<h2 class="update-card-title">' +
+              escapeHtml(update.title) +
+              (isLatest && unread ? '<span class="update-badge-nouveau">NOUVEAU</span>' : "") +
+            "</h2>" +
+            (update.summary
+              ? '<p class="update-card-summary">' + escapeHtml(update.summary) + "</p>"
+              : "") +
+            (items ? '<ul class="update-card-items">' + items + "</ul>" : "") +
+          "</article>"
+        );
+      }).join("");
+    }
+
+    function renderHomeLatestUpdate() {
+      const panel = document.getElementById("homeLatestUpdate");
+      if (!panel) return;
+      const latest = getLatestSiteUpdate();
+      if (!latest) {
+        panel.hidden = true;
+        panel.innerHTML = "";
+        return;
+      }
+
+      const unread = hasUnreadSiteUpdate();
+      panel.hidden = false;
+      panel.classList.toggle("unread", unread);
+      panel.innerHTML =
+        '<div class="home-update-kicker">' +
+          (unread
+            ? '<span class="update-dot" aria-hidden="true"></span> Nouveau'
+            : "Dernière mise à jour") +
+        "</div>" +
+        '<h2 class="home-update-title">' + escapeHtml(latest.title) + "</h2>" +
+        '<p class="home-update-date">' + escapeHtml(formatSiteUpdateDate(latest.date)) + "</p>" +
+        '<p class="home-update-summary">' + escapeHtml(latest.summary || "") + "</p>" +
+        '<button type="button" class="btn btn-secondary" id="btnHomeViewUpdates">Voir les ajouts récents</button>';
+    }
 
     /* ============================= */
     /* GESTION DES JOUEURS           */
@@ -7647,6 +7971,13 @@
         if (page === "history") {
           HistoryUI.refresh();
         }
+        if (page === "updates") {
+          markLatestSiteUpdateAsRead();
+          renderUpdatesPage();
+        }
+        if (page === "home") {
+          renderHomeLatestUpdate();
+        }
       },
 
       openSidebar() {
@@ -7746,6 +8077,12 @@
         const btn = e.target.closest(".nav-btn");
         if (!btn) return;
         Nav.go(btn.dataset.page);
+      });
+
+      document.getElementById("page-home").addEventListener("click", function (e) {
+        const goUpdates = e.target.closest("#btnHomeViewUpdates");
+        if (!goUpdates) return;
+        Nav.go("updates");
       });
 
       document.getElementById("menuToggle").addEventListener("click", function () {
@@ -7960,6 +8297,9 @@
       Storage.bindLifecycle();
       bindEvents();
       PlayersUI.render();
+      refreshUpdateIndicators();
+      renderHomeLatestUpdate();
+      renderUpdatesPage();
       if (Storage._restoredFromInvalid) {
         Notifications.show("Données locales invalides : configuration officielle restaurée.", "info");
       }
