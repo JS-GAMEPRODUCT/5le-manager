@@ -2770,6 +2770,46 @@
       font-weight: 700;
     }
 
+    .shield-step-hint {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      letter-spacing: 0;
+    }
+
+    .shield-inline-hint {
+      margin: 0.65rem 0 0;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.4;
+    }
+
+    .shield-inline-hint.warn {
+      color: #ff8a7a;
+    }
+
+    .shield-asset-btn.selected::after {
+      content: "✓";
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: #1a1408;
+      font-size: 0.7rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .shield-asset-btn {
+      position: relative;
+    }
+
     @media (max-width: 900px) {
       .shield-fields {
         grid-template-columns: 1fr;
@@ -2811,7 +2851,7 @@
           <span class="nav-icon">▣</span> Train
         </button>
         <button type="button" class="nav-btn" data-page="teamville">
-          <span class="nav-icon">▤</span> Team Ville
+          <span class="nav-icon">▤</span> Reine Cramoisie
         </button>
         <button type="button" class="nav-btn" data-page="tempete">
           <span class="nav-icon">▦</span> Tempête du désert
@@ -2866,7 +2906,7 @@
             <h2>Bienvenue dans 5LE Manager</h2>
             <p>
               Gérez vos joueurs, préparez le train et vos équipes.
-              Préparez le train, Team Ville, Tempête du désert et le planning VS depuis le menu.
+              Préparez le train, Reine Cramoisie, Tempête du désert et le planning VS depuis le menu.
             </p>
           </div>
         </section>
@@ -3009,11 +3049,11 @@
           </div>
         </section>
 
-        <!-- Team Ville -->
+        <!-- Reine Cramoisie -->
         <section class="page" id="page-teamville" data-page="teamville">
           <div class="page-header">
             <div>
-              <h1>Team Ville</h1>
+              <h1>Reine Cramoisie</h1>
               <p>Répartition des joueurs par équipe</p>
             </div>
           </div>
@@ -3034,7 +3074,7 @@
             <div class="panel train-preview-panel">
               <h2>Aperçu</h2>
               <div class="train-stage train-preview tv-stage" id="tvStage">
-                <img id="tvImage" src="images/teamville.png" alt="Modèle Team Ville 5LE" />
+                <img id="tvImage" src="images/teamville.png" alt="Modèle Reine Cramoisie 5LE" />
                 <div class="tv-slot" data-team="team1" data-label="TEAM 1" id="tv-slot-team1">
                   <div class="tv-slot-list" id="tv-list-team1"></div>
                   <span class="train-slot-handle tv-slot-handle" data-resize="1"></span>
@@ -3048,7 +3088,7 @@
                   <span class="train-slot-handle tv-slot-handle" data-resize="1"></span>
                 </div>
               </div>
-              <div class="train-error" id="tvImageError">Impossible de charger le modèle Team Ville.</div>
+              <div class="train-error" id="tvImageError">Impossible de charger le modèle Reine Cramoisie.</div>
               <p class="train-hint" id="tvAdjustHint" hidden>
                 Mode ajustement : déplacez ou redimensionnez les 3 colonnes. Sauvegarde automatique.
               </p>
@@ -3155,14 +3195,15 @@
           </div>
 
           <p class="shield-help">
-            Choisissez d’abord un fond pour adapter automatiquement le format de l’annonce, puis ajoutez visuels, badges, emblèmes et texte.
+            Choisissez un fond, ajoutez visuels, emblèmes, badges et cadre de texte, ou utilisez “Choix automatique” pour générer une annonce prête à l’emploi.
           </p>
 
           <div class="train-toolbar">
+            <button type="button" class="btn btn-primary" id="btnBouclierAuto">Choix automatique</button>
             <button type="button" class="btn btn-primary" id="btnExportBouclier">Exporter l'image</button>
             <button type="button" class="btn btn-secondary" id="btnAdjustBouclier">Ajuster les positions</button>
             <button type="button" class="btn btn-ghost" id="btnResetBouclierPos">Réinitialiser les positions</button>
-            <button type="button" class="btn btn-danger" id="btnResetBouclier">Réinitialiser l'annonce</button>
+            <button type="button" class="btn btn-danger" id="btnResetBouclier">Effacer la composition</button>
           </div>
           <p class="train-hint" id="bouclierAdjustHint" hidden>
             Mode ajustement : glissez les zones, redimensionnez avec le coin. Les positions sont en pourcentage.
@@ -3187,32 +3228,33 @@
           </div>
 
           <div class="panel shield-step">
-            <h3>Étape 2 — Visuel</h3>
+            <h3>Étape 2 — Visuels <span class="shield-step-hint">(plusieurs possibles)</span></h3>
             <div class="shield-gallery" id="bouclierGalleryVisuel"></div>
           </div>
 
           <div class="panel shield-step">
-            <h3>Étape 3 — Emblème</h3>
+            <h3>Étape 3 — Emblèmes <span class="shield-step-hint">(plusieurs possibles)</span></h3>
             <div class="shield-gallery" id="bouclierGalleryEmbleme"></div>
           </div>
 
           <div class="panel shield-step">
-            <h3>Étape 4 — Cadre principal</h3>
+            <h3>Étape 4 — Cadres principaux <span class="shield-step-hint">(plusieurs possibles)</span></h3>
             <div class="shield-gallery" id="bouclierGalleryCadre"></div>
           </div>
 
           <div class="panel shield-step">
-            <h3>Étape 5 — Cadre de texte</h3>
+            <h3>Étape 5 — Cadres de texte <span class="shield-step-hint">(texte uniquement ici)</span></h3>
             <div class="shield-gallery" id="bouclierGalleryCadreTexte"></div>
+            <p class="shield-inline-hint" id="bouclierTextFrameHint">Sélectionnez au moins un cadre de texte pour afficher le contenu écrit.</p>
           </div>
 
           <div class="panel shield-step">
-            <h3>Étape 6 — Badges</h3>
-            <div class="shield-badge-rows" id="bouclierBadgeRows"></div>
+            <h3>Étape 6 — Badges <span class="shield-step-hint">(plusieurs possibles)</span></h3>
+            <div class="shield-gallery" id="bouclierGalleryBadges"></div>
           </div>
 
           <div class="panel shield-step">
-            <h3>Textes de l’annonce</h3>
+            <h3>Textes de l’annonce <span class="shield-step-hint">(dans le cadre de texte)</span></h3>
             <div class="shield-fields">
               <div class="form-group">
                 <label for="bouclierTitle">Titre principal</label>
@@ -3251,7 +3293,7 @@
             <div class="history-filters" id="historyFilters" role="tablist" aria-label="Filtres historique">
               <button type="button" class="btn btn-secondary history-filter-btn active" data-filter="all">Tous</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="train">Train</button>
-              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="teamville">Team Ville</button>
+              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="teamville">Reine Cramoisie</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="tempete">Tempête</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="vs">VS</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="bouclier">Bouclier</button>
@@ -3261,7 +3303,7 @@
 
           <div class="history-empty" id="historyEmpty" hidden>
             <h2>Aucune image</h2>
-            <p>Les exports Train, Team Ville, Tempête et VS apparaîtront ici automatiquement.</p>
+            <p>Les exports Train, Reine Cramoisie, Tempête et VS apparaîtront ici automatiquement.</p>
           </div>
           <div class="history-grid" id="historyList"></div>
         </section>
@@ -3416,6 +3458,21 @@
        Plus récent en premier. Pour publier : ajouter un objet en tête du tableau. */
     const SITE_UPDATES = [
       {
+        id: "update_2026_09_25_02",
+        version: 2,
+        date: "2026-09-25T18:00:00+02:00",
+        title: "Amélioration de l’annonce bouclier",
+        summary: "Le module Annonce bouclier gagne le choix automatique, la sélection multiple et un meilleur placement des éléments.",
+        items: [
+          "Choix automatique d’une composition cohérente",
+          "Ajout de messages prédéfinis",
+          "Sélection multiple des badges",
+          "Sélection multiple des visuels, emblèmes et cadres",
+          "Texte désormais réservé aux cadres de texte",
+          "Amélioration générale du workflow de création"
+        ]
+      },
+      {
         id: "update_2026_09_25_01",
         version: 1,
         date: "2026-09-25T16:30:00+02:00",
@@ -3424,7 +3481,7 @@
         items: [
           "Gestion des 100 joueurs de l'alliance",
           "Planning Train",
-          "Team Ville",
+          "Reine Cramoisie",
           "Tempête du désert — Plans A et B",
           "Planning VS ÉCO / PUSH",
           "Export PNG PC et mobile",
@@ -3596,8 +3653,7 @@
 
 
     const SHIELD_ASSET_BASE = "images/bouclier/";
-    const SHIELD_POSITIONS_VERSION = 1;
-    const SHIELD_BADGE_SLOTS = 3;
+    const SHIELD_POSITIONS_VERSION = 2;
 
     function shieldAsset(fileName, name) {
       return {
@@ -3653,51 +3709,161 @@
       shieldAsset("bouclierembleme4.png", "Emblème 4")
     ];
 
-    const SHIELD_SLOT_META = [
-      { key: "frame", label: "Cadre" },
-      { key: "visual", label: "Visuel" },
-      { key: "emblem", label: "Emblème" },
-      { key: "badge1", label: "Badge 1" },
-      { key: "badge2", label: "Badge 2" },
-      { key: "badge3", label: "Badge 3" },
-      { key: "textFrame", label: "Cadre texte" },
-      { key: "title", label: "Titre" },
-      { key: "subtitle", label: "Sous-titre" },
-      { key: "message", label: "Message" },
-      { key: "time", label: "Heure" },
-      { key: "note", label: "Note" }
+    const SHIELD_AUTO_MESSAGES = [
+      {
+        title: "N’oubliez pas le bouclier",
+        subtitle: "Protection recommandée",
+        message: "Pensez à activer votre bouclier avant de quitter le jeu.",
+        time: "Avant 4:00",
+        note: "Mieux vaut prévenir que finir en barbecue."
+      },
+      {
+        title: "Bouclier avant de dormir",
+        subtitle: "Rappel 5LE",
+        message: "Avant de dormir, activez votre bouclier pour protéger votre base.",
+        time: "Avant 00:00",
+        note: "Une bonne nuit commence par un bouclier."
+      },
+      {
+        title: "Bouclier sinon à 4:00 barbecue",
+        subtitle: "Ne prenez pas de risque",
+        message: "Sans bouclier, votre base peut brûler pendant la fenêtre de 4:00.",
+        time: "Avant 4:00",
+        note: "Pas de bouclier = danger."
+      },
+      {
+        title: "Protégez votre base",
+        subtitle: "Avant de quitter le jeu",
+        message: "Pensez à vous protéger avant de quitter le jeu.",
+        time: "Avant déconnexion",
+        note: "Mise du bouclier obligatoire."
+      },
+      {
+        title: "Bouclier obligatoire",
+        subtitle: "Avant la nuit",
+        message: "Protégez votre base avant la nuit et activez votre bouclier.",
+        time: "Avant 4:00",
+        note: "Ne prenez pas de risque pendant le VS."
+      },
+      {
+        title: "Pas de bouclier = danger",
+        subtitle: "Rappel alliance",
+        message: "Activez votre bouclier avant de vous déconnecter.",
+        time: "Avant 4:00",
+        note: "Barbecue à 4:00 si oubli."
+      },
+      {
+        title: "Protection de nuit",
+        subtitle: "Rappel R4",
+        message: "Avant de dormir, activez votre bouclier.",
+        time: "Avant 00:00",
+        note: "Merci à tous les joueurs 5LE."
+      },
+      {
+        title: "Bouclier avant déconnexion",
+        subtitle: "Sécurité base",
+        message: "Mise du bouclier obligatoire avant de quitter le jeu.",
+        time: "Avant 4:00",
+        note: "Protégez votre progression."
+      }
     ];
 
-    const SHIELD_LAYOUT_PRESETS = {
-      landscape: {
-        frame: { left: 1.5, top: 1.5, width: 97, height: 97 },
-        visual: { left: 30, top: 10, width: 40, height: 48 },
-        emblem: { left: 42, top: 2, width: 16, height: 18 },
-        badge1: { left: 4, top: 10, width: 14, height: 22 },
-        badge2: { left: 82, top: 10, width: 14, height: 22 },
-        badge3: { left: 4, top: 38, width: 14, height: 22 },
-        textFrame: { left: 10, top: 60, width: 80, height: 34 },
-        title: { left: 14, top: 63, width: 72, height: 7 },
-        subtitle: { left: 14, top: 70.5, width: 72, height: 5 },
-        message: { left: 14, top: 76, width: 72, height: 9 },
-        time: { left: 14, top: 85.5, width: 72, height: 4 },
-        note: { left: 14, top: 90, width: 72, height: 4 }
-      },
-      portrait: {
-        frame: { left: 1.5, top: 1.5, width: 97, height: 97 },
-        visual: { left: 14, top: 8, width: 72, height: 32 },
-        emblem: { left: 35, top: 2, width: 30, height: 10 },
-        badge1: { left: 6, top: 42, width: 26, height: 10 },
-        badge2: { left: 37, top: 42, width: 26, height: 10 },
-        badge3: { left: 68, top: 42, width: 26, height: 10 },
-        textFrame: { left: 6, top: 54, width: 88, height: 40 },
-        title: { left: 10, top: 57, width: 80, height: 6 },
-        subtitle: { left: 10, top: 64, width: 80, height: 4.5 },
-        message: { left: 10, top: 69.5, width: 80, height: 12 },
-        time: { left: 10, top: 82.5, width: 80, height: 4 },
-        note: { left: 10, top: 87.5, width: 80, height: 4.5 }
+    /** Génère les positions % selon orientation et nombre d’éléments sélectionnés. */
+    function buildShieldLayoutPositions(orientation, counts) {
+      const portrait = orientation === "portrait";
+      const positions = {};
+      const nFrames = Math.max(0, counts.frames | 0);
+      const nVisuals = Math.max(0, counts.visuals | 0);
+      const nEmblems = Math.max(0, counts.emblems | 0);
+      const nBadges = Math.max(0, counts.badges | 0);
+      const nTextFrames = Math.max(0, counts.textFrames | 0);
+
+      for (let i = 0; i < nFrames; i++) {
+        positions["frame" + i] = { left: 1.5, top: 1.5, width: 97, height: 97 };
       }
-    };
+
+      if (portrait) {
+        if (nVisuals === 1) {
+          positions.visual0 = { left: 14, top: 7, width: 72, height: 30 };
+        } else if (nVisuals >= 2) {
+          positions.visual0 = { left: 6, top: 7, width: 42, height: 28 };
+          positions.visual1 = { left: 52, top: 7, width: 42, height: 28 };
+          for (let i = 2; i < nVisuals; i++) {
+            positions["visual" + i] = { left: 20 + (i - 2) * 8, top: 30, width: 28, height: 12 };
+          }
+        }
+        if (nEmblems === 1) {
+          positions.emblem0 = { left: 36, top: 1.5, width: 28, height: 9 };
+        } else {
+          for (let i = 0; i < nEmblems; i++) {
+            const w = Math.min(22, 80 / Math.max(1, nEmblems));
+            const gap = (100 - nEmblems * w) / (nEmblems + 1);
+            positions["emblem" + i] = { left: gap + i * (w + gap), top: 1.5, width: w, height: 8 };
+          }
+        }
+        const badgeTop = nVisuals ? 38 : 12;
+        for (let i = 0; i < nBadges; i++) {
+          const w = Math.min(28, 88 / Math.max(1, nBadges));
+          const gap = (100 - nBadges * w) / (nBadges + 1);
+          positions["badge" + i] = { left: gap + i * (w + gap), top: badgeTop, width: w, height: 11 };
+        }
+        const textTop = badgeTop + (nBadges ? 13 : 0);
+        for (let i = 0; i < nTextFrames; i++) {
+          positions["textFrame" + i] = {
+            left: 6,
+            top: Math.min(58, textTop + i * 3),
+            width: 88,
+            height: Math.max(28, 42 - i * 4)
+          };
+        }
+      } else {
+        if (nVisuals === 1) {
+          positions.visual0 = { left: 30, top: 8, width: 40, height: 46 };
+        } else if (nVisuals >= 2) {
+          positions.visual0 = { left: 18, top: 8, width: 30, height: 42 };
+          positions.visual1 = { left: 52, top: 8, width: 30, height: 42 };
+          for (let i = 2; i < nVisuals; i++) {
+            positions["visual" + i] = { left: 35, top: 48, width: 30, height: 12 };
+          }
+        }
+        if (nEmblems === 1) {
+          positions.emblem0 = { left: 42, top: 1.5, width: 16, height: 16 };
+        } else {
+          for (let i = 0; i < nEmblems; i++) {
+            positions["emblem" + i] = { left: 34 + i * 16, top: 1.5, width: 14, height: 14 };
+          }
+        }
+        const badgeSlots = [
+          { left: 3, top: 8 },
+          { left: 83, top: 8 },
+          { left: 3, top: 34 },
+          { left: 83, top: 34 },
+          { left: 3, top: 58 },
+          { left: 83, top: 58 }
+        ];
+        for (let i = 0; i < nBadges; i++) {
+          const slot = badgeSlots[i] || { left: 3 + i * 4, top: 58 };
+          positions["badge" + i] = { left: slot.left, top: slot.top, width: 14, height: 22 };
+        }
+        for (let i = 0; i < nTextFrames; i++) {
+          positions["textFrame" + i] = { left: 12, top: 58 + i * 2, width: 76, height: 34 - i * 2 };
+        }
+      }
+
+      const tf = positions.textFrame0 || { left: 10, top: 60, width: 80, height: 34 };
+      const padX = tf.width * 0.06;
+      const innerLeft = tf.left + padX;
+      const innerW = tf.width - padX * 2;
+      const y0 = tf.top + tf.height * 0.08;
+      const h = tf.height;
+      positions.title = { left: innerLeft, top: y0, width: innerW, height: h * 0.18 };
+      positions.subtitle = { left: innerLeft, top: y0 + h * 0.2, width: innerW, height: h * 0.14 };
+      positions.message = { left: innerLeft, top: y0 + h * 0.36, width: innerW, height: h * 0.28 };
+      positions.time = { left: innerLeft, top: y0 + h * 0.66, width: innerW, height: h * 0.12 };
+      positions.note = { left: innerLeft, top: y0 + h * 0.8, width: innerW, height: h * 0.14 };
+
+      return positions;
+    }
 
 
     /* ============================= */
@@ -3791,19 +3957,20 @@
       return width >= height ? "landscape" : "portrait";
     }
 
-    function createDefaultShieldPositions(orientation) {
-      const key = orientation === "portrait" ? "portrait" : "landscape";
-      return clonePositions(SHIELD_LAYOUT_PRESETS[key]);
+    function createDefaultShieldPositions(orientation, counts) {
+      return buildShieldLayoutPositions(orientation === "portrait" ? "portrait" : "landscape", counts || {
+        frames: 0, visuals: 0, emblems: 0, badges: 0, textFrames: 1
+      });
     }
 
     function createDefaultShield() {
       return {
         background: "",
-        visual: "",
-        emblem: "",
-        frame: "",
-        textFrame: "",
-        badges: ["", "", ""],
+        selectedVisualIds: [],
+        selectedBadgeIds: [],
+        selectedEmblemIds: [],
+        selectedFrameIds: [],
+        selectedTextFrameIds: [],
         texts: {
           title: "",
           subtitle: "",
@@ -3812,8 +3979,9 @@
           note: ""
         },
         orientation: "landscape",
-        positions: createDefaultShieldPositions("landscape"),
-        positionsVersion: SHIELD_POSITIONS_VERSION
+        positions: createDefaultShieldPositions("landscape", { frames: 0, visuals: 0, emblems: 0, badges: 0, textFrames: 1 }),
+        positionsVersion: SHIELD_POSITIONS_VERSION,
+        autoGenerated: false
       };
     }
 
@@ -3828,48 +3996,84 @@
       };
     }
 
+    function normalizeShieldIdList(list, legacySingle, legacyBadges) {
+      const out = [];
+      const seen = {};
+      function push(id) {
+        if (!id || typeof id !== "string" || seen[id]) return;
+        seen[id] = true;
+        out.push(id);
+      }
+      if (Array.isArray(list)) list.forEach(push);
+      if (typeof legacySingle === "string") push(legacySingle);
+      if (Array.isArray(legacyBadges)) {
+        legacyBadges.forEach(function (id) { push(id); });
+      }
+      return out;
+    }
+
+    function shieldSelectionCounts(data) {
+      return {
+        frames: (data.selectedFrameIds || []).length,
+        visuals: (data.selectedVisualIds || []).length,
+        emblems: (data.selectedEmblemIds || []).length,
+        badges: (data.selectedBadgeIds || []).length,
+        textFrames: Math.max(1, (data.selectedTextFrameIds || []).length)
+      };
+    }
+
     function normalizeShield(data) {
       const base = createDefaultShield();
       if (!data || typeof data !== "object") return base;
 
       const orientation = data.orientation === "portrait" ? "portrait" : "landscape";
-      const defaults = createDefaultShieldPositions(orientation);
+      const selectedVisualIds = normalizeShieldIdList(data.selectedVisualIds, data.visual);
+      const selectedEmblemIds = normalizeShieldIdList(data.selectedEmblemIds, data.emblem);
+      const selectedFrameIds = normalizeShieldIdList(data.selectedFrameIds, data.frame);
+      const selectedTextFrameIds = normalizeShieldIdList(data.selectedTextFrameIds, data.textFrame);
+      const selectedBadgeIds = normalizeShieldIdList(data.selectedBadgeIds, null, data.badges);
+
+      const draft = {
+        selectedVisualIds: selectedVisualIds,
+        selectedEmblemIds: selectedEmblemIds,
+        selectedFrameIds: selectedFrameIds,
+        selectedTextFrameIds: selectedTextFrameIds,
+        selectedBadgeIds: selectedBadgeIds
+      };
+      const defaults = createDefaultShieldPositions(orientation, shieldSelectionCounts(draft));
       const version = Number(data.positionsVersion) || 0;
       let positions;
       if (version >= SHIELD_POSITIONS_VERSION && data.positions && typeof data.positions === "object") {
         positions = {};
-        SHIELD_SLOT_META.forEach(function (slot) {
-          positions[slot.key] = normalizeShieldBox(data.positions[slot.key], defaults[slot.key]);
+        Object.keys(defaults).forEach(function (key) {
+          positions[key] = normalizeShieldBox(data.positions[key], defaults[key]);
+        });
+        Object.keys(data.positions).forEach(function (key) {
+          if (!positions[key]) positions[key] = normalizeShieldBox(data.positions[key], defaults[key] || { left: 10, top: 10, width: 20, height: 20 });
         });
       } else {
         positions = defaults;
       }
 
-      const badges = ["", "", ""];
-      if (Array.isArray(data.badges)) {
-        for (let i = 0; i < SHIELD_BADGE_SLOTS; i++) {
-          badges[i] = typeof data.badges[i] === "string" ? data.badges[i] : "";
-        }
-      }
-
       const texts = data.texts && typeof data.texts === "object" ? data.texts : {};
       return {
-        background: typeof data.background === "string" ? data.background : "",
-        visual: typeof data.visual === "string" ? data.visual : "",
-        emblem: typeof data.emblem === "string" ? data.emblem : "",
-        frame: typeof data.frame === "string" ? data.frame : "",
-        textFrame: typeof data.textFrame === "string" ? data.textFrame : "",
-        badges: badges,
+        background: typeof data.background === "string" ? data.background : (typeof data.backgroundId === "string" ? data.backgroundId : ""),
+        selectedVisualIds: selectedVisualIds,
+        selectedBadgeIds: selectedBadgeIds,
+        selectedEmblemIds: selectedEmblemIds,
+        selectedFrameIds: selectedFrameIds,
+        selectedTextFrameIds: selectedTextFrameIds,
         texts: {
           title: typeof texts.title === "string" ? texts.title : "",
           subtitle: typeof texts.subtitle === "string" ? texts.subtitle : "",
           message: typeof texts.message === "string" ? texts.message : "",
-          time: typeof texts.time === "string" ? texts.time : "",
+          time: typeof texts.time === "string" ? texts.time : (typeof texts.hour === "string" ? texts.hour : ""),
           note: typeof texts.note === "string" ? texts.note : ""
         },
         orientation: orientation,
         positions: positions,
-        positionsVersion: SHIELD_POSITIONS_VERSION
+        positionsVersion: SHIELD_POSITIONS_VERSION,
+        autoGenerated: !!data.autoGenerated
       };
     }
 
@@ -6130,7 +6334,7 @@
               : "Aucune image";
             empty.querySelector("p").textContent = items.length
               ? "Change de filtre ou exporte une image depuis un module."
-              : "Les exports Train, Team Ville, Tempête et VS apparaîtront ici automatiquement.";
+              : "Les exports Train, Reine Cramoisie, Tempête et VS apparaîtront ici automatiquement.";
             return;
           }
 
@@ -6826,7 +7030,7 @@
             const filename = "team-ville-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
             finalizeImageExport(canvas, {
               module: "teamville",
-              title: "Team Ville",
+              title: "Reine Cramoisie",
               filename: filename
             });
           } catch (err) {
@@ -6835,7 +7039,7 @@
           }
         };
         img.onerror = function () {
-          Notifications.show("Impossible de charger le modèle Team Ville.", "error");
+          Notifications.show("Impossible de charger le modèle Reine Cramoisie.", "error");
         };
         img.src = "images/teamville.png?t=" + Date.now();
       },
@@ -8500,11 +8704,24 @@
         });
       },
 
+      currentCounts() {
+        this.ensureState();
+        return shieldSelectionCounts(state.bouclier);
+      },
+
       applyShieldLayoutPreset(orientation) {
         this.ensureState();
         const key = orientation === "portrait" ? "portrait" : "landscape";
         state.bouclier.orientation = key;
-        state.bouclier.positions = createDefaultShieldPositions(key);
+        state.bouclier.positions = createDefaultShieldPositions(key, this.currentCounts());
+        state.bouclier.positionsVersion = SHIELD_POSITIONS_VERSION;
+      },
+
+      rebuildPositionsKeepCustom(orientation) {
+        this.ensureState();
+        const key = orientation === "portrait" ? "portrait" : "landscape";
+        state.bouclier.orientation = key;
+        state.bouclier.positions = createDefaultShieldPositions(key, this.currentCounts());
         state.bouclier.positionsVersion = SHIELD_POSITIONS_VERSION;
       },
 
@@ -8533,22 +8750,31 @@
         state.bouclier.texts.note = (document.getElementById("bouclierNote").value || "").trim();
       },
 
-      renderAssetGallery(containerId, list, selectedId, field, allowNone) {
+      renderSingleGallery(containerId, list, selectedId, field) {
         const root = document.getElementById(containerId);
         if (!root) return;
-        const self = this;
-        let html = "";
-        if (allowNone) {
-          html +=
-            '<button type="button" class="shield-asset-btn' + (!selectedId ? " selected" : "") + '" data-field="' + field + '" data-id="">' +
-              '<span class="shield-asset-none">Aucun</span>' +
-              "<span>Aucun</span>" +
-            "</button>";
-        }
-        html += list.map(function (asset) {
+        root.innerHTML = list.map(function (asset) {
           const sel = selectedId === asset.id ? " selected" : "";
           return (
-            '<button type="button" class="shield-asset-btn' + sel + '" data-field="' + field + '" data-id="' + escapeHtml(asset.id) + '">' +
+            '<button type="button" class="shield-asset-btn' + sel + '" data-field="' + field + '" data-mode="single" data-id="' + escapeHtml(asset.id) + '">' +
+              '<img class="shield-asset-thumb" src="' + escapeHtml(asset.src) + '" alt="' + escapeHtml(asset.name) + '" loading="lazy" />' +
+              "<span>" + escapeHtml(asset.name) + "</span>" +
+            "</button>"
+          );
+        }).join("");
+      },
+
+      renderMultiGallery(containerId, list, selectedIds, field) {
+        const root = document.getElementById(containerId);
+        if (!root) return;
+        const selected = selectedIds || [];
+        let html =
+          '<button type="button" class="shield-asset-btn' + (!selected.length ? " selected" : "") + '" data-field="' + field + '" data-mode="multi-none" data-id="">' +
+            '<span class="shield-asset-none">Aucun</span><span>Aucun</span></button>';
+        html += list.map(function (asset) {
+          const sel = selected.indexOf(asset.id) !== -1 ? " selected" : "";
+          return (
+            '<button type="button" class="shield-asset-btn' + sel + '" data-field="' + field + '" data-mode="multi" data-id="' + escapeHtml(asset.id) + '">' +
               '<img class="shield-asset-thumb" src="' + escapeHtml(asset.src) + '" alt="' + escapeHtml(asset.name) + '" loading="lazy" />' +
               "<span>" + escapeHtml(asset.name) + "</span>" +
             "</button>"
@@ -8557,43 +8783,35 @@
         root.innerHTML = html;
       },
 
-      renderBadgeRows() {
-        const root = document.getElementById("bouclierBadgeRows");
-        if (!root) return;
-        this.ensureState();
-        const badges = state.bouclier.badges;
-        root.innerHTML = [0, 1, 2].map(function (slot) {
-          const selected = badges[slot] || "";
-          let gallery =
-            '<button type="button" class="shield-asset-btn' + (!selected ? " selected" : "") + '" data-field="badge" data-slot="' + slot + '" data-id="">' +
-              '<span class="shield-asset-none">Aucun</span><span>Aucun</span></button>';
-          gallery += SHIELD_BADGES.map(function (asset) {
-            const sel = selected === asset.id ? " selected" : "";
-            return (
-              '<button type="button" class="shield-asset-btn' + sel + '" data-field="badge" data-slot="' + slot + '" data-id="' + escapeHtml(asset.id) + '">' +
-                '<img class="shield-asset-thumb" src="' + escapeHtml(asset.src) + '" alt="' + escapeHtml(asset.name) + '" loading="lazy" />' +
-                "<span>" + escapeHtml(asset.name) + "</span>" +
-              "</button>"
-            );
-          }).join("");
-          return (
-            '<div class="shield-badge-row">' +
-              "<h4>Badge " + (slot + 1) + "</h4>" +
-              '<div class="shield-gallery">' + gallery + "</div>" +
-            "</div>"
-          );
-        }).join("");
+      updateTextFrameHint() {
+        const hint = document.getElementById("bouclierTextFrameHint");
+        if (!hint) return;
+        const has = (state.bouclier.selectedTextFrameIds || []).length > 0;
+        const hasText = !!(state.bouclier.texts.title || state.bouclier.texts.subtitle ||
+          state.bouclier.texts.message || state.bouclier.texts.time || state.bouclier.texts.note);
+        if (!has && hasText) {
+          hint.classList.add("warn");
+          hint.textContent = "Choisissez un cadre de texte pour afficher le contenu écrit sur l’image.";
+        } else if (!has) {
+          hint.classList.remove("warn");
+          hint.textContent = "Sélectionnez au moins un cadre de texte pour afficher le contenu écrit.";
+        } else {
+          hint.classList.remove("warn");
+          hint.textContent = "Le texte est affiché uniquement à l’intérieur du cadre de texte sélectionné.";
+        }
       },
 
       renderShieldAnnouncementPage() {
         this.ensureState();
-        this.renderAssetGallery("bouclierGalleryFond", SHIELD_BACKGROUNDS, state.bouclier.background, "background", false);
-        this.renderAssetGallery("bouclierGalleryVisuel", SHIELD_VISUALS, state.bouclier.visual, "visual", true);
-        this.renderAssetGallery("bouclierGalleryEmbleme", SHIELD_EMBLEMS, state.bouclier.emblem, "emblem", true);
-        this.renderAssetGallery("bouclierGalleryCadre", SHIELD_FRAMES, state.bouclier.frame, "frame", true);
-        this.renderAssetGallery("bouclierGalleryCadreTexte", SHIELD_TEXT_FRAMES, state.bouclier.textFrame, "textFrame", true);
-        this.renderBadgeRows();
+        const b = state.bouclier;
+        this.renderSingleGallery("bouclierGalleryFond", SHIELD_BACKGROUNDS, b.background, "background");
+        this.renderMultiGallery("bouclierGalleryVisuel", SHIELD_VISUALS, b.selectedVisualIds, "visuals");
+        this.renderMultiGallery("bouclierGalleryEmbleme", SHIELD_EMBLEMS, b.selectedEmblemIds, "emblems");
+        this.renderMultiGallery("bouclierGalleryCadre", SHIELD_FRAMES, b.selectedFrameIds, "frames");
+        this.renderMultiGallery("bouclierGalleryCadreTexte", SHIELD_TEXT_FRAMES, b.selectedTextFrameIds, "textFrames");
+        this.renderMultiGallery("bouclierGalleryBadges", SHIELD_BADGES, b.selectedBadgeIds, "badges");
         this.syncTextInputs();
+        this.updateTextFrameHint();
         this.buildAdjustSlots();
         this.updateStageAspect();
         this.schedulePreview();
@@ -8601,6 +8819,28 @@
 
       refresh() {
         this.renderShieldAnnouncementPage();
+      },
+
+      getAdjustSlotMeta() {
+        this.ensureState();
+        const b = state.bouclier;
+        const slots = [];
+        (b.selectedFrameIds || []).forEach(function (id, i) {
+          slots.push({ key: "frame" + i, label: "Cadre " + (i + 1) });
+        });
+        (b.selectedVisualIds || []).forEach(function (id, i) {
+          slots.push({ key: "visual" + i, label: "Visuel " + (i + 1) });
+        });
+        (b.selectedEmblemIds || []).forEach(function (id, i) {
+          slots.push({ key: "emblem" + i, label: "Emblème " + (i + 1) });
+        });
+        (b.selectedBadgeIds || []).forEach(function (id, i) {
+          slots.push({ key: "badge" + i, label: "Badge " + (i + 1) });
+        });
+        (b.selectedTextFrameIds || []).forEach(function (id, i) {
+          slots.push({ key: "textFrame" + i, label: "Cadre texte " + (i + 1) });
+        });
+        return slots;
       },
 
       updateStageAspect() {
@@ -8618,7 +8858,8 @@
       buildAdjustSlots() {
         const layer = document.getElementById("bouclierAdjustLayer");
         if (!layer) return;
-        layer.innerHTML = SHIELD_SLOT_META.map(function (slot) {
+        const slots = this.getAdjustSlotMeta();
+        layer.innerHTML = slots.map(function (slot) {
           return (
             '<div class="shield-slot" data-slot="' + slot.key + '" data-label="' + escapeHtml(slot.label) + '" id="bouclier-slot-' + slot.key + '">' +
               '<span class="shield-slot-handle" data-resize="1"></span>' +
@@ -8630,11 +8871,15 @@
 
       applySlotStyles() {
         this.ensureState();
-        const positions = state.bouclier.positions;
-        SHIELD_SLOT_META.forEach(function (slot) {
+        const positions = state.bouclier.positions || {};
+        this.getAdjustSlotMeta().forEach(function (slot) {
           const el = document.getElementById("bouclier-slot-" + slot.key);
-          const pos = positions[slot.key];
-          if (!el || !pos) return;
+          let pos = positions[slot.key];
+          if (!pos) {
+            pos = { left: 10, top: 10, width: 20, height: 20 };
+            positions[slot.key] = pos;
+          }
+          if (!el) return;
           el.style.left = pos.left + "%";
           el.style.top = pos.top + "%";
           el.style.width = pos.width + "%";
@@ -8670,15 +8915,9 @@
         const br = w / Math.max(1, h);
         let dw, dh, dx, dy;
         if (ir > br) {
-          dw = w;
-          dh = w / ir;
-          dx = x;
-          dy = y + (h - dh) / 2;
+          dw = w; dh = w / ir; dx = x; dy = y + (h - dh) / 2;
         } else {
-          dh = h;
-          dw = h * ir;
-          dx = x + (w - dw) / 2;
-          dy = y;
+          dh = h; dw = h * ir; dx = x + (w - dw) / 2; dy = y;
         }
         ctx.drawImage(img, dx, dy, dw, dh);
       },
@@ -8701,9 +8940,8 @@
           let line = "";
           words.forEach(function (word) {
             const test = line ? line + " " + word : word;
-            if (ctx.measureText(test).width <= width) {
-              line = test;
-            } else {
+            if (ctx.measureText(test).width <= width) line = test;
+            else {
               if (line) lines.push(line);
               line = word;
             }
@@ -8728,7 +8966,7 @@
         ctx.textBaseline = "middle";
         ctx.font = weight + " " + size + "px " + fontFamily;
         const totalH = lines.length * lineH;
-        let startY = y + (height - totalH) / 2 + lineH / 2;
+        const startY = y + (height - totalH) / 2 + lineH / 2;
         const tx = align === "left" ? x : align === "right" ? x + width : x + width / 2;
         lines.forEach(function (line, i) {
           ctx.fillText(line, tx, startY + i * lineH);
@@ -8742,29 +8980,61 @@
         const bgMeta = this.findAsset(SHIELD_BACKGROUNDS, b.background);
         if (!bgMeta) return null;
 
-        function srcOf(list, id) {
-          const meta = ShieldAnnouncement.findAsset(list, id);
-          return meta ? meta.src : null;
+        const self = this;
+        function loadList(list, ids) {
+          return Promise.all((ids || []).map(function (id) {
+            const meta = self.findAsset(list, id);
+            if (!meta) return Promise.resolve(null);
+            return self.loadImage(meta.src).catch(function () { return null; });
+          }));
         }
-        const jobs = {
-          background: this.loadImage(bgMeta.src),
-          visual: srcOf(SHIELD_VISUALS, b.visual) ? this.loadImage(srcOf(SHIELD_VISUALS, b.visual)) : Promise.resolve(null),
-          emblem: srcOf(SHIELD_EMBLEMS, b.emblem) ? this.loadImage(srcOf(SHIELD_EMBLEMS, b.emblem)) : Promise.resolve(null),
-          frame: srcOf(SHIELD_FRAMES, b.frame) ? this.loadImage(srcOf(SHIELD_FRAMES, b.frame)) : Promise.resolve(null),
-          textFrame: srcOf(SHIELD_TEXT_FRAMES, b.textFrame) ? this.loadImage(srcOf(SHIELD_TEXT_FRAMES, b.textFrame)) : Promise.resolve(null),
-          badge1: srcOf(SHIELD_BADGES, b.badges[0]) ? this.loadImage(srcOf(SHIELD_BADGES, b.badges[0])) : Promise.resolve(null),
-          badge2: srcOf(SHIELD_BADGES, b.badges[1]) ? this.loadImage(srcOf(SHIELD_BADGES, b.badges[1])) : Promise.resolve(null),
-          badge3: srcOf(SHIELD_BADGES, b.badges[2]) ? this.loadImage(srcOf(SHIELD_BADGES, b.badges[2])) : Promise.resolve(null)
-        };
 
-        const keys = Object.keys(jobs);
-        const values = await Promise.all(keys.map(function (k) {
-          return jobs[k].catch(function () { return null; });
-        }));
-        const out = {};
-        keys.forEach(function (k, i) { out[k] = values[i]; });
-        if (!out.background) return null;
-        return out;
+        const packed = await Promise.all([
+          this.loadImage(bgMeta.src),
+          loadList(SHIELD_FRAMES, b.selectedFrameIds),
+          loadList(SHIELD_VISUALS, b.selectedVisualIds),
+          loadList(SHIELD_EMBLEMS, b.selectedEmblemIds),
+          loadList(SHIELD_BADGES, b.selectedBadgeIds),
+          loadList(SHIELD_TEXT_FRAMES, b.selectedTextFrameIds)
+        ]);
+
+        if (!packed[0]) return null;
+        return {
+          background: packed[0],
+          frames: packed[1].filter(Boolean),
+          visuals: packed[2].filter(Boolean),
+          emblems: packed[3].filter(Boolean),
+          badges: packed[4].filter(Boolean),
+          textFrames: packed[5].filter(Boolean)
+        };
+      },
+
+      /** Positions % du texte, toujours dérivées du cadre de texte (jamais hors cadre). */
+      textBoxesFromFrame(tf) {
+        const frame = tf || { left: 10, top: 60, width: 80, height: 34 };
+        const padX = frame.width * 0.06;
+        const innerLeft = frame.left + padX;
+        const innerW = frame.width - padX * 2;
+        const y0 = frame.top + frame.height * 0.08;
+        const h = frame.height;
+        return {
+          title: { left: innerLeft, top: y0, width: innerW, height: h * 0.18 },
+          subtitle: { left: innerLeft, top: y0 + h * 0.2, width: innerW, height: h * 0.14 },
+          message: { left: innerLeft, top: y0 + h * 0.36, width: innerW, height: h * 0.28 },
+          time: { left: innerLeft, top: y0 + h * 0.66, width: innerW, height: h * 0.12 },
+          note: { left: innerLeft, top: y0 + h * 0.8, width: innerW, height: h * 0.14 }
+        };
+      },
+
+      syncTextBoxesToFrame() {
+        this.ensureState();
+        const pos = state.bouclier.positions || {};
+        const tf = pos.textFrame0;
+        if (!tf) return;
+        const boxes = this.textBoxesFromFrame(tf);
+        Object.keys(boxes).forEach(function (key) {
+          pos[key] = boxes[key];
+        });
       },
 
       drawShieldAnnouncementCanvas(canvas, assets) {
@@ -8776,23 +9046,30 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-        const pos = state.bouclier.positions;
-        const order = [
-          { key: "frame", img: assets.frame, mode: "stretch" },
-          { key: "visual", img: assets.visual, mode: "contain" },
-          { key: "emblem", img: assets.emblem, mode: "contain" },
-          { key: "badge1", img: assets.badge1, mode: "contain" },
-          { key: "badge2", img: assets.badge2, mode: "contain" },
-          { key: "badge3", img: assets.badge3, mode: "contain" },
-          { key: "textFrame", img: assets.textFrame, mode: "stretch" }
-        ];
-
+        const pos = state.bouclier.positions || {};
         const self = this;
-        order.forEach(function (item) {
-          if (!item.img || !pos[item.key]) return;
-          const box = self.pctBox(pos[item.key], canvas.width, canvas.height);
-          self.drawImageInBox(ctx, item.img, box.x, box.y, box.w, box.h, item.mode);
-        });
+
+        function drawSeries(imgs, prefix, mode) {
+          imgs.forEach(function (img, i) {
+            const key = prefix + i;
+            const boxPos = pos[key];
+            if (!img || !boxPos) return;
+            const box = self.pctBox(boxPos, canvas.width, canvas.height);
+            self.drawImageInBox(ctx, img, box.x, box.y, box.w, box.h, mode);
+          });
+        }
+
+        drawSeries(assets.frames, "frame", "stretch");
+        drawSeries(assets.visuals, "visual", "contain");
+        drawSeries(assets.emblems, "emblem", "contain");
+        drawSeries(assets.badges, "badge", "contain");
+        drawSeries(assets.textFrames, "textFrame", "stretch");
+
+        const hasTextFrame = (state.bouclier.selectedTextFrameIds || []).length > 0 && assets.textFrames.length > 0;
+        if (!hasTextFrame) return canvas;
+
+        const textPos = this.textBoxesFromFrame(pos.textFrame0);
+        Object.keys(textPos).forEach(function (key) { pos[key] = textPos[key]; });
 
         const texts = state.bouclier.texts;
         const textSpecs = [
@@ -8804,25 +9081,17 @@
         ];
 
         textSpecs.forEach(function (spec) {
-          if (!spec.value || !pos[spec.key]) return;
-          const box = self.pctBox(pos[spec.key], canvas.width, canvas.height);
+          if (!spec.value || !textPos[spec.key]) return;
+          const box = self.pctBox(textPos[spec.key], canvas.width, canvas.height);
           const maxSize = Math.min(box.h * spec.maxFrac, canvas.width * 0.06, 64);
           if (spec.wrap) {
             self.drawWrappedText(ctx, spec.value, box.x, box.y, box.w, box.h, {
-              color: spec.color,
-              weight: spec.weight,
-              maxSize: maxSize,
-              minSize: 8,
-              align: "center"
+              color: spec.color, weight: spec.weight, maxSize: maxSize, minSize: 8, align: "center"
             });
           } else {
             drawSingleLineFittedText(ctx, spec.value, box.x, box.y, box.w, box.h, {
-              color: spec.color,
-              align: "center",
-              baseline: "middle",
-              weight: spec.weight,
-              maxSize: maxSize,
-              minSize: 8
+              color: spec.color, align: "center", baseline: "middle",
+              weight: spec.weight, maxSize: maxSize, minSize: 8
             });
           }
         });
@@ -8834,11 +9103,13 @@
         this.ensureState();
         const empty = document.getElementById("bouclierEmpty");
         const canvas = document.getElementById("bouclierPreviewCanvas");
-        const stage = document.getElementById("bouclierStage");
-        if (!canvas || !stage) return;
+        if (!canvas) return;
 
         if (!state.bouclier.background) {
-          if (empty) empty.hidden = false;
+          if (empty) {
+            empty.hidden = false;
+            empty.textContent = "Choisissez un fond pour démarrer l’annonce.";
+          }
           const ctx = canvas.getContext("2d");
           canvas.width = 1600;
           canvas.height = 900;
@@ -8892,11 +9163,10 @@
           const yyyy = date.getFullYear();
           const mm = String(date.getMonth() + 1).padStart(2, "0");
           const dd = String(date.getDate()).padStart(2, "0");
-          const filename = "annonce-bouclier-5le-" + yyyy + "-" + mm + "-" + dd + ".png";
           finalizeImageExport(canvas, {
             module: "bouclier",
             title: "Annonce bouclier",
-            filename: filename
+            filename: "annonce-bouclier-5le-" + yyyy + "-" + mm + "-" + dd + ".png"
           });
         } catch (err) {
           console.error(err);
@@ -8904,44 +9174,109 @@
         }
       },
 
-      setField(field, id) {
-        this.ensureState();
-        if (field === "background") {
-          const prevOrientation = state.bouclier.orientation;
-          state.bouclier.background = id || "";
-          const meta = this.findAsset(SHIELD_BACKGROUNDS, id);
-          if (meta) {
-            const self = this;
-            this.loadImage(meta.src).then(function (img) {
-              const orientation = getShieldBackgroundOrientation(img.naturalWidth, img.naturalHeight);
-              self.bgNatural = { w: img.naturalWidth, h: img.naturalHeight };
-              if (orientation !== prevOrientation || !state.bouclier.positions) {
-                self.applyShieldLayoutPreset(orientation);
-              } else {
-                state.bouclier.orientation = orientation;
-              }
-              Storage.persist();
-              self.renderShieldAnnouncementPage();
-            }).catch(function () {
-              Notifications.show("Impossible de charger ce fond.", "error");
-            });
-            return;
-          }
-        } else if (field === "visual" || field === "emblem" || field === "frame" || field === "textFrame") {
-          state.bouclier[field] = id || "";
+      pickRandom(arr, count) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = copy[i];
+          copy[i] = copy[j];
+          copy[j] = tmp;
         }
-        Storage.persist();
-        this.renderShieldAnnouncementPage();
+        return copy.slice(0, Math.max(0, Math.min(count, copy.length)));
       },
 
-      setBadge(slot, id) {
+      async runAutoGenerate() {
         this.ensureState();
-        const i = Number(slot);
-        if (i < 0 || i >= SHIELD_BADGE_SLOTS) return;
-        state.bouclier.badges[i] = id || "";
+        const bg = this.pickRandom(SHIELD_BACKGROUNDS, 1)[0];
+        if (!bg) return;
+
+        let orientation = "landscape";
+        try {
+          const img = await this.loadImage(bg.src);
+          orientation = getShieldBackgroundOrientation(img.naturalWidth, img.naturalHeight);
+          this.bgNatural = { w: img.naturalWidth, h: img.naturalHeight };
+        } catch (err) {
+          Notifications.show("Impossible de charger un fond automatique.", "error");
+          return;
+        }
+
+        const nVisuals = 1 + Math.floor(Math.random() * 2);
+        const nBadges = 1 + Math.floor(Math.random() * 3);
+        const nEmblems = 1 + Math.floor(Math.random() * 2);
+        const useFrame = Math.random() > 0.35;
+
+        state.bouclier.background = bg.id;
+        state.bouclier.selectedVisualIds = this.pickRandom(SHIELD_VISUALS, nVisuals).map(function (a) { return a.id; });
+        state.bouclier.selectedBadgeIds = this.pickRandom(SHIELD_BADGES, nBadges).map(function (a) { return a.id; });
+        state.bouclier.selectedEmblemIds = this.pickRandom(SHIELD_EMBLEMS, nEmblems).map(function (a) { return a.id; });
+        state.bouclier.selectedFrameIds = useFrame
+          ? this.pickRandom(SHIELD_FRAMES, 1).map(function (a) { return a.id; })
+          : [];
+        state.bouclier.selectedTextFrameIds = this.pickRandom(SHIELD_TEXT_FRAMES, 1).map(function (a) { return a.id; });
+
+        const msg = this.pickRandom(SHIELD_AUTO_MESSAGES, 1)[0];
+        state.bouclier.texts = {
+          title: msg.title || "",
+          subtitle: msg.subtitle || "",
+          message: msg.message || "",
+          time: msg.time || "",
+          note: msg.note || ""
+        };
+        state.bouclier.autoGenerated = true;
+        this.applyShieldLayoutPreset(orientation);
         Storage.persist();
-        this.renderBadgeRows();
-        this.schedulePreview();
+        this.renderShieldAnnouncementPage();
+        Notifications.show("Composition automatique générée", "success");
+      },
+
+      setBackground(id) {
+        this.ensureState();
+        const prevOrientation = state.bouclier.orientation;
+        state.bouclier.background = id || "";
+        state.bouclier.autoGenerated = false;
+        const meta = this.findAsset(SHIELD_BACKGROUNDS, id);
+        if (!meta) {
+          Storage.persist();
+          this.renderShieldAnnouncementPage();
+          return;
+        }
+        const self = this;
+        this.loadImage(meta.src).then(function (img) {
+          const orientation = getShieldBackgroundOrientation(img.naturalWidth, img.naturalHeight);
+          self.bgNatural = { w: img.naturalWidth, h: img.naturalHeight };
+          if (orientation !== prevOrientation) self.applyShieldLayoutPreset(orientation);
+          else state.bouclier.orientation = orientation;
+          Storage.persist();
+          self.renderShieldAnnouncementPage();
+        }).catch(function () {
+          Notifications.show("Impossible de charger ce fond.", "error");
+        });
+      },
+
+      toggleMulti(fieldKey, id) {
+        this.ensureState();
+        const map = {
+          visuals: "selectedVisualIds",
+          emblems: "selectedEmblemIds",
+          frames: "selectedFrameIds",
+          textFrames: "selectedTextFrameIds",
+          badges: "selectedBadgeIds"
+        };
+        const prop = map[fieldKey];
+        if (!prop) return;
+        let list = (state.bouclier[prop] || []).slice();
+        if (!id) {
+          list = [];
+        } else {
+          const idx = list.indexOf(id);
+          if (idx === -1) list.push(id);
+          else list.splice(idx, 1);
+        }
+        state.bouclier[prop] = list;
+        state.bouclier.autoGenerated = false;
+        this.rebuildPositionsKeepCustom(state.bouclier.orientation || "landscape");
+        Storage.persist();
+        this.renderShieldAnnouncementPage();
       },
 
       resetShieldAnnouncementPositions() {
@@ -8959,7 +9294,7 @@
         Storage.persist();
         this.setAdjustMode(false);
         this.refresh();
-        Notifications.show("Annonce réinitialisée", "success");
+        Notifications.show("Composition effacée", "success");
       },
 
       setAdjustMode(on) {
@@ -8986,6 +9321,9 @@
         const stage = document.getElementById("bouclierStage");
         const rect = stage.getBoundingClientRect();
         const key = slot.dataset.slot;
+        if (!state.bouclier.positions[key]) {
+          state.bouclier.positions[key] = { left: 10, top: 10, width: 20, height: 20 };
+        }
         const pos = state.bouclier.positions[key];
         this.drag = {
           key: key,
@@ -9014,6 +9352,9 @@
           pos.top = Math.max(0, Math.min(100 - pos.height, this.drag.orig.top + dy));
         }
         this.applySlotStyles();
+        if (String(this.drag.key).indexOf("textFrame") === 0) {
+          this.syncTextBoxesToFrame();
+        }
         this.schedulePreview();
         Storage.persistSoon(180);
       },
@@ -9034,15 +9375,18 @@
         const self = this;
         this.refresh();
 
-        const page = document.getElementById("page-bouclier");
-        page.addEventListener("click", function (e) {
+        document.getElementById("page-bouclier").addEventListener("click", function (e) {
           const assetBtn = e.target.closest(".shield-asset-btn");
-          if (assetBtn) {
-            const field = assetBtn.dataset.field;
-            const id = assetBtn.dataset.id || "";
-            if (field === "badge") self.setBadge(assetBtn.dataset.slot, id);
-            else self.setField(field, id);
+          if (!assetBtn) return;
+          const field = assetBtn.dataset.field;
+          const id = assetBtn.dataset.id || "";
+          const mode = assetBtn.dataset.mode;
+          if (field === "background") {
+            self.setBackground(id);
             return;
+          }
+          if (mode === "multi-none" || mode === "multi") {
+            self.toggleMulti(field, mode === "multi-none" ? "" : id);
           }
         });
 
@@ -9051,11 +9395,15 @@
           if (!el) return;
           el.addEventListener("input", function () {
             self.readTextInputs();
+            self.updateTextFrameHint();
             Storage.persistSoon(250);
             self.schedulePreview();
           });
         });
 
+        document.getElementById("btnBouclierAuto").addEventListener("click", function () {
+          self.runAutoGenerate();
+        });
         document.getElementById("btnExportBouclier").addEventListener("click", function () {
           self.exportShieldAnnouncementImage();
         });
@@ -9065,16 +9413,16 @@
         document.getElementById("btnResetBouclierPos").addEventListener("click", function () {
           Modal.confirm({
             title: "Réinitialiser les positions",
-            message: "Remettre les zones au placement par défaut pour ce format ?",
+            message: "Remettre les zones au placement cohérent pour ce format ?",
             okLabel: "Réinitialiser",
             onConfirm: function () { self.resetShieldAnnouncementPositions(); }
           });
         });
         document.getElementById("btnResetBouclier").addEventListener("click", function () {
           Modal.confirm({
-            title: "Réinitialiser l'annonce",
+            title: "Effacer la composition",
             message: "Effacer fond, visuels, badges, textes et positions ?",
-            okLabel: "Réinitialiser",
+            okLabel: "Effacer",
             onConfirm: function () { self.resetAll(); }
           });
         });
@@ -9092,6 +9440,7 @@
         });
       }
     };
+
 
     /* ============================= */
     /* NAVIGATION                    */
