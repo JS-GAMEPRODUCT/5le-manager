@@ -2648,6 +2648,19 @@
       resize: vertical;
     }
 
+    .shield-text-size-group {
+      margin-bottom: 0.15rem;
+    }
+
+    .shield-text-size-slider {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 0.45rem;
+      accent-color: var(--gold);
+      box-sizing: border-box;
+    }
+
     .shield-stage-wrap {
       width: 100%;
       max-width: 980px;
@@ -2823,6 +2836,206 @@
         max-width: 100%;
       }
     }
+
+    /* ---------- Attaque Capitole ---------- */
+    .capitol-help {
+      margin: 0 0 1rem;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .capitol-stage-wrap {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .capitol-stage {
+      position: relative;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .capitol-stage img {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: top;
+    }
+
+    .capitol-zone {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    .capitol-zone-text {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 100%;
+      padding: 0.15em 0.55em;
+      border-radius: 0.35em;
+      background: rgba(6, 10, 18, 0.78);
+      color: #fff6d5;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      text-align: center;
+      white-space: nowrap;
+      line-height: 1.1;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
+    }
+
+    .capitol-zone-handle {
+      display: none;
+    }
+
+    .capitol-stage.adjusting .capitol-zone {
+      pointer-events: auto;
+      outline: 1px dashed rgba(212, 175, 55, 0.85);
+      background: rgba(8, 14, 28, 0.28);
+      cursor: move;
+      touch-action: none;
+    }
+
+    .capitol-stage.adjusting .capitol-zone::before {
+      content: attr(data-label);
+      position: absolute;
+      top: -1.1rem;
+      left: 0;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .capitol-stage.adjusting .capitol-zone.dragging {
+      outline-color: #fff;
+      z-index: 5;
+    }
+
+    .capitol-stage.adjusting .capitol-zone-handle {
+      display: block;
+      position: absolute;
+      right: -3px;
+      bottom: -3px;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      background: var(--gold);
+      cursor: nwse-resize;
+      pointer-events: auto;
+    }
+
+    .capitol-assign-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .capitol-assign-row {
+      display: grid;
+      grid-template-columns: minmax(110px, 160px) 1fr;
+      gap: 0.65rem;
+      align-items: center;
+    }
+
+    .capitol-assign-label {
+      font-weight: 800;
+      color: var(--gold-soft);
+      font-size: 0.92rem;
+    }
+
+    .capitol-assign-controls {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .capitol-assign-controls .form-control {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .capitol-alliance-panel {
+      margin-top: 1rem;
+    }
+
+    .capitol-alliance-add {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.85rem;
+    }
+
+    .capitol-alliance-add .form-control {
+      flex: 1;
+      min-width: 160px;
+    }
+
+    .capitol-alliance-list {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .capitol-alliance-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.55rem 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
+    }
+
+    .capitol-alliance-name {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .capitol-alliance-tag {
+      font-style: normal;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-left: 0.35rem;
+    }
+
+    .capitol-alliance-empty {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 700px) {
+      .capitol-assign-row {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
+      }
+
+      .capitol-assign-controls {
+        width: 100%;
+      }
+
+      .capitol-alliance-add {
+        flex-direction: column;
+      }
+
+      .capitol-alliance-add .btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2855,6 +3068,9 @@
         </button>
         <button type="button" class="nav-btn" data-page="tempete">
           <span class="nav-icon">▦</span> Tempête du désert
+        </button>
+        <button type="button" class="nav-btn" data-page="capitol">
+          <span class="nav-icon">🏛</span> Attaque Capitole
         </button>
         <button type="button" class="nav-btn" data-page="vs">
           <span class="nav-icon">⚔</span> VS
@@ -2906,7 +3122,7 @@
             <h2>Bienvenue dans 5LE Manager</h2>
             <p>
               Gérez vos joueurs, préparez le train et vos équipes.
-              Préparez le train, Reine Cramoisie, Tempête du désert et le planning VS depuis le menu.
+              Préparez le train, Reine Cramoisie, Tempête du désert, Attaque Capitole et le planning VS depuis le menu.
             </p>
           </div>
         </section>
@@ -3114,6 +3330,76 @@
           <div id="tempetePlansRoot"></div>
         </section>
 
+        <!-- Attaque Capitole -->
+        <section class="page" id="page-capitol" data-page="capitol">
+          <div class="page-header">
+            <div>
+              <h1>Attaque Capitole</h1>
+              <p>Attribuez les alliances sur les canons et le Capitole</p>
+            </div>
+          </div>
+
+          <p class="capitol-help">
+            Choisissez une alliance pour chaque canon (SE, SW, NE, NW) et pour le Capitole, puis exportez l’annonce.
+          </p>
+
+          <div class="train-toolbar">
+            <button type="button" class="btn btn-primary" id="btnExportCapitol">Exporter l'image</button>
+            <button type="button" class="btn btn-secondary" id="btnAdjustCapitol">Ajuster les positions</button>
+            <button type="button" class="btn btn-ghost" id="btnResetCapitolPos">Réinitialiser les positions</button>
+            <button type="button" class="btn btn-danger" id="btnClearCapitol">Effacer les sélections</button>
+          </div>
+          <p class="train-hint" id="capitolAdjustHint" hidden>
+            Mode ajustement : glissez les zones, redimensionnez avec le coin. Sauvegarde automatique.
+          </p>
+
+          <div class="train-preview-section">
+            <div class="panel train-preview-panel">
+              <h2>Aperçu</h2>
+              <div class="capitol-stage-wrap">
+                <div class="capitol-stage" id="capitolStage">
+                  <img id="capitolImage" src="images/capitol.png" alt="Carte Attaque Capitole 5LE" />
+                  <div class="capitol-zone" id="capitol-zone-NW" data-zone="NW" data-label="Canon NW">
+                    <span class="capitol-zone-text" id="capitol-text-NW" hidden></span>
+                    <span class="capitol-zone-handle" data-resize="1"></span>
+                  </div>
+                  <div class="capitol-zone" id="capitol-zone-NE" data-zone="NE" data-label="Canon NE">
+                    <span class="capitol-zone-text" id="capitol-text-NE" hidden></span>
+                    <span class="capitol-zone-handle" data-resize="1"></span>
+                  </div>
+                  <div class="capitol-zone" id="capitol-zone-SW" data-zone="SW" data-label="Canon SW">
+                    <span class="capitol-zone-text" id="capitol-text-SW" hidden></span>
+                    <span class="capitol-zone-handle" data-resize="1"></span>
+                  </div>
+                  <div class="capitol-zone" id="capitol-zone-SE" data-zone="SE" data-label="Canon SE">
+                    <span class="capitol-zone-text" id="capitol-text-SE" hidden></span>
+                    <span class="capitol-zone-handle" data-resize="1"></span>
+                  </div>
+                  <div class="capitol-zone" id="capitol-zone-CAPITOL" data-zone="CAPITOL" data-label="Capitole">
+                    <span class="capitol-zone-text" id="capitol-text-CAPITOL" hidden></span>
+                    <span class="capitol-zone-handle" data-resize="1"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="train-error" id="capitolImageError" hidden>Impossible de charger images/capitol.png</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h2>Attribution des alliances</h2>
+            <div class="capitol-assign-list" id="capitolAssignList"></div>
+          </div>
+
+          <div class="panel capitol-alliance-panel">
+            <h2>Liste des alliances</h2>
+            <div class="capitol-alliance-add">
+              <input type="text" class="form-control" id="capitolAllianceInput" maxlength="16" placeholder="Nouvelle alliance (ex: ABCD)" autocomplete="off" />
+              <button type="button" class="btn btn-primary" id="btnAddCapitolAlliance">Ajouter une alliance</button>
+            </div>
+            <div class="capitol-alliance-list" id="capitolAllianceList"></div>
+          </div>
+        </section>
+
         <!-- VS -->
         <section class="page" id="page-vs" data-page="vs">
           <div class="page-header">
@@ -3195,11 +3481,10 @@
           </div>
 
           <p class="shield-help">
-            Choisissez un fond, ajoutez visuels, emblèmes, badges et cadre de texte, ou utilisez “Choix automatique” pour générer une annonce prête à l’emploi.
+            Choisissez un fond, ajoutez visuels, emblèmes, badges et cadre de texte, puis écrivez votre message et exportez l’annonce.
           </p>
 
           <div class="train-toolbar">
-            <button type="button" class="btn btn-primary" id="btnBouclierAuto">Choix automatique</button>
             <button type="button" class="btn btn-primary" id="btnExportBouclier">Exporter l'image</button>
             <button type="button" class="btn btn-secondary" id="btnAdjustBouclier">Ajuster les positions</button>
             <button type="button" class="btn btn-ghost" id="btnResetBouclierPos">Réinitialiser les positions</button>
@@ -3253,9 +3538,13 @@
             <div class="shield-gallery" id="bouclierGalleryBadges"></div>
           </div>
 
-          <div class="panel shield-step">
+          <div class="panel shield-step" id="bouclierTextSection">
             <h3>Textes de l’annonce <span class="shield-step-hint">(dans le cadre de texte)</span></h3>
             <div class="shield-fields">
+              <div class="form-group full shield-text-size-group">
+                <label for="bouclierTextSize" id="bouclierTextSizeLabel">Taille du texte : 42 px</label>
+                <input type="range" class="shield-text-size-slider" id="bouclierTextSize" min="12" max="120" step="1" value="42" />
+              </div>
               <div class="form-group">
                 <label for="bouclierTitle">Titre principal</label>
                 <input type="text" class="form-control" id="bouclierTitle" maxlength="80" placeholder="BOUCLIER OBLIGATOIRE" autocomplete="off" />
@@ -3295,6 +3584,7 @@
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="train">Train</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="teamville">Reine Cramoisie</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="tempete">Tempête</button>
+              <button type="button" class="btn btn-secondary history-filter-btn" data-filter="capitol">Capitole</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="vs">VS</button>
               <button type="button" class="btn btn-secondary history-filter-btn" data-filter="bouclier">Bouclier</button>
             </div>
@@ -3303,7 +3593,7 @@
 
           <div class="history-empty" id="historyEmpty" hidden>
             <h2>Aucune image</h2>
-            <p>Les exports Train, Reine Cramoisie, Tempête et VS apparaîtront ici automatiquement.</p>
+            <p>Les exports Train, Reine Cramoisie, Tempête, Capitole et VS apparaîtront ici automatiquement.</p>
           </div>
           <div class="history-grid" id="historyList"></div>
         </section>
@@ -3458,17 +3748,31 @@
        Plus récent en premier. Pour publier : ajouter un objet en tête du tableau. */
     const SITE_UPDATES = [
       {
+        id: "update_2026_09_26_01",
+        version: 3,
+        date: "2026-09-26T14:00:00+02:00",
+        title: "Nouvelle catégorie Attaque Capitole",
+        summary: "Ajout d’un nouveau module pour préparer les annonces d’attaque Capitole avec attribution des alliances sur les canons et le Capitole.",
+        items: [
+          "Nouvel onglet Attaque Capitole",
+          "Image de base images/capitol.png",
+          "Sélection des alliances pour SE, SW, NE, NW et Capitole",
+          "Liste d’alliances par défaut intégrée au site",
+          "Possibilité d’ajouter / supprimer des alliances",
+          "Aperçu dynamique et export image"
+        ]
+      },
+      {
         id: "update_2026_09_25_02",
         version: 2,
         date: "2026-09-25T18:00:00+02:00",
         title: "Amélioration de l’annonce bouclier",
-        summary: "Le module Annonce bouclier gagne le choix automatique, la sélection multiple et un meilleur placement des éléments.",
+        summary: "Le module Annonce bouclier gagne la sélection multiple, le texte dans les cadres et un meilleur placement des éléments.",
         items: [
-          "Choix automatique d’une composition cohérente",
-          "Ajout de messages prédéfinis",
           "Sélection multiple des badges",
           "Sélection multiple des visuels, emblèmes et cadres",
           "Texte désormais réservé aux cadres de texte",
+          "Réglage de la taille du texte",
           "Amélioration générale du workflow de création"
         ]
       },
@@ -3651,6 +3955,40 @@
       }
     ];
 
+    const DEFAULT_CAPITOL_ALLIANCES = Object.freeze([
+      "CNVZ",
+      "GEW",
+      "APXO",
+      "XEXE",
+      "5LE",
+      "OLR",
+      "EDO",
+      "IMRM",
+      "EOD1",
+      "UWA"
+    ]);
+    const DEFAULT_CAPITOL_ALLIANCES_SET = new Set(
+      DEFAULT_CAPITOL_ALLIANCES.map(function (a) { return a.toUpperCase(); })
+    );
+    const CAPITOL_IMAGE_SRC = "images/capitol.png";
+    const CAPITOL_POSITIONS_VERSION = 1;
+    const CAPITOL_ZONES = [
+      { key: "SE", label: "Canon SE" },
+      { key: "SW", label: "Canon SW" },
+      { key: "NE", label: "Canon NE" },
+      { key: "NW", label: "Canon NW" },
+      { key: "CAPITOL", label: "Capitole" }
+    ];
+    const CAPITOL_ZONE_KEYS = CAPITOL_ZONES.map(function (z) { return z.key; });
+    /* Positions % par défaut (ajustables) — labels sous les canons / zone Capitole */
+    const capitolDefaultPositions = {
+      NW: { left: 10, top: 30, width: 24, height: 6.5 },
+      NE: { left: 66, top: 30, width: 24, height: 6.5 },
+      SW: { left: 10, top: 70, width: 24, height: 6.5 },
+      SE: { left: 66, top: 70, width: 24, height: 6.5 },
+      CAPITOL: { left: 34, top: 49, width: 32, height: 7.5 }
+    };
+
 
     const SHIELD_ASSET_BASE = "images/bouclier/";
     const SHIELD_POSITIONS_VERSION = 2;
@@ -3709,64 +4047,7 @@
       shieldAsset("bouclierembleme4.png", "Emblème 4")
     ];
 
-    const SHIELD_AUTO_MESSAGES = [
-      {
-        title: "N’oubliez pas le bouclier",
-        subtitle: "Protection recommandée",
-        message: "Pensez à activer votre bouclier avant de quitter le jeu.",
-        time: "Avant 4:00",
-        note: "Mieux vaut prévenir que finir en barbecue."
-      },
-      {
-        title: "Bouclier avant de dormir",
-        subtitle: "Rappel 5LE",
-        message: "Avant de dormir, activez votre bouclier pour protéger votre base.",
-        time: "Avant 00:00",
-        note: "Une bonne nuit commence par un bouclier."
-      },
-      {
-        title: "Bouclier sinon à 4:00 barbecue",
-        subtitle: "Ne prenez pas de risque",
-        message: "Sans bouclier, votre base peut brûler pendant la fenêtre de 4:00.",
-        time: "Avant 4:00",
-        note: "Pas de bouclier = danger."
-      },
-      {
-        title: "Protégez votre base",
-        subtitle: "Avant de quitter le jeu",
-        message: "Pensez à vous protéger avant de quitter le jeu.",
-        time: "Avant déconnexion",
-        note: "Mise du bouclier obligatoire."
-      },
-      {
-        title: "Bouclier obligatoire",
-        subtitle: "Avant la nuit",
-        message: "Protégez votre base avant la nuit et activez votre bouclier.",
-        time: "Avant 4:00",
-        note: "Ne prenez pas de risque pendant le VS."
-      },
-      {
-        title: "Pas de bouclier = danger",
-        subtitle: "Rappel alliance",
-        message: "Activez votre bouclier avant de vous déconnecter.",
-        time: "Avant 4:00",
-        note: "Barbecue à 4:00 si oubli."
-      },
-      {
-        title: "Protection de nuit",
-        subtitle: "Rappel R4",
-        message: "Avant de dormir, activez votre bouclier.",
-        time: "Avant 00:00",
-        note: "Merci à tous les joueurs 5LE."
-      },
-      {
-        title: "Bouclier avant déconnexion",
-        subtitle: "Sécurité base",
-        message: "Mise du bouclier obligatoire avant de quitter le jeu.",
-        time: "Avant 4:00",
-        note: "Protégez votre progression."
-      }
-    ];
+    const SHIELD_DEFAULT_TEXT_SIZE = 42;
 
     /** Génère les positions % selon orientation et nombre d’éléments sélectionnés. */
     function buildShieldLayoutPositions(orientation, counts) {
@@ -3978,10 +4259,10 @@
           time: "",
           note: ""
         },
+        textSize: SHIELD_DEFAULT_TEXT_SIZE,
         orientation: "landscape",
         positions: createDefaultShieldPositions("landscape", { frames: 0, visuals: 0, emblems: 0, badges: 0, textFrames: 1 }),
-        positionsVersion: SHIELD_POSITIONS_VERSION,
-        autoGenerated: false
+        positionsVersion: SHIELD_POSITIONS_VERSION
       };
     }
 
@@ -4056,6 +4337,10 @@
       }
 
       const texts = data.texts && typeof data.texts === "object" ? data.texts : {};
+      let textSize = Number(data.textSize);
+      if (!Number.isFinite(textSize)) textSize = SHIELD_DEFAULT_TEXT_SIZE;
+      textSize = Math.max(12, Math.min(120, Math.round(textSize)));
+
       return {
         background: typeof data.background === "string" ? data.background : (typeof data.backgroundId === "string" ? data.backgroundId : ""),
         selectedVisualIds: selectedVisualIds,
@@ -4070,10 +4355,10 @@
           time: typeof texts.time === "string" ? texts.time : (typeof texts.hour === "string" ? texts.hour : ""),
           note: typeof texts.note === "string" ? texts.note : ""
         },
+        textSize: textSize,
         orientation: orientation,
         positions: positions,
-        positionsVersion: SHIELD_POSITIONS_VERSION,
-        autoGenerated: !!data.autoGenerated
+        positionsVersion: SHIELD_POSITIONS_VERSION
       };
     }
 
@@ -4254,6 +4539,72 @@
       return out;
     }
 
+    function createDefaultCapitolAssignments() {
+      return { SE: "", SW: "", NE: "", NW: "", CAPITOL: "" };
+    }
+
+    function createDefaultCapitolAttack() {
+      return {
+        imageSrc: CAPITOL_IMAGE_SRC,
+        alliances: DEFAULT_CAPITOL_ALLIANCES.slice(),
+        assignments: createDefaultCapitolAssignments(),
+        positions: clonePositions(capitolDefaultPositions),
+        positionsVersion: CAPITOL_POSITIONS_VERSION
+      };
+    }
+
+    function normalizeCapitolAllianceList(list) {
+      const out = [];
+      const seen = new Set();
+      function push(name) {
+        const cleaned = String(name || "").trim();
+        if (!cleaned) return;
+        const key = cleaned.toUpperCase();
+        if (seen.has(key)) return;
+        seen.add(key);
+        out.push(cleaned.toUpperCase().replace(/\s+/g, ""));
+      }
+      DEFAULT_CAPITOL_ALLIANCES.forEach(push);
+      if (Array.isArray(list)) list.forEach(push);
+      return out;
+    }
+
+    function normalizeCapitolPositions(src) {
+      const out = clonePositions(capitolDefaultPositions);
+      if (!src || typeof src !== "object") return out;
+      CAPITOL_ZONE_KEYS.forEach(function (key) {
+        const p = src[key] || capitolDefaultPositions[key];
+        /* Compat éventuelle x/y → left/top */
+        out[key] = {
+          left: Number(p.left != null ? p.left : p.x) || 0,
+          top: Number(p.top != null ? p.top : p.y) || 0,
+          width: Number(p.width) || 0,
+          height: Number(p.height) || 0
+        };
+      });
+      return out;
+    }
+
+    function normalizeCapitolAttack(data) {
+      const base = createDefaultCapitolAttack();
+      if (!data || typeof data !== "object") return base;
+      const version = Number(data.positionsVersion) || 0;
+      const assignments = createDefaultCapitolAssignments();
+      CAPITOL_ZONE_KEYS.forEach(function (key) {
+        const src = data.assignments && typeof data.assignments === "object" ? data.assignments[key] : "";
+        assignments[key] = typeof src === "string" ? src.trim() : "";
+      });
+      return {
+        imageSrc: CAPITOL_IMAGE_SRC,
+        alliances: normalizeCapitolAllianceList(data.alliances),
+        assignments: assignments,
+        positions: version >= CAPITOL_POSITIONS_VERSION
+          ? normalizeCapitolPositions(data.positions)
+          : clonePositions(capitolDefaultPositions),
+        positionsVersion: CAPITOL_POSITIONS_VERSION
+      };
+    }
+
     /* Roster alliance 5LE — R3/R2/R1 → Membre (rôles app : R5, R4, Membre) */
     const ALLIANCE_ROSTER = [
       { nickname: "Aiko5LE", role: "R5" },
@@ -4413,6 +4764,7 @@
       train: createDefaultTrain(),
       teamVille: createDefaultTeamVille(),
       tempete: createDefaultTempete(),
+      capitolAttack: createDefaultCapitolAttack(),
       vs: createDefaultVs(),
       bouclier: createDefaultShield(),
       teams: Object.freeze([]),
@@ -4436,6 +4788,7 @@
       if (typeof Train !== "undefined") Train.refresh();
       if (typeof TeamVille !== "undefined") TeamVille.refresh();
       if (typeof Tempete !== "undefined") Tempete.refresh();
+      if (typeof CapitolAttack !== "undefined") CapitolAttack.refresh();
       if (typeof Vs !== "undefined") Vs.refresh();
       if (typeof ShieldAnnouncement !== "undefined") ShieldAnnouncement.refresh();
     }
@@ -4604,6 +4957,7 @@
           train: normalizeTrain(data.train),
           teamVille: normalizeTeamVille(data.teamVille),
           tempete: normalizeTempete(data.tempete),
+          capitolAttack: normalizeCapitolAttack(data.capitolAttack),
           vs: normalizeVs(data.vs),
           bouclier: normalizeShield(data.bouclier),
           teams: Array.isArray(data.teams) ? data.teams : [],
@@ -6334,7 +6688,7 @@
               : "Aucune image";
             empty.querySelector("p").textContent = items.length
               ? "Change de filtre ou exporte une image depuis un module."
-              : "Les exports Train, Reine Cramoisie, Tempête et VS apparaîtront ici automatiquement.";
+              : "Les exports Train, Reine Cramoisie, Tempête, Capitole et VS apparaîtront ici automatiquement.";
             return;
           }
 
@@ -8739,6 +9093,17 @@
           const el = document.getElementById(id);
           if (el) el.value = t[map[id]] || "";
         });
+        this.syncTextSizeControl();
+      },
+
+      syncTextSizeControl() {
+        this.ensureState();
+        const size = Math.max(12, Math.min(120, Number(state.bouclier.textSize) || SHIELD_DEFAULT_TEXT_SIZE));
+        state.bouclier.textSize = size;
+        const slider = document.getElementById("bouclierTextSize");
+        const label = document.getElementById("bouclierTextSizeLabel");
+        if (slider) slider.value = String(size);
+        if (label) label.textContent = "Taille du texte : " + size + " px";
       },
 
       readTextInputs() {
@@ -8748,6 +9113,12 @@
         state.bouclier.texts.message = (document.getElementById("bouclierMessage").value || "").trim();
         state.bouclier.texts.time = (document.getElementById("bouclierTime").value || "").trim();
         state.bouclier.texts.note = (document.getElementById("bouclierNote").value || "").trim();
+        const slider = document.getElementById("bouclierTextSize");
+        if (slider) {
+          let size = Number(slider.value);
+          if (!Number.isFinite(size)) size = SHIELD_DEFAULT_TEXT_SIZE;
+          state.bouclier.textSize = Math.max(12, Math.min(120, Math.round(size)));
+        }
       },
 
       renderSingleGallery(containerId, list, selectedId, field) {
@@ -8785,8 +9156,10 @@
 
       updateTextFrameHint() {
         const hint = document.getElementById("bouclierTextFrameHint");
-        if (!hint) return;
+        const section = document.getElementById("bouclierTextSection");
         const has = (state.bouclier.selectedTextFrameIds || []).length > 0;
+        if (section) section.hidden = !has;
+        if (!hint) return;
         const hasText = !!(state.bouclier.texts.title || state.bouclier.texts.subtitle ||
           state.bouclier.texts.message || state.bouclier.texts.time || state.bouclier.texts.note);
         if (!has && hasText) {
@@ -8922,58 +9295,6 @@
         ctx.drawImage(img, dx, dy, dw, dh);
       },
 
-      drawWrappedText(ctx, text, x, y, width, height, options) {
-        if (!text) return;
-        options = options || {};
-        const color = options.color || "#fff8e7";
-        const weight = options.weight || "800";
-        const align = options.align || "center";
-        const fontFamily = options.fontFamily || "Segoe UI, system-ui, sans-serif";
-        const minSize = options.minSize != null ? options.minSize : 8;
-        let size = options.maxSize != null ? options.maxSize : Math.min(height * 0.55, 48);
-        size = Math.max(minSize, Math.floor(size));
-
-        function wrap(fontSize) {
-          ctx.font = weight + " " + fontSize + "px " + fontFamily;
-          const words = String(text).split(/\s+/);
-          const lines = [];
-          let line = "";
-          words.forEach(function (word) {
-            const test = line ? line + " " + word : word;
-            if (ctx.measureText(test).width <= width) line = test;
-            else {
-              if (line) lines.push(line);
-              line = word;
-            }
-          });
-          if (line) lines.push(line);
-          return lines;
-        }
-
-        let lines = wrap(size);
-        let lineH = size * 1.15;
-        while (size > minSize && (lines.length * lineH > height || lines.some(function (l) {
-          return ctx.measureText(l).width > width;
-        }))) {
-          size -= 1;
-          lines = wrap(size);
-          lineH = size * 1.15;
-        }
-
-        ctx.save();
-        ctx.fillStyle = color;
-        ctx.textAlign = align;
-        ctx.textBaseline = "middle";
-        ctx.font = weight + " " + size + "px " + fontFamily;
-        const totalH = lines.length * lineH;
-        const startY = y + (height - totalH) / 2 + lineH / 2;
-        const tx = align === "left" ? x : align === "right" ? x + width : x + width / 2;
-        lines.forEach(function (line, i) {
-          ctx.fillText(line, tx, startY + i * lineH);
-        });
-        ctx.restore();
-      },
-
       async collectAssets() {
         this.ensureState();
         const b = state.bouclier;
@@ -9037,6 +9358,104 @@
         });
       },
 
+      drawCenteredFrameText(ctx, frameBox) {
+        const texts = state.bouclier.texts || {};
+        const specs = [
+          { value: texts.title, weight: "900", color: "#fff6d5", scale: 1.12 },
+          { value: texts.subtitle, weight: "700", color: "#f0e2b0", scale: 0.92 },
+          { value: texts.message, weight: "700", color: "#fff8e7", scale: 1, wrap: true },
+          { value: texts.time, weight: "800", color: "#ffe08a", scale: 0.95 },
+          { value: texts.note, weight: "600", color: "#e8d9a8", scale: 0.85 }
+        ].filter(function (s) { return !!(s.value && String(s.value).trim()); });
+
+        if (!specs.length) return;
+
+        const fontFamily = "Segoe UI, system-ui, sans-serif";
+        const padX = frameBox.w * 0.08;
+        const padY = frameBox.h * 0.1;
+        const maxW = Math.max(8, frameBox.w - padX * 2);
+        const maxH = Math.max(8, frameBox.h - padY * 2);
+        const cx = frameBox.x + frameBox.w / 2;
+        const cy = frameBox.y + frameBox.h / 2;
+
+        let requested = Number(state.bouclier.textSize);
+        if (!Number.isFinite(requested)) requested = SHIELD_DEFAULT_TEXT_SIZE;
+        requested = Math.max(12, Math.min(120, requested));
+        let baseSize = requested;
+
+        function wrapLines(text, fontSize, weight) {
+          ctx.font = weight + " " + fontSize + "px " + fontFamily;
+          const words = String(text).split(/\s+/).filter(Boolean);
+          const lines = [];
+          let line = "";
+          words.forEach(function (word) {
+            const test = line ? line + " " + word : word;
+            if (ctx.measureText(test).width <= maxW) line = test;
+            else {
+              if (line) lines.push(line);
+              line = word;
+            }
+          });
+          if (line) lines.push(line);
+          return lines.length ? lines : [String(text)];
+        }
+
+        function buildRows(size) {
+          const rows = [];
+          specs.forEach(function (spec) {
+            const fontSize = Math.max(8, size * (spec.scale || 1));
+            const parts = spec.wrap
+              ? wrapLines(spec.value, fontSize, spec.weight)
+              : [String(spec.value)];
+            parts.forEach(function (line) {
+              rows.push({
+                text: line,
+                weight: spec.weight,
+                color: spec.color,
+                size: fontSize
+              });
+            });
+          });
+          return rows;
+        }
+
+        let rows = buildRows(baseSize);
+        let lineGap = baseSize * 0.28;
+        let totalH = rows.reduce(function (sum, row) { return sum + row.size; }, 0) + Math.max(0, rows.length - 1) * lineGap;
+
+        while (baseSize > 8 && totalH > maxH) {
+          baseSize -= 1;
+          rows = buildRows(baseSize);
+          lineGap = baseSize * 0.28;
+          totalH = rows.reduce(function (sum, row) { return sum + row.size; }, 0) + Math.max(0, rows.length - 1) * lineGap;
+        }
+
+        /* Réduire encore si une ligne dépasse la largeur. */
+        rows.forEach(function (row) {
+          ctx.font = row.weight + " " + row.size + "px " + fontFamily;
+          let w = ctx.measureText(row.text).width;
+          while (w > maxW && row.size > 8) {
+            row.size -= 0.5;
+            ctx.font = row.weight + " " + row.size + "px " + fontFamily;
+            w = ctx.measureText(row.text).width;
+          }
+        });
+        totalH = rows.reduce(function (sum, row) { return sum + row.size; }, 0) + Math.max(0, rows.length - 1) * lineGap;
+
+        ctx.save();
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        let y = cy - totalH / 2;
+        rows.forEach(function (row) {
+          y += row.size / 2;
+          ctx.fillStyle = row.color;
+          ctx.font = row.weight + " " + row.size + "px " + fontFamily;
+          ctx.fillText(row.text, cx, y);
+          y += row.size / 2 + lineGap;
+        });
+        ctx.restore();
+      },
+
       drawShieldAnnouncementCanvas(canvas, assets) {
         this.ensureState();
         const bg = assets.background;
@@ -9066,35 +9485,11 @@
         drawSeries(assets.textFrames, "textFrame", "stretch");
 
         const hasTextFrame = (state.bouclier.selectedTextFrameIds || []).length > 0 && assets.textFrames.length > 0;
-        if (!hasTextFrame) return canvas;
+        if (!hasTextFrame || !pos.textFrame0) return canvas;
 
-        const textPos = this.textBoxesFromFrame(pos.textFrame0);
-        Object.keys(textPos).forEach(function (key) { pos[key] = textPos[key]; });
-
-        const texts = state.bouclier.texts;
-        const textSpecs = [
-          { key: "title", value: texts.title, weight: "900", color: "#fff6d5", maxFrac: 0.7 },
-          { key: "subtitle", value: texts.subtitle, weight: "700", color: "#f0e2b0", maxFrac: 0.55 },
-          { key: "message", value: texts.message, weight: "700", color: "#fff8e7", maxFrac: 0.42, wrap: true },
-          { key: "time", value: texts.time, weight: "800", color: "#ffe08a", maxFrac: 0.55 },
-          { key: "note", value: texts.note, weight: "600", color: "#e8d9a8", maxFrac: 0.45 }
-        ];
-
-        textSpecs.forEach(function (spec) {
-          if (!spec.value || !textPos[spec.key]) return;
-          const box = self.pctBox(textPos[spec.key], canvas.width, canvas.height);
-          const maxSize = Math.min(box.h * spec.maxFrac, canvas.width * 0.06, 64);
-          if (spec.wrap) {
-            self.drawWrappedText(ctx, spec.value, box.x, box.y, box.w, box.h, {
-              color: spec.color, weight: spec.weight, maxSize: maxSize, minSize: 8, align: "center"
-            });
-          } else {
-            drawSingleLineFittedText(ctx, spec.value, box.x, box.y, box.w, box.h, {
-              color: spec.color, align: "center", baseline: "middle",
-              weight: spec.weight, maxSize: maxSize, minSize: 8
-            });
-          }
-        });
+        const frameBox = this.pctBox(pos.textFrame0, canvas.width, canvas.height);
+        this.drawCenteredFrameText(ctx, frameBox);
+        this.syncTextBoxesToFrame();
 
         return canvas;
       },
@@ -9174,66 +9569,10 @@
         }
       },
 
-      pickRandom(arr, count) {
-        const copy = arr.slice();
-        for (let i = copy.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          const tmp = copy[i];
-          copy[i] = copy[j];
-          copy[j] = tmp;
-        }
-        return copy.slice(0, Math.max(0, Math.min(count, copy.length)));
-      },
-
-      async runAutoGenerate() {
-        this.ensureState();
-        const bg = this.pickRandom(SHIELD_BACKGROUNDS, 1)[0];
-        if (!bg) return;
-
-        let orientation = "landscape";
-        try {
-          const img = await this.loadImage(bg.src);
-          orientation = getShieldBackgroundOrientation(img.naturalWidth, img.naturalHeight);
-          this.bgNatural = { w: img.naturalWidth, h: img.naturalHeight };
-        } catch (err) {
-          Notifications.show("Impossible de charger un fond automatique.", "error");
-          return;
-        }
-
-        const nVisuals = 1 + Math.floor(Math.random() * 2);
-        const nBadges = 1 + Math.floor(Math.random() * 3);
-        const nEmblems = 1 + Math.floor(Math.random() * 2);
-        const useFrame = Math.random() > 0.35;
-
-        state.bouclier.background = bg.id;
-        state.bouclier.selectedVisualIds = this.pickRandom(SHIELD_VISUALS, nVisuals).map(function (a) { return a.id; });
-        state.bouclier.selectedBadgeIds = this.pickRandom(SHIELD_BADGES, nBadges).map(function (a) { return a.id; });
-        state.bouclier.selectedEmblemIds = this.pickRandom(SHIELD_EMBLEMS, nEmblems).map(function (a) { return a.id; });
-        state.bouclier.selectedFrameIds = useFrame
-          ? this.pickRandom(SHIELD_FRAMES, 1).map(function (a) { return a.id; })
-          : [];
-        state.bouclier.selectedTextFrameIds = this.pickRandom(SHIELD_TEXT_FRAMES, 1).map(function (a) { return a.id; });
-
-        const msg = this.pickRandom(SHIELD_AUTO_MESSAGES, 1)[0];
-        state.bouclier.texts = {
-          title: msg.title || "",
-          subtitle: msg.subtitle || "",
-          message: msg.message || "",
-          time: msg.time || "",
-          note: msg.note || ""
-        };
-        state.bouclier.autoGenerated = true;
-        this.applyShieldLayoutPreset(orientation);
-        Storage.persist();
-        this.renderShieldAnnouncementPage();
-        Notifications.show("Composition automatique générée", "success");
-      },
-
       setBackground(id) {
         this.ensureState();
         const prevOrientation = state.bouclier.orientation;
         state.bouclier.background = id || "";
-        state.bouclier.autoGenerated = false;
         const meta = this.findAsset(SHIELD_BACKGROUNDS, id);
         if (!meta) {
           Storage.persist();
@@ -9273,7 +9612,6 @@
           else list.splice(idx, 1);
         }
         state.bouclier[prop] = list;
-        state.bouclier.autoGenerated = false;
         this.rebuildPositionsKeepCustom(state.bouclier.orientation || "landscape");
         Storage.persist();
         this.renderShieldAnnouncementPage();
@@ -9401,9 +9739,20 @@
           });
         });
 
-        document.getElementById("btnBouclierAuto").addEventListener("click", function () {
-          self.runAutoGenerate();
-        });
+        const textSizeSlider = document.getElementById("bouclierTextSize");
+        if (textSizeSlider) {
+          textSizeSlider.addEventListener("input", function () {
+            let size = Number(textSizeSlider.value);
+            if (!Number.isFinite(size)) size = SHIELD_DEFAULT_TEXT_SIZE;
+            size = Math.max(12, Math.min(120, Math.round(size)));
+            state.bouclier.textSize = size;
+            const label = document.getElementById("bouclierTextSizeLabel");
+            if (label) label.textContent = "Taille du texte : " + size + " px";
+            Storage.persistSoon(200);
+            self.schedulePreview();
+          });
+        }
+
         document.getElementById("btnExportBouclier").addEventListener("click", function () {
           self.exportShieldAnnouncementImage();
         });
@@ -9442,6 +9791,462 @@
     };
 
 
+/* Injected CapitolAttack module — do not load standalone */
+
+    /* ============================= */
+    /* ATTAQUE CAPITOLE              */
+    /* ============================= */
+    const CapitolAttack = {
+      adjusting: false,
+      drag: null,
+      bound: false,
+      imgNatural: null,
+
+      ensureState() {
+        state.capitolAttack = normalizeCapitolAttack(state.capitolAttack);
+      },
+
+      getPositions() {
+        this.ensureState();
+        return state.capitolAttack.positions;
+      },
+
+      isDefaultAlliance(name) {
+        return DEFAULT_CAPITOL_ALLIANCES_SET.has(String(name || "").trim().toUpperCase());
+      },
+
+      getAllianceOptions() {
+        this.ensureState();
+        return (state.capitolAttack.alliances || []).slice().sort(function (a, b) {
+          return a.localeCompare(b, "fr", { sensitivity: "base" });
+        });
+      },
+
+      syncTextOverlay() {
+        this.ensureState();
+        const assignments = state.capitolAttack.assignments;
+        const stage = document.getElementById("capitolStage");
+        const img = document.getElementById("capitolImage");
+        if (!stage) return;
+        const natW = (img && img.naturalWidth) || (this.imgNatural && this.imgNatural.w) || 1024;
+        const natH = (img && img.naturalHeight) || (this.imgNatural && this.imgNatural.h) || 1024;
+        const scale = stage.clientWidth / Math.max(1, natW);
+
+        CAPITOL_ZONE_KEYS.forEach(function (key) {
+          const el = document.getElementById("capitol-zone-" + key);
+          const textEl = document.getElementById("capitol-text-" + key);
+          if (!el || !textEl) return;
+          const name = assignments[key] || "";
+          textEl.textContent = name;
+          textEl.hidden = !name;
+          if (!name) return;
+          const pos = state.capitolAttack.positions[key] || capitolDefaultPositions[key];
+          const boxH = (pos.height / 100) * natH * scale;
+          const boxW = (pos.width / 100) * natW * scale;
+          let size = Math.min(34 * scale, boxH * 0.72, boxW * 0.28);
+          size = Math.max(10 * scale, size);
+          textEl.style.fontSize = size.toFixed(2) + "px";
+          textEl.style.fontWeight = "900";
+          /* Réduire si le nom dépasse la largeur de zone */
+          let guard = 40;
+          while (guard-- > 0 && textEl.scrollWidth > boxW * 0.92 && size > 9 * scale) {
+            size -= 0.5 * scale;
+            textEl.style.fontSize = size.toFixed(2) + "px";
+          }
+        });
+      },
+
+      applyZoneStyles() {
+        this.ensureState();
+        const positions = this.getPositions();
+        CAPITOL_ZONE_KEYS.forEach(function (key) {
+          const el = document.getElementById("capitol-zone-" + key);
+          const pos = positions[key] || capitolDefaultPositions[key];
+          if (!el || !pos) return;
+          el.style.left = pos.left + "%";
+          el.style.top = pos.top + "%";
+          el.style.width = pos.width + "%";
+          el.style.height = pos.height + "%";
+        });
+      },
+
+      renderAssignmentSelects() {
+        this.ensureState();
+        const root = document.getElementById("capitolAssignList");
+        if (!root) return;
+        const alliances = this.getAllianceOptions();
+        const assignments = state.capitolAttack.assignments;
+        root.innerHTML = CAPITOL_ZONES.map(function (zone) {
+          const current = assignments[zone.key] || "";
+          const opts = ['<option value="">— Aucune —</option>'].concat(
+            alliances.map(function (name) {
+              const sel = name === current ? " selected" : "";
+              return '<option value="' + escapeHtml(name) + '"' + sel + ">" + escapeHtml(name) + "</option>";
+            })
+          );
+          if (current && alliances.indexOf(current) === -1) {
+            opts.push('<option value="' + escapeHtml(current) + '" selected>' + escapeHtml(current) + "</option>");
+          }
+          return (
+            '<div class="capitol-assign-row" data-zone="' + zone.key + '">' +
+              '<label class="capitol-assign-label" for="capitol-select-' + zone.key + '">' + escapeHtml(zone.label) + "</label>" +
+              '<div class="capitol-assign-controls">' +
+                '<select class="form-control capitol-zone-select" id="capitol-select-' + zone.key + '" data-zone="' + zone.key + '">' +
+                  opts.join("") +
+                "</select>" +
+                '<button type="button" class="btn btn-ghost capitol-clear-zone" data-zone="' + zone.key + '" title="Effacer">Effacer</button>' +
+              "</div>" +
+            "</div>"
+          );
+        }).join("");
+      },
+
+      renderAllianceList() {
+        this.ensureState();
+        const list = document.getElementById("capitolAllianceList");
+        if (!list) return;
+        const alliances = this.getAllianceOptions();
+        if (!alliances.length) {
+          list.innerHTML = '<div class="capitol-alliance-empty">Aucune alliance</div>';
+          return;
+        }
+        list.innerHTML = alliances.map(function (name) {
+          const isDefault = DEFAULT_CAPITOL_ALLIANCES_SET.has(name.toUpperCase());
+          return (
+            '<div class="capitol-alliance-row" data-name="' + escapeHtml(name) + '">' +
+              '<span class="capitol-alliance-name">' + escapeHtml(name) +
+                (isDefault ? ' <em class="capitol-alliance-tag">base</em>' : "") +
+              "</span>" +
+              (isDefault
+                ? ""
+                : '<button type="button" class="btn btn-ghost capitol-alliance-remove" data-name="' + escapeHtml(name) + '">Supprimer</button>') +
+            "</div>"
+          );
+        }).join("");
+      },
+
+      refreshOverlay() {
+        this.applyZoneStyles();
+        this.syncTextOverlay();
+      },
+
+      refresh() {
+        this.ensureState();
+        this.renderAssignmentSelects();
+        this.renderAllianceList();
+        this.refreshOverlay();
+      },
+
+      setAssignment(zoneKey, value) {
+        this.ensureState();
+        if (CAPITOL_ZONE_KEYS.indexOf(zoneKey) === -1) return;
+        state.capitolAttack.assignments[zoneKey] = (value || "").trim();
+        Storage.persist();
+        this.refreshOverlay();
+      },
+
+      addAlliance(rawName) {
+        this.ensureState();
+        const name = String(rawName || "").trim().toUpperCase().replace(/\s+/g, "");
+        if (!name) {
+          Notifications.show("Entrez un nom d’alliance.", "info");
+          return false;
+        }
+        if (name.length > 16) {
+          Notifications.show("Nom trop long (max 16).", "info");
+          return false;
+        }
+        const exists = state.capitolAttack.alliances.some(function (a) {
+          return a.toUpperCase() === name;
+        });
+        if (exists) {
+          Notifications.show("Cette alliance existe déjà.", "info");
+          return false;
+        }
+        state.capitolAttack.alliances.push(name);
+        Storage.persist();
+        this.renderAllianceList();
+        this.renderAssignmentSelects();
+        Notifications.show("Alliance ajoutée : " + name, "success");
+        return true;
+      },
+
+      removeAlliance(name) {
+        this.ensureState();
+        const target = String(name || "").trim();
+        if (!target) return;
+        if (DEFAULT_CAPITOL_ALLIANCES_SET.has(target.toUpperCase())) {
+          Notifications.show("Les alliances de base ne peuvent pas être supprimées.", "info");
+          return;
+        }
+        state.capitolAttack.alliances = state.capitolAttack.alliances.filter(function (a) {
+          return a !== target;
+        });
+        CAPITOL_ZONE_KEYS.forEach(function (key) {
+          if (state.capitolAttack.assignments[key] === target) {
+            state.capitolAttack.assignments[key] = "";
+          }
+        });
+        Storage.persist();
+        this.refresh();
+        Notifications.show("Alliance supprimée", "success");
+      },
+
+      resetPositions() {
+        this.ensureState();
+        state.capitolAttack.positions = clonePositions(capitolDefaultPositions);
+        state.capitolAttack.positionsVersion = CAPITOL_POSITIONS_VERSION;
+        Storage.persist();
+        this.refreshOverlay();
+        Notifications.show("Positions réinitialisées", "success");
+      },
+
+      clearAssignments() {
+        this.ensureState();
+        CAPITOL_ZONE_KEYS.forEach(function (key) {
+          state.capitolAttack.assignments[key] = "";
+        });
+        Storage.persist();
+        this.refresh();
+        Notifications.show("Sélections effacées", "success");
+      },
+
+      setAdjustMode(on) {
+        this.adjusting = !!on;
+        const stage = document.getElementById("capitolStage");
+        const btn = document.getElementById("btnAdjustCapitol");
+        const hint = document.getElementById("capitolAdjustHint");
+        if (stage) stage.classList.toggle("adjusting", this.adjusting);
+        if (btn) {
+          btn.classList.toggle("btn-primary", this.adjusting);
+          btn.classList.toggle("btn-secondary", !this.adjusting);
+          btn.textContent = this.adjusting ? "Terminer l'ajustement" : "Ajuster les positions";
+        }
+        if (hint) hint.hidden = !this.adjusting;
+        this.refreshOverlay();
+      },
+
+      onPointerDown(e) {
+        if (!this.adjusting) return;
+        const handle = e.target.closest(".capitol-zone-handle");
+        const zone = e.target.closest(".capitol-zone");
+        if (!zone) return;
+        e.preventDefault();
+        const stage = document.getElementById("capitolStage");
+        const rect = stage.getBoundingClientRect();
+        const key = zone.dataset.zone;
+        if (!state.capitolAttack.positions[key]) {
+          state.capitolAttack.positions[key] = Object.assign({}, capitolDefaultPositions[key]);
+        }
+        const pos = state.capitolAttack.positions[key];
+        this.drag = {
+          key: key,
+          el: zone,
+          resize: !!handle,
+          startX: e.clientX,
+          startY: e.clientY,
+          orig: { left: pos.left, top: pos.top, width: pos.width, height: pos.height },
+          stageW: rect.width,
+          stageH: rect.height
+        };
+        zone.classList.add("dragging");
+        try { zone.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      },
+
+      onPointerMove(e) {
+        if (!this.drag) return;
+        const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
+        const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
+        const pos = state.capitolAttack.positions[this.drag.key];
+        if (this.drag.resize) {
+          pos.width = Math.max(6, Math.min(100 - this.drag.orig.left, this.drag.orig.width + dx));
+          pos.height = Math.max(3, Math.min(100 - this.drag.orig.top, this.drag.orig.height + dy));
+        } else {
+          pos.left = Math.max(0, Math.min(100 - pos.width, this.drag.orig.left + dx));
+          pos.top = Math.max(0, Math.min(100 - pos.height, this.drag.orig.top + dy));
+        }
+        this.applyZoneStyles();
+        this.syncTextOverlay();
+        Storage.persistSoon(180);
+      },
+
+      onPointerUp(e) {
+        if (!this.drag) return;
+        this.drag.el.classList.remove("dragging");
+        try { this.drag.el.releasePointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+        this.drag = null;
+        state.capitolAttack.positionsVersion = CAPITOL_POSITIONS_VERSION;
+        Storage.persist();
+        this.refreshOverlay();
+      },
+
+      drawCanvas(img) {
+        this.ensureState();
+        const canvas = document.createElement("canvas");
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        const positions = this.getPositions();
+        const assignments = state.capitolAttack.assignments;
+        const fontFamily = "Segoe UI, system-ui, -apple-system, sans-serif";
+
+        CAPITOL_ZONE_KEYS.forEach(function (key) {
+          const name = assignments[key];
+          if (!name) return;
+          const pos = positions[key] || capitolDefaultPositions[key];
+          const x = (pos.left / 100) * canvas.width;
+          const y = (pos.top / 100) * canvas.height;
+          const w = (pos.width / 100) * canvas.width;
+          const h = (pos.height / 100) * canvas.height;
+
+          const padX = Math.max(4, w * 0.06);
+          const plateH = Math.min(h * 0.92, Math.max(22, h * 0.75));
+          const plateY = y + (h - plateH) / 2;
+          const radius = Math.min(10, plateH * 0.22);
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(x + padX + radius, plateY);
+          ctx.arcTo(x + w - padX, plateY, x + w - padX, plateY + plateH, radius);
+          ctx.arcTo(x + w - padX, plateY + plateH, x + padX, plateY + plateH, radius);
+          ctx.arcTo(x + padX, plateY + plateH, x + padX, plateY, radius);
+          ctx.arcTo(x + padX, plateY, x + w - padX, plateY, radius);
+          ctx.closePath();
+          ctx.fillStyle = "rgba(6, 10, 18, 0.78)";
+          ctx.fill();
+
+          drawSingleLineFittedText(ctx, name, x + padX, plateY, w - padX * 2, plateH, {
+            color: "#fff6d5",
+            align: "center",
+            baseline: "middle",
+            weight: "900",
+            maxSize: Math.min(plateH * 0.72, canvas.width * 0.045, 56),
+            minSize: 10,
+            fontFamily: fontFamily,
+            padX: 4
+          });
+          ctx.restore();
+        });
+
+        return canvas;
+      },
+
+      exportImage() {
+        this.ensureState();
+        const img = document.getElementById("capitolImage");
+        if (!img || !img.naturalWidth) {
+          Notifications.show("Impossible de charger l’image du Capitole.", "error");
+          return;
+        }
+        try {
+          const canvas = this.drawCanvas(img);
+          const date = new Date();
+          const yyyy = date.getFullYear();
+          const mm = String(date.getMonth() + 1).padStart(2, "0");
+          const dd = String(date.getDate()).padStart(2, "0");
+          finalizeImageExport(canvas, {
+            module: "capitol",
+            title: "Attaque Capitole",
+            filename: "attaque-capitole-5le-" + yyyy + "-" + mm + "-" + dd + ".png"
+          });
+        } catch (err) {
+          console.error(err);
+          Notifications.show("Export impossible", "error");
+        }
+      },
+
+      bind() {
+        if (this.bound) return;
+        this.bound = true;
+        const self = this;
+        this.refresh();
+
+        const img = document.getElementById("capitolImage");
+        const err = document.getElementById("capitolImageError");
+        if (img) {
+          const onReady = function () {
+            if (err) err.hidden = true;
+            self.imgNatural = { w: img.naturalWidth, h: img.naturalHeight };
+            self.refreshOverlay();
+          };
+          img.addEventListener("load", onReady);
+          img.addEventListener("error", function () {
+            if (err) err.hidden = false;
+          });
+          if (img.complete && img.naturalWidth) onReady();
+        }
+
+        document.getElementById("page-capitol").addEventListener("change", function (e) {
+          const select = e.target.closest(".capitol-zone-select");
+          if (!select) return;
+          self.setAssignment(select.dataset.zone, select.value);
+        });
+
+        document.getElementById("page-capitol").addEventListener("click", function (e) {
+          const clearBtn = e.target.closest(".capitol-clear-zone");
+          if (clearBtn) {
+            self.setAssignment(clearBtn.dataset.zone, "");
+            self.renderAssignmentSelects();
+            return;
+          }
+          const removeBtn = e.target.closest(".capitol-alliance-remove");
+          if (removeBtn) {
+            self.removeAlliance(removeBtn.dataset.name);
+          }
+        });
+
+        document.getElementById("btnAddCapitolAlliance").addEventListener("click", function () {
+          const input = document.getElementById("capitolAllianceInput");
+          if (!input) return;
+          if (self.addAlliance(input.value)) input.value = "";
+        });
+
+        document.getElementById("capitolAllianceInput").addEventListener("keydown", function (e) {
+          if (e.key !== "Enter") return;
+          e.preventDefault();
+          if (self.addAlliance(this.value)) this.value = "";
+        });
+
+        document.getElementById("btnExportCapitol").addEventListener("click", function () {
+          self.exportImage();
+        });
+        document.getElementById("btnAdjustCapitol").addEventListener("click", function () {
+          self.setAdjustMode(!self.adjusting);
+        });
+        document.getElementById("btnResetCapitolPos").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Réinitialiser les positions",
+            message: "Remettre les zones SE / SW / NE / NW / Capitole aux positions par défaut ?",
+            okLabel: "Réinitialiser",
+            onConfirm: function () { self.resetPositions(); }
+          });
+        });
+        document.getElementById("btnClearCapitol").addEventListener("click", function () {
+          Modal.confirm({
+            title: "Effacer les sélections",
+            message: "Retirer toutes les alliances assignées aux canons et au Capitole ?",
+            okLabel: "Effacer",
+            onConfirm: function () { self.clearAssignments(); }
+          });
+        });
+
+        const stage = document.getElementById("capitolStage");
+        stage.addEventListener("pointerdown", function (e) { self.onPointerDown(e); });
+        stage.addEventListener("pointermove", function (e) { self.onPointerMove(e); });
+        stage.addEventListener("pointerup", function (e) { self.onPointerUp(e); });
+        stage.addEventListener("pointercancel", function (e) { self.onPointerUp(e); });
+
+        let resizeTimer = null;
+        window.addEventListener("resize", function () {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(function () { self.refreshOverlay(); }, 80);
+        });
+      }
+    };
+
+
     /* ============================= */
     /* NAVIGATION                    */
     /* ============================= */
@@ -9468,6 +10273,10 @@
           setTimeout(function () {
             TEMPETE_PLANS.forEach(function (meta) { Tempete.refreshOverlay(meta.key); });
           }, 50);
+        }
+        if (page === "capitol") {
+          CapitolAttack.refresh();
+          setTimeout(function () { CapitolAttack.refreshOverlay(); }, 50);
         }
         if (page === "vs") {
           Vs.refresh();
@@ -9563,6 +10372,7 @@
       Train.bind();
       TeamVille.bind();
       Tempete.bind();
+      CapitolAttack.bind();
       Vs.bind();
       ShieldAnnouncement.bind();
       HistoryUI.bind();
@@ -9787,6 +10597,7 @@
           else if (Tempete.adjustingPlan) Tempete.setAdjustMode(Tempete.adjustingPlan, false);
           else if (Vs.adjusting) Vs.setAdjustMode(false);
           else if (ShieldAnnouncement.adjusting) ShieldAnnouncement.setAdjustMode(false);
+          else if (CapitolAttack.adjusting) CapitolAttack.setAdjustMode(false);
           else Nav.closeSidebar();
         }
       });
@@ -9800,6 +10611,7 @@
       state.train = normalizeTrain(state.train);
       state.teamVille = normalizeTeamVille(state.teamVille);
       state.tempete = normalizeTempete(state.tempete);
+      state.capitolAttack = normalizeCapitolAttack(state.capitolAttack);
       state.vs = normalizeVs(state.vs);
       state.bouclier = normalizeShield(state.bouclier);
       if (!state.migrations || typeof state.migrations !== "object") state.migrations = {};
