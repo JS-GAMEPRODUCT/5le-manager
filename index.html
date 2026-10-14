@@ -981,9 +981,9 @@
 
     .train-day-row {
       display: grid;
-      grid-template-columns: 110px 1fr 48px;
-      gap: 0.55rem;
-      align-items: center;
+      grid-template-columns: 110px 1fr;
+      gap: 0.55rem 0.75rem;
+      align-items: start;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -995,6 +995,29 @@
       letter-spacing: 0.03em;
       color: var(--gold-soft);
       font-size: 0.95rem;
+      padding-top: 0.85rem;
+    }
+
+    .train-day-roles {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      min-width: 0;
+    }
+
+    .train-role-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 42px;
+      gap: 0.45rem;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .train-role-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
     }
 
     .train-combo {
@@ -1341,16 +1364,17 @@
 
     @media (max-width: 900px) {
       .train-day-row {
-        grid-template-columns: 1fr auto;
-        grid-template-areas:
-          "label clear"
-          "select select";
-        gap: 0.5rem;
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
       }
 
-      .train-day-label { grid-area: label; }
-      .train-combo { grid-area: select; }
-      .train-clear-day { grid-area: clear; }
+      .train-day-label {
+        padding-top: 0;
+      }
+
+      .train-role-row {
+        grid-template-columns: 78px 1fr 40px;
+      }
 
       .train-toolbar .btn,
       .train-toolbar .train-option {
@@ -3242,13 +3266,20 @@
               <h2>Aperçu</h2>
               <div class="train-stage train-preview" id="trainStage">
                 <img id="trainImage" src="images/train.png" alt="Modèle Train 5LE" />
-                <div class="train-slot-label" data-day="lundi" data-label="LUNDI" id="slot-lundi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-                <div class="train-slot-label" data-day="mardi" data-label="MARDI" id="slot-mardi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-                <div class="train-slot-label" data-day="mercredi" data-label="MERCREDI" id="slot-mercredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-                <div class="train-slot-label" data-day="jeudi" data-label="JEUDI" id="slot-jeudi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-                <div class="train-slot-label" data-day="vendredi" data-label="VENDREDI" id="slot-vendredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-                <div class="train-slot-label" data-day="samedi" data-label="SAMEDI" id="slot-samedi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
-                <div class="train-slot-label" data-day="dimanche" data-label="DIMANCHE" id="slot-dimanche"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="lundi" data-role="conducteur" data-label="LUNDI COND." id="slot-lundi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="mardi" data-role="conducteur" data-label="MARDI COND." id="slot-mardi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="mercredi" data-role="conducteur" data-label="MERCREDI COND." id="slot-mercredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="jeudi" data-role="conducteur" data-label="JEUDI COND." id="slot-jeudi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="vendredi" data-role="conducteur" data-label="VENDREDI COND." id="slot-vendredi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="samedi" data-role="conducteur" data-label="SAMEDI COND." id="slot-samedi"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="dimanche" data-role="conducteur" data-label="DIMANCHE COND." id="slot-dimanche"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="lundi" data-role="vip" data-label="LUNDI VIP" id="slot-lundi-vip"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="mardi" data-role="vip" data-label="MARDI VIP" id="slot-mardi-vip"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="mercredi" data-role="vip" data-label="MERCREDI VIP" id="slot-mercredi-vip"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="jeudi" data-role="vip" data-label="JEUDI VIP" id="slot-jeudi-vip"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="vendredi" data-role="vip" data-label="VENDREDI VIP" id="slot-vendredi-vip"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="samedi" data-role="vip" data-label="SAMEDI VIP" id="slot-samedi-vip"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
+                <div class="train-slot-label" data-day="dimanche" data-role="vip" data-label="DIMANCHE VIP" id="slot-dimanche-vip"><span class="train-slot-text"></span><span class="train-slot-handle" data-resize="1"></span></div>
               </div>
               <div class="train-error" id="trainImageError">Impossible de charger le modèle Train.</div>
               <p class="train-hint" id="trainAdjustHint" hidden>
@@ -3811,20 +3842,96 @@
       ]
     };
 
-    /* Positions par défaut des zones de pseudos (en % de l'image).
-       Calibrées sur les cases crème sous LUNDI→DIMANCHE (pas sur le train).
-       Modifiables via "Ajuster les positions" ou directement ici. */
-    const trainSlotPositions = {
-      lundi:    { left: 4.2,  top: 32.8, width: 11.8, height: 21.2 },
-      mardi:    { left: 17.6, top: 32.8, width: 11.6, height: 21.2 },
-      mercredi: { left: 30.9, top: 32.8, width: 11.6, height: 21.2 },
-      jeudi:    { left: 44.2, top: 32.8, width: 11.6, height: 21.2 },
-      vendredi: { left: 57.5, top: 32.8, width: 11.6, height: 21.2 },
-      samedi:   { left: 70.8, top: 32.8, width: 11.8, height: 21.2 },
-      dimanche: { left: 84.4, top: 32.8, width: 11.5, height: 21.2 }
-    };
+    /* Positions par défaut des 14 zones de pseudos (en % de l'image).
+       Rangée haute = CONDUCTEUR (parchemin sous le bandeau jour).
+       Rangée basse = VIP.
+       Modifiables via "Ajuster les positions". */
+    const TRAIN_ROLES = ["conducteur", "vip"];
+    const TRAIN_ROLE_LABELS = { conducteur: "Conducteur", vip: "VIP" };
+    /* Mesures sur images/train.png (1672×941) : zones parchemin crème. */
+    const trainSlotColumns = [
+      { day: "lundi", left: 6.5, width: 10.4 },
+      { day: "mardi", left: 19.3, width: 10.2 },
+      { day: "mercredi", left: 31.6, width: 10.8 },
+      { day: "jeudi", left: 45.0, width: 10.5 },
+      { day: "vendredi", left: 57.6, width: 10.5 },
+      { day: "samedi", left: 70.4, width: 10.6 },
+      { day: "dimanche", left: 82.7, width: 10.8 }
+    ];
+    const TRAIN_CONDUCTEUR_TOP = 31.4;
+    const TRAIN_CONDUCTEUR_HEIGHT = 14.2;
+    const TRAIN_VIP_TOP = 61.0;
+    const TRAIN_VIP_HEIGHT = 11.6;
+    const trainSlotPositions = (function () {
+      const out = {};
+      trainSlotColumns.forEach(function (col) {
+        out[col.day] = {
+          left: col.left,
+          top: TRAIN_CONDUCTEUR_TOP,
+          width: col.width,
+          height: TRAIN_CONDUCTEUR_HEIGHT
+        };
+        out[col.day + "Vip"] = {
+          left: col.left,
+          top: TRAIN_VIP_TOP,
+          width: col.width,
+          height: TRAIN_VIP_HEIGHT
+        };
+      });
+      return out;
+    })();
     const DEFAULT_TRAIN_SLOT_POSITIONS = trainSlotPositions;
-    const TRAIN_POSITIONS_VERSION = 3;
+    const TRAIN_POSITIONS_VERSION = 4;
+    const TRAIN_SLOT_KEYS = Object.keys(trainSlotPositions);
+
+    function trainSlotPosKey(day, role) {
+      return role === "vip" ? day + "Vip" : day;
+    }
+
+    function trainSlotElementId(day, role) {
+      return role === "vip" ? "slot-" + day + "-vip" : "slot-" + day;
+    }
+
+    function trainComboElementId(day, role) {
+      return "train-select-" + day + "-" + role;
+    }
+
+    function trainOpenKey(day, role) {
+      return day + ":" + role;
+    }
+
+    function parseTrainOpenKey(key) {
+      if (!key || key.indexOf(":") === -1) return null;
+      const parts = key.split(":");
+      return { day: parts[0], role: parts[1] };
+    }
+
+    function createEmptyTrainDayAssignment() {
+      return { conducteur: "", vip: "" };
+    }
+
+    function normalizeTrainDayAssignment(val) {
+      /* Ancien format : assignments.lundi = "playerId" → devient conducteur. */
+      if (typeof val === "string") {
+        return { conducteur: val || "", vip: "" };
+      }
+      if (val && typeof val === "object") {
+        return {
+          conducteur: val.conducteur ? String(val.conducteur) : "",
+          vip: val.vip ? String(val.vip) : ""
+        };
+      }
+      return createEmptyTrainDayAssignment();
+    }
+
+    function getTrainDayAssignment(assignments, day) {
+      return normalizeTrainDayAssignment(assignments && assignments[day]);
+    }
+
+    function getTrainRoleAssignment(assignments, day, role) {
+      const dayAssign = getTrainDayAssignment(assignments, day);
+      return role === "vip" ? (dayAssign.vip || "") : (dayAssign.conducteur || "");
+    }
 
     /* Positions cases VS (en %) — mesurées sur l'intérieur bleu de chaque panneau,
        même largeur/hauteur pour les 7 jours, centrées sur le centre réel du panneau. */
@@ -4162,7 +4269,9 @@
 
     function createDefaultTrain() {
       const assignments = {};
-      CONFIG.trainDays.forEach(function (d) { assignments[d.key] = ""; });
+      CONFIG.trainDays.forEach(function (d) {
+        assignments[d.key] = createEmptyTrainDayAssignment();
+      });
       return {
         assignments: assignments,
         slotPositions: clonePositions(trainSlotPositions),
@@ -4392,13 +4501,16 @@
       if (!train || typeof train !== "object") return base;
       const assignments = {};
       CONFIG.trainDays.forEach(function (d) {
-        const val = train.assignments && train.assignments[d.key];
-        assignments[d.key] = val ? String(val) : "";
+        assignments[d.key] = normalizeTrainDayAssignment(
+          train.assignments ? train.assignments[d.key] : null
+        );
       });
 
       const version = Number(train.positionsVersion) || 0;
+      const hasVipSlots = !!(train.slotPositions && train.slotPositions.lundiVip);
       const mustResetPositions =
         version < TRAIN_POSITIONS_VERSION ||
+        !hasVipSlots ||
         isLegacyTrainPositions(train.slotPositions);
 
       let slotPositions;
@@ -4406,9 +4518,9 @@
         slotPositions = clonePositions(trainSlotPositions);
       } else {
         slotPositions = {};
-        CONFIG.trainDays.forEach(function (d) {
-          const src = (train.slotPositions && train.slotPositions[d.key]) || trainSlotPositions[d.key];
-          slotPositions[d.key] = {
+        TRAIN_SLOT_KEYS.forEach(function (key) {
+          const src = (train.slotPositions && train.slotPositions[key]) || trainSlotPositions[key];
+          slotPositions[key] = {
             left: Number(src.left) || 0,
             top: Number(src.top) || 0,
             width: Number(src.width) || 0,
@@ -4796,9 +4908,14 @@
     function remapPlayerReferences(idMap) {
       if (state.train && state.train.assignments) {
         CONFIG.trainDays.forEach(function (d) {
-          const cur = state.train.assignments[d.key];
-          if (!cur || !Object.prototype.hasOwnProperty.call(idMap, cur)) return;
-          state.train.assignments[d.key] = idMap[cur] || "";
+          const dayAssign = normalizeTrainDayAssignment(state.train.assignments[d.key]);
+          TRAIN_ROLES.forEach(function (role) {
+            const cur = dayAssign[role];
+            if (cur && Object.prototype.hasOwnProperty.call(idMap, cur)) {
+              dayAssign[role] = idMap[cur] || "";
+            }
+          });
+          state.train.assignments[d.key] = dayAssign;
         });
       }
       if (state.teamVille) {
@@ -5628,10 +5745,14 @@
         this.ensureState();
         let changed = false;
         CONFIG.trainDays.forEach(function (d) {
-          if (state.train.assignments[d.key] === playerId) {
-            state.train.assignments[d.key] = "";
-            changed = true;
-          }
+          const dayAssign = getTrainDayAssignment(state.train.assignments, d.key);
+          TRAIN_ROLES.forEach(function (role) {
+            if (dayAssign[role] === playerId) {
+              dayAssign[role] = "";
+              changed = true;
+            }
+          });
+          state.train.assignments[d.key] = dayAssign;
         });
         return changed;
       },
@@ -5641,20 +5762,22 @@
         return state.players.find(function (p) { return p.id === id; }) || null;
       },
 
-      getUsedIds(exceptDay) {
+      getUsedIds(exceptDay, exceptRole) {
         const used = new Set();
         CONFIG.trainDays.forEach(function (d) {
-          if (d.key === exceptDay) return;
-          const id = state.train.assignments[d.key];
-          if (id) used.add(id);
+          TRAIN_ROLES.forEach(function (role) {
+            if (d.key === exceptDay && role === exceptRole) return;
+            const id = getTrainRoleAssignment(state.train.assignments, d.key, role);
+            if (id) used.add(id);
+          });
         });
         return used;
       },
 
-      getEligiblePlayers(day, query) {
+      getEligiblePlayers(day, role, query) {
         const allowDup = !!state.train.allowDuplicates;
-        const current = state.train.assignments[day] || "";
-        const used = allowDup ? new Set() : this.getUsedIds(day);
+        const current = getTrainRoleAssignment(state.train.assignments, day, role);
+        const used = allowDup ? new Set() : this.getUsedIds(day, role);
         const q = (query || "").trim().toLowerCase();
         return state.players
           .slice()
@@ -5672,33 +5795,43 @@
         if (this.daysBuilt) return;
         const list = document.getElementById("trainDayList");
         list.innerHTML = CONFIG.trainDays.map(function (d) {
+          const rolesHtml = TRAIN_ROLES.map(function (role) {
+            const roleLabel = TRAIN_ROLE_LABELS[role];
+            const comboId = trainComboElementId(d.key, role);
+            return (
+              '<div class="train-role-row" data-day="' + d.key + '" data-role="' + role + '">' +
+                '<div class="train-role-label">' + roleLabel + "</div>" +
+                '<div class="train-combo" id="' + comboId + '" data-day="' + d.key + '" data-role="' + role + '">' +
+                  '<button type="button" class="train-combo-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="' + d.label + " " + roleLabel + '">' +
+                    '<span class="train-combo-value placeholder">Choisir un joueur</span>' +
+                    '<span class="train-combo-caret">▾</span>' +
+                  "</button>" +
+                  '<div class="train-combo-dropdown" hidden>' +
+                    '<div class="train-combo-search-wrap">' +
+                      '<input type="search" class="train-combo-search form-control" placeholder="🔎 Rechercher un joueur..." autocomplete="off" enterkeyhint="search" />' +
+                    "</div>" +
+                    '<div class="train-combo-options" role="listbox"></div>' +
+                  "</div>" +
+                "</div>" +
+                '<button type="button" class="train-clear-day" data-day="' + d.key + '" data-role="' + role + '" title="Vider" aria-label="Vider ' + d.label + " " + roleLabel + '">×</button>' +
+              "</div>"
+            );
+          }).join("");
           return (
             '<div class="train-day-row" data-day="' + d.key + '">' +
               '<div class="train-day-label">' + d.label + "</div>" +
-              '<div class="train-combo" id="train-select-' + d.key + '" data-day="' + d.key + '">' +
-                '<button type="button" class="train-combo-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="' + d.label + '">' +
-                  '<span class="train-combo-value placeholder">Choisir un joueur</span>' +
-                  '<span class="train-combo-caret">▾</span>' +
-                "</button>" +
-                '<div class="train-combo-dropdown" hidden>' +
-                  '<div class="train-combo-search-wrap">' +
-                    '<input type="search" class="train-combo-search form-control" placeholder="🔎 Rechercher un joueur..." autocomplete="off" enterkeyhint="search" />' +
-                  "</div>" +
-                  '<div class="train-combo-options" role="listbox"></div>' +
-                "</div>" +
-              "</div>" +
-              '<button type="button" class="train-clear-day" data-day="' + d.key + '" title="Vider" aria-label="Vider ' + d.label + '">×</button>' +
+              '<div class="train-day-roles">' + rolesHtml + "</div>" +
             "</div>"
           );
         }).join("");
         this.daysBuilt = true;
       },
 
-      updateTriggerLabel(day) {
-        const combo = document.getElementById("train-select-" + day);
+      updateTriggerLabel(day, role) {
+        const combo = document.getElementById(trainComboElementId(day, role));
         if (!combo) return;
         const valueEl = combo.querySelector(".train-combo-value");
-        const player = this.getPlayer(state.train.assignments[day]);
+        const player = this.getPlayer(getTrainRoleAssignment(state.train.assignments, day, role));
         if (player) {
           valueEl.classList.remove("placeholder");
           fitUiNickname(valueEl, player.nickname);
@@ -5709,12 +5842,12 @@
         }
       },
 
-      renderComboOptions(day, query) {
-        const combo = document.getElementById("train-select-" + day);
+      renderComboOptions(day, role, query) {
+        const combo = document.getElementById(trainComboElementId(day, role));
         if (!combo) return;
         const optionsEl = combo.querySelector(".train-combo-options");
-        const current = state.train.assignments[day] || "";
-        const players = this.getEligiblePlayers(day, query);
+        const current = getTrainRoleAssignment(state.train.assignments, day, role);
+        const players = this.getEligiblePlayers(day, role, query);
 
         if (!players.length) {
           optionsEl.innerHTML = '<div class="train-combo-empty">Aucun joueur trouvé</div>';
@@ -5735,11 +5868,11 @@
 
         this.highlightIndex = players.findIndex(function (p) { return p.id === current; });
         if (this.highlightIndex < 0) this.highlightIndex = 0;
-        this.syncHighlight(day);
+        this.syncHighlight(day, role);
       },
 
-      syncHighlight(day) {
-        const combo = document.getElementById("train-select-" + day);
+      syncHighlight(day, role) {
+        const combo = document.getElementById(trainComboElementId(day, role));
         if (!combo) return;
         const options = combo.querySelectorAll(".train-combo-option");
         options.forEach(function (opt, idx) {
@@ -5751,9 +5884,10 @@
         }
       },
 
-      openCombo(day) {
-        if (this.openDay && this.openDay !== day) this.closeCombo();
-        const combo = document.getElementById("train-select-" + day);
+      openCombo(day, role) {
+        const key = trainOpenKey(day, role);
+        if (this.openDay && this.openDay !== key) this.closeCombo();
+        const combo = document.getElementById(trainComboElementId(day, role));
         if (!combo) return;
         const dropdown = combo.querySelector(".train-combo-dropdown");
         const search = combo.querySelector(".train-combo-search");
@@ -5761,9 +5895,9 @@
         combo.classList.add("open");
         dropdown.hidden = false;
         trigger.setAttribute("aria-expanded", "true");
-        this.openDay = day;
+        this.openDay = key;
         search.value = "";
-        this.renderComboOptions(day, "");
+        this.renderComboOptions(day, role, "");
         setTimeout(function () {
           search.focus();
           if (typeof search.select === "function") search.select();
@@ -5772,8 +5906,10 @@
 
       closeCombo() {
         if (!this.openDay) return;
-        const day = this.openDay;
-        const combo = document.getElementById("train-select-" + day);
+        const parsed = parseTrainOpenKey(this.openDay);
+        const combo = parsed
+          ? document.getElementById(trainComboElementId(parsed.day, parsed.role))
+          : null;
         if (combo) {
           combo.classList.remove("open");
           const dropdown = combo.querySelector(".train-combo-dropdown");
@@ -5797,31 +5933,42 @@
 
         let changed = false;
         CONFIG.trainDays.forEach(function (d) {
-          const current = state.train.assignments[d.key] || "";
-          if (current && !state.players.some(function (p) { return p.id === current; })) {
-            state.train.assignments[d.key] = "";
-            changed = true;
-          }
-          Train.updateTriggerLabel(d.key);
+          const dayAssign = getTrainDayAssignment(state.train.assignments, d.key);
+          TRAIN_ROLES.forEach(function (role) {
+            const current = dayAssign[role] || "";
+            if (current && !state.players.some(function (p) { return p.id === current; })) {
+              dayAssign[role] = "";
+              changed = true;
+            }
+            Train.updateTriggerLabel(d.key, role);
+          });
+          state.train.assignments[d.key] = dayAssign;
         });
         if (changed) Storage.persist();
 
         if (this.openDay) {
-          const combo = document.getElementById("train-select-" + this.openDay);
-          const search = combo ? combo.querySelector(".train-combo-search") : null;
-          this.renderComboOptions(this.openDay, search ? search.value : "");
+          const parsed = parseTrainOpenKey(this.openDay);
+          if (parsed) {
+            const combo = document.getElementById(trainComboElementId(parsed.day, parsed.role));
+            const search = combo ? combo.querySelector(".train-combo-search") : null;
+            this.renderComboOptions(parsed.day, parsed.role, search ? search.value : "");
+          }
         }
       },
 
       applySlotStyles() {
         this.ensureState();
         CONFIG.trainDays.forEach(function (d) {
-          const el = document.getElementById("slot-" + d.key);
-          const pos = state.train.slotPositions[d.key] || trainSlotPositions[d.key];
-          el.style.left = pos.left + "%";
-          el.style.top = pos.top + "%";
-          el.style.width = pos.width + "%";
-          el.style.height = pos.height + "%";
+          TRAIN_ROLES.forEach(function (role) {
+            const el = document.getElementById(trainSlotElementId(d.key, role));
+            if (!el) return;
+            const key = trainSlotPosKey(d.key, role);
+            const pos = state.train.slotPositions[key] || trainSlotPositions[key];
+            el.style.left = pos.left + "%";
+            el.style.top = pos.top + "%";
+            el.style.width = pos.width + "%";
+            el.style.height = pos.height + "%";
+          });
         });
       },
 
@@ -5829,12 +5976,16 @@
         this.ensureState();
         this.applySlotStyles();
         CONFIG.trainDays.forEach(function (d) {
-          const el = document.getElementById("slot-" + d.key);
-          const textEl = el.querySelector(".train-slot-text") || el;
-          const player = Train.getPlayer(state.train.assignments[d.key]);
-          fitSingleLineText(textEl, player ? player.nickname : "", {
-            maxSize: 26,
-            minSize: 7
+          TRAIN_ROLES.forEach(function (role) {
+            const el = document.getElementById(trainSlotElementId(d.key, role));
+            if (!el) return;
+            const textEl = el.querySelector(".train-slot-text") || el;
+            const player = Train.getPlayer(getTrainRoleAssignment(state.train.assignments, d.key, role));
+            fitSingleLineText(textEl, player ? player.nickname : "", {
+              maxSize: 24,
+              minSize: 7,
+              box: el
+            });
           });
         });
       },
@@ -5848,9 +5999,12 @@
         this.refreshSlots();
       },
 
-      setAssignment(day, playerId) {
+      setAssignment(day, role, playerId) {
         this.ensureState();
-        state.train.assignments[day] = playerId || "";
+        const dayAssign = getTrainDayAssignment(state.train.assignments, day);
+        if (role === "vip") dayAssign.vip = playerId || "";
+        else dayAssign.conducteur = playerId || "";
+        state.train.assignments[day] = dayAssign;
         Storage.persist();
         this.closeCombo();
         this.refresh();
@@ -5859,7 +6013,7 @@
       resetWeek() {
         this.ensureState();
         CONFIG.trainDays.forEach(function (d) {
-          state.train.assignments[d.key] = "";
+          state.train.assignments[d.key] = createEmptyTrainDayAssignment();
         });
         Storage.persist();
         this.refresh();
@@ -5896,10 +6050,17 @@
         const stage = document.getElementById("trainStage");
         const rect = stage.getBoundingClientRect();
         const day = slot.dataset.day;
-        const pos = state.train.slotPositions[day];
+        const role = slot.dataset.role === "vip" ? "vip" : "conducteur";
+        const posKey = trainSlotPosKey(day, role);
+        if (!state.train.slotPositions[posKey]) {
+          state.train.slotPositions[posKey] = Object.assign({}, trainSlotPositions[posKey]);
+        }
+        const pos = state.train.slotPositions[posKey];
         this.drag = {
           mode: handle ? "resize" : "move",
           day: day,
+          role: role,
+          posKey: posKey,
           el: slot,
           startX: e.clientX,
           startY: e.clientY,
@@ -5919,7 +6080,7 @@
         e.preventDefault();
         const dx = ((e.clientX - this.drag.startX) / this.drag.stageW) * 100;
         const dy = ((e.clientY - this.drag.startY) / this.drag.stageH) * 100;
-        const pos = state.train.slotPositions[this.drag.day];
+        const pos = state.train.slotPositions[this.drag.posKey];
 
         if (this.drag.mode === "resize") {
           let width = this.drag.origWidth + dx;
@@ -5968,20 +6129,23 @@
             ctx.drawImage(img, 0, 0);
 
             CONFIG.trainDays.forEach(function (d) {
-              const player = Train.getPlayer(state.train.assignments[d.key]);
-              if (!player) return;
-              const pos = state.train.slotPositions[d.key];
-              const x = (pos.left / 100) * canvas.width;
-              const y = (pos.top / 100) * canvas.height;
-              const w = (pos.width / 100) * canvas.width;
-              const h = (pos.height / 100) * canvas.height;
-              drawSingleLineFittedText(ctx, player.nickname, x, y, w, h, {
-                color: "#1b1208",
-                align: "center",
-                baseline: "middle",
-                weight: "800",
-                maxSize: Math.min(h * 0.42, w * 0.34, 48),
-                minSize: 10
+              TRAIN_ROLES.forEach(function (role) {
+                const player = Train.getPlayer(getTrainRoleAssignment(state.train.assignments, d.key, role));
+                if (!player) return;
+                const posKey = trainSlotPosKey(d.key, role);
+                const pos = state.train.slotPositions[posKey] || trainSlotPositions[posKey];
+                const x = (pos.left / 100) * canvas.width;
+                const y = (pos.top / 100) * canvas.height;
+                const w = (pos.width / 100) * canvas.width;
+                const h = (pos.height / 100) * canvas.height;
+                drawSingleLineFittedText(ctx, player.nickname, x, y, w, h, {
+                  color: "#1b1208",
+                  align: "center",
+                  baseline: "middle",
+                  weight: "800",
+                  maxSize: Math.min(h * 0.55, w * 0.36, 42),
+                  minSize: 9
+                });
               });
             });
 
@@ -6027,7 +6191,8 @@
           if (clearBtn) {
             e.preventDefault();
             Train.closeCombo();
-            Train.setAssignment(clearBtn.dataset.day, "");
+            const role = clearBtn.dataset.role === "vip" ? "vip" : "conducteur";
+            Train.setAssignment(clearBtn.dataset.day, role, "");
             return;
           }
 
@@ -6036,7 +6201,8 @@
             e.preventDefault();
             const combo = option.closest(".train-combo");
             if (!combo) return;
-            Train.setAssignment(combo.dataset.day, option.dataset.id);
+            const role = combo.dataset.role === "vip" ? "vip" : "conducteur";
+            Train.setAssignment(combo.dataset.day, role, option.dataset.id);
             return;
           }
 
@@ -6045,8 +6211,10 @@
             e.preventDefault();
             const combo = trigger.closest(".train-combo");
             if (!combo) return;
-            if (Train.openDay === combo.dataset.day) Train.closeCombo();
-            else Train.openCombo(combo.dataset.day);
+            const role = combo.dataset.role === "vip" ? "vip" : "conducteur";
+            const key = trainOpenKey(combo.dataset.day, role);
+            if (Train.openDay === key) Train.closeCombo();
+            else Train.openCombo(combo.dataset.day, role);
           }
         });
 
@@ -6055,12 +6223,15 @@
           if (!search) return;
           const combo = search.closest(".train-combo");
           if (!combo) return;
-          Train.renderComboOptions(combo.dataset.day, search.value);
+          const role = combo.dataset.role === "vip" ? "vip" : "conducteur";
+          Train.renderComboOptions(combo.dataset.day, role, search.value);
         });
 
         document.getElementById("trainDayList").addEventListener("keydown", function (e) {
           if (!Train.openDay) return;
-          const combo = document.getElementById("train-select-" + Train.openDay);
+          const parsed = parseTrainOpenKey(Train.openDay);
+          if (!parsed) return;
+          const combo = document.getElementById(trainComboElementId(parsed.day, parsed.role));
           if (!combo) return;
           const options = combo.querySelectorAll(".train-combo-option");
 
@@ -6069,17 +6240,17 @@
             if (!options.length) return;
             Train.highlightIndex = Math.min(options.length - 1, Train.highlightIndex + 1);
             if (Train.highlightIndex < 0) Train.highlightIndex = 0;
-            Train.syncHighlight(Train.openDay);
+            Train.syncHighlight(parsed.day, parsed.role);
           } else if (e.key === "ArrowUp") {
             e.preventDefault();
             if (!options.length) return;
             Train.highlightIndex = Math.max(0, Train.highlightIndex - 1);
-            Train.syncHighlight(Train.openDay);
+            Train.syncHighlight(parsed.day, parsed.role);
           } else if (e.key === "Enter") {
             const active = options[Train.highlightIndex];
             if (active) {
               e.preventDefault();
-              Train.setAssignment(Train.openDay, active.dataset.id);
+              Train.setAssignment(parsed.day, parsed.role, active.dataset.id);
             }
           } else if (e.key === "Escape") {
             e.preventDefault();
@@ -6273,12 +6444,14 @@
 
     function refreshTrainTextSizing() {
       CONFIG.trainDays.forEach(function (d) {
-        const el = document.getElementById("slot-" + d.key);
-        if (!el) return;
-        const textEl = el.querySelector(".train-slot-text") || el;
-        const player = Train.getPlayer(state.train.assignments[d.key]);
-        fitSingleLineText(textEl, player ? player.nickname : "", { maxSize: 26, minSize: 7, box: el });
-        Train.updateTriggerLabel(d.key);
+        TRAIN_ROLES.forEach(function (role) {
+          const el = document.getElementById(trainSlotElementId(d.key, role));
+          if (!el) return;
+          const textEl = el.querySelector(".train-slot-text") || el;
+          const player = Train.getPlayer(getTrainRoleAssignment(state.train.assignments, d.key, role));
+          fitSingleLineText(textEl, player ? player.nickname : "", { maxSize: 24, minSize: 7, box: el });
+          Train.updateTriggerLabel(d.key, role);
+        });
       });
     }
 
